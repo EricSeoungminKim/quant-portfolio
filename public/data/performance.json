@@ -1,0 +1,142 @@
+{
+  "generated_at": "2026-09-02T07:50:00+09:00",
+  "disclaimer": "모의투자(paper) 계좌 기준 실측치입니다. 2026-09-01부터 일부 자본이 실계좌로 이전되었습니다. 표본이 작을수록 승률·기대값은 통계적으로 신뢰하기 어렵습니다 — 각 전략의 판정을 함께 확인하세요.",
+  "period": {
+    "start": "2026-08-10",
+    "end": "2026-09-02",
+    "sessions": 18,
+    "total_fills": 590
+  },
+  "phases": [
+    {
+      "id": "paper",
+      "label": "모의 운용",
+      "from": "2026-08-10",
+      "to": "2026-08-31",
+      "seed_krw": 10000000,
+      "note": "가상 시드 1,000만원으로 3개 전략(KR/US)을 동시 운용, 체결·손익을 거래 원장에 영속화."
+    },
+    {
+      "id": "real_seeded",
+      "label": "실계좌 스냅샷 이식",
+      "from": "2026-09-01",
+      "to": null,
+      "seed_krw": 11517674,
+      "note": "실계좌 잔고를 시드로 이식. 이전 보유 종목 청산 체결은 성과 계산에서 제외(excluded 참고)."
+    }
+  ],
+  "equity": [
+    { "date": "2026-08-10", "cum_pct": 0.41, "day_pct": 0.41, "fills": 28, "phase": "paper" },
+    { "date": "2026-08-11", "cum_pct": 0.63, "day_pct": 0.22, "fills": 22, "phase": "paper" },
+    { "date": "2026-08-12", "cum_pct": 0.05, "day_pct": -0.58, "fills": 35, "phase": "paper" },
+    { "date": "2026-08-13", "cum_pct": 0.24, "day_pct": 0.19, "fills": 19, "phase": "paper" },
+    { "date": "2026-08-14", "cum_pct": -0.47, "day_pct": -0.71, "fills": 55, "phase": "paper" },
+    { "date": "2026-08-17", "cum_pct": -0.80, "day_pct": -0.33, "fills": 25, "phase": "paper" },
+    { "date": "2026-08-18", "cum_pct": -0.52, "day_pct": 0.28, "fills": 33, "phase": "paper" },
+    { "date": "2026-08-19", "cum_pct": -1.13, "day_pct": -0.61, "fills": 21, "phase": "paper" },
+    { "date": "2026-08-20", "cum_pct": -1.37, "day_pct": -0.24, "fills": 52, "phase": "paper" },
+    { "date": "2026-08-21", "cum_pct": -1.22, "day_pct": 0.15, "fills": 24, "phase": "paper" },
+    { "date": "2026-08-24", "cum_pct": -1.66, "day_pct": -0.44, "fills": 29, "phase": "paper" },
+    { "date": "2026-08-25", "cum_pct": -1.85, "day_pct": -0.19, "fills": 26, "phase": "paper" },
+    { "date": "2026-08-26", "cum_pct": -1.54, "day_pct": 0.31, "fills": 64, "phase": "paper" },
+    { "date": "2026-08-27", "cum_pct": -2.21, "day_pct": -0.67, "fills": 31, "phase": "paper" },
+    { "date": "2026-08-28", "cum_pct": -2.59, "day_pct": -0.38, "fills": 36, "phase": "paper" },
+    { "date": "2026-08-31", "cum_pct": -3.26, "day_pct": -0.67, "fills": 23, "phase": "paper" },
+    { "date": "2026-09-01", "cum_pct": -0.05, "day_pct": -0.05, "fills": 37, "phase": "real_seeded" },
+    { "date": "2026-09-02", "cum_pct": -0.23, "day_pct": -0.18, "fills": 30, "phase": "real_seeded" }
+  ],
+  "strategies": [
+    {
+      "id": "donchian_kr",
+      "name_ko": "채널 돌파 (KR)",
+      "trips": 52,
+      "wins": 21,
+      "win_rate": 0.404,
+      "ci_low": 0.27,
+      "ci_high": 0.55,
+      "expectancy_bp": -8.2,
+      "verdict": "기각 — 수수료가 엣지 초과",
+      "sample_warning": false,
+      "markets": ["KR"]
+    },
+    {
+      "id": "donchian_us",
+      "name_ko": "채널 돌파 (US)",
+      "trips": 61,
+      "wins": 29,
+      "win_rate": 0.475,
+      "ci_low": 0.35,
+      "ci_high": 0.60,
+      "expectancy_bp": -3.1,
+      "verdict": "판단 보류 — 경계선",
+      "sample_warning": false,
+      "markets": ["US"]
+    },
+    {
+      "id": "orb_scan_kr",
+      "name_ko": "개장 돌파 스캐너 (KR)",
+      "trips": 38,
+      "wins": 14,
+      "win_rate": 0.368,
+      "ci_low": 0.22,
+      "ci_high": 0.54,
+      "expectancy_bp": -15.6,
+      "verdict": "기각 — 수수료가 엣지 초과",
+      "sample_warning": true,
+      "markets": ["KR"]
+    },
+    {
+      "id": "orb_scan_us",
+      "name_ko": "개장 돌파 스캐너 (US)",
+      "trips": 45,
+      "wins": 19,
+      "win_rate": 0.422,
+      "ci_low": 0.28,
+      "ci_high": 0.57,
+      "expectancy_bp": -6.4,
+      "verdict": "판단 불가 — 표본 부족",
+      "sample_warning": true,
+      "markets": ["US"]
+    },
+    {
+      "id": "intraday_scan_kr",
+      "name_ko": "세션 신고가 스캐너 (KR)",
+      "trips": 71,
+      "wins": 33,
+      "win_rate": 0.465,
+      "ci_low": 0.35,
+      "ci_high": 0.58,
+      "expectancy_bp": -2.8,
+      "verdict": "판단 보류 — 경계선",
+      "sample_warning": false,
+      "markets": ["KR"]
+    },
+    {
+      "id": "intraday_scan_us",
+      "name_ko": "세션 신고가 스캐너 (US)",
+      "trips": 28,
+      "wins": 10,
+      "win_rate": 0.357,
+      "ci_low": 0.19,
+      "ci_high": 0.55,
+      "expectancy_bp": -19.3,
+      "verdict": "판단 불가 — 표본 부족",
+      "sample_warning": true,
+      "markets": ["US"]
+    }
+  ],
+  "excluded": {
+    "seeding_liquidation": {
+      "fills": 7,
+      "note": "실계좌 이식 시 기존 보유 종목 청산 체결. 전략 판단과 무관하므로 성과 집계에서 제외.",
+      "krw_impact": 0,
+      "usd_impact": 0
+    }
+  },
+  "costs": {
+    "kr_stock_roundtrip_bp": 23,
+    "kr_etf_roundtrip_bp": 3,
+    "us_roundtrip_bp": 20,
+    "note": "KR 개별주 왕복 23bp 중 20bp는 거래세 — 전략 엣지가 이를 넘지 못하면 매매 자체가 손실 요인이 된다. ETF는 거래세가 면제돼 왕복 비용이 3bp로 낮다."
+  }
+}

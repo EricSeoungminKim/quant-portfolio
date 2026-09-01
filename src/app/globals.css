@@ -1,26 +1,157 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f3f4f7;
+  --surface: #ffffff;
+  --surface-2: #eceef2;
+  --border: #d7dbe3;
+  --foreground: #12151c;
+  --muted: #5b6270;
+  --muted-2: #8890a0;
+  --accent: #9a7327;
+  --accent-2: #b78a35;
+  --link: #12151c;
+
+  /* Korean market convention: up = red, down = blue */
+  --up: #c23b3b;
+  --up-bg: rgba(194, 59, 59, 0.08);
+  --down: #2f5fbf;
+  --down-bg: rgba(47, 95, 191, 0.08);
+
+  --grid-line: rgba(18, 21, 28, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #0b0d12;
+    --surface: #10141b;
+    --surface-2: #161b24;
+    --border: #262c38;
+    --foreground: #e7e9ee;
+    --muted: #969fb0;
+    --muted-2: #6b7484;
+    --accent: #d7ab5c;
+    --accent-2: #e6c079;
+    --link: #e7e9ee;
+
+    --up: #e0665f;
+    --up-bg: rgba(224, 102, 95, 0.12);
+    --down: #6f9bf0;
+    --down-bg: rgba(111, 155, 240, 0.12);
+
+    --grid-line: rgba(231, 233, 238, 0.07);
+  }
+}
+
+:root[data-theme="dark"] {
+  --background: #0b0d12;
+  --surface: #10141b;
+  --surface-2: #161b24;
+  --border: #262c38;
+  --foreground: #e7e9ee;
+  --muted: #969fb0;
+  --muted-2: #6b7484;
+  --accent: #d7ab5c;
+  --accent-2: #e6c079;
+  --link: #e7e9ee;
+
+  --up: #e0665f;
+  --up-bg: rgba(224, 102, 95, 0.12);
+  --down: #6f9bf0;
+  --down-bg: rgba(111, 155, 240, 0.12);
+
+  --grid-line: rgba(231, 233, 238, 0.07);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-muted-2: var(--muted-2);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-up: var(--up);
+  --color-up-bg: var(--up-bg);
+  --color-down: var(--down);
+  --color-down-bg: var(--down-bg);
+  --font-sans: var(--font-plex-kr);
+  --font-num: var(--font-plex-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border);
+}
+
+html {
+  color-scheme: light dark;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-plex-kr), "Pretendard", -apple-system, BlinkMacSystemFont,
+    "Malgun Gothic", sans-serif;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-attachment: fixed;
+}
+
+.tnum {
+  font-family: var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--background);
+}
+
+.scroll-x {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-x::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scroll-x::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+/* Theme toggle icon — resolved with CSS alone so there is no client-only
+   state to hydrate and no flash of the wrong icon. Icon shown = active theme.
+   Base :root tokens above are the light palette, so the default is "sun". */
+.icon-sun {
+  display: inline-flex;
+}
+.icon-moon {
+  display: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .icon-sun {
+    display: none;
+  }
+  :root:not([data-theme]) .icon-moon {
+    display: inline-flex;
+  }
+}
+:root[data-theme="light"] .icon-sun {
+  display: inline-flex;
+}
+:root[data-theme="light"] .icon-moon {
+  display: none;
+}
+:root[data-theme="dark"] .icon-sun {
+  display: none;
+}
+:root[data-theme="dark"] .icon-moon {
+  display: inline-flex;
 }
