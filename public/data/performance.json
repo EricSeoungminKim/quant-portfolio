@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-02T03:28:45+09:00",
+  "generated_at": "2026-09-02T06:20:02+09:00",
   "disclaimer": "모의투자(paper) 기록입니다. 실제 자금이 투입되지 않았습니다.",
   "period": {
     "start": "2026-08-10",
     "end": "2026-09-01",
     "sessions": 17,
-    "total_fills": 584
+    "total_fills": 589
   },
   "phases": [
     {
@@ -140,9 +140,9 @@
     },
     {
       "date": "2026-09-01",
-      "cum_pct": -1.2959,
-      "day_pct": -1.2959,
-      "fills": 84,
+      "cum_pct": -1.3406,
+      "day_pct": -1.3406,
+      "fills": 89,
       "phase": "real_seeded"
     }
   ],
@@ -181,12 +181,12 @@
     {
       "id": "gap_fade",
       "name_ko": "갭 페이드",
-      "trips": 7,
+      "trips": 8,
       "wins": 0,
       "win_rate": 0.0,
       "ci_low": 0.0,
-      "ci_high": 0.3543,
-      "expectancy_bp": -51.96,
+      "ci_high": 0.3244,
+      "expectancy_bp": -60.02,
       "verdict": "유의(음)",
       "sample_warning": true,
       "markets": [
@@ -196,12 +196,12 @@
     {
       "id": "intraday_momentum",
       "name_ko": "장중 모멘텀",
-      "trips": 2,
+      "trips": 3,
       "wins": 0,
       "win_rate": 0.0,
       "ci_low": 0.0,
-      "ci_high": 0.6576,
-      "expectancy_bp": -70.58,
+      "ci_high": 0.5615,
+      "expectancy_bp": -86.02,
       "verdict": "판단 불가",
       "sample_warning": true,
       "markets": [
@@ -302,12 +302,12 @@
     {
       "id": "pullback_impulse",
       "name_ko": "눌림목 임펄스",
-      "trips": 17,
+      "trips": 18,
       "wins": 7,
-      "win_rate": 0.4118,
-      "ci_low": 0.2161,
-      "ci_high": 0.6399,
-      "expectancy_bp": -11.04,
+      "win_rate": 0.3889,
+      "ci_low": 0.2031,
+      "ci_high": 0.6138,
+      "expectancy_bp": -11.75,
       "verdict": "판단 불가",
       "sample_warning": true,
       "markets": [
