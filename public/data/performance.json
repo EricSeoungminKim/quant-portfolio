@@ -1,356 +1,541 @@
 {
-  "generated_at": "2026-09-02T06:20:02+09:00",
+  "generated_at": "2026-09-02T15:14:07+09:00",
   "disclaimer": "모의투자(paper) 기록입니다. 실제 자금이 투입되지 않았습니다.",
+  "disclaimer_en": "Paper trading record. No real capital was deployed.",
   "period": {
-    "start": "2026-08-10",
-    "end": "2026-09-01",
-    "sessions": 17,
-    "total_fills": 589
+    "start": "2026-09-01",
+    "end": "2026-09-02",
+    "sessions": 2,
+    "total_fills": 53
   },
   "phases": [
     {
       "id": "paper",
       "label": "모의 운용",
-      "from": "2026-08-10",
-      "to": "2026-09-01",
+      "label_en": "Paper trading",
+      "from": "2026-08-10T09:05:11+09:00",
+      "to": "2026-09-01T23:01:08+09:00",
       "seed_krw": 10000000,
-      "note": "가상 자본 1천만원(고정 참고값 — 원장에 시작 자본 기록 없음)"
+      "note": "가상 자본 1천만원(고정 참고값 — 원장에 시작 자본 기록 없음)",
+      "note_en": "Virtual capital of 10,000,000 KRW (fixed reference value — no starting capital recorded in the ledger)"
     },
     {
       "id": "real_seeded",
       "label": "실계좌 스냅샷 이식",
-      "from": "2026-09-01",
+      "label_en": "Live-account snapshot transplant",
+      "from": "2026-09-01T23:01:08+09:00",
       "to": null,
-      "seed_krw": 11517675,
-      "note": "실계좌 현금·보유를 이어받아 재시작 (KRW/USD 풀 분리, USD→KRW 환산은 고정환율 1376.7 — 2026-09-01 스냅샷)"
+      "seed_krw": 13098175,
+      "seed_basis": "현금+이월보유",
+      "seed_basis_en": "cash + carried position",
+      "note": "실계좌 현금·보유를 이어받아 재시작 (KRW/USD 풀 분리, USD→KRW 환산은 고정환율 1376.7 — 2026-09-01 스냅샷) / 이월 보유 평가액 포함(스냅샷 평단 기준, 종목·수량은 비공개)",
+      "note_en": "Restarted by carrying over real-account cash and holdings (KRW/USD pools kept separate; USD→KRW conversion uses a fixed rate of 1376.7 — 2026-09-01 snapshot) / Includes carried-over holdings valuation (based on snapshot average cost; symbol and quantity are not disclosed)"
     }
   ],
-  "equity": [
-    {
-      "date": "2026-08-10",
-      "cum_pct": 0.5168,
-      "day_pct": 0.5168,
-      "fills": 16,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-08-11",
-      "cum_pct": 0.4932,
-      "day_pct": -0.0236,
-      "fills": 7,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-08-12",
-      "cum_pct": 0.5165,
-      "day_pct": 0.0233,
-      "fills": 13,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-08-13",
-      "cum_pct": 0.1085,
-      "day_pct": -0.4079,
-      "fills": 29,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-08-14",
-      "cum_pct": 0.0963,
-      "day_pct": -0.0123,
-      "fills": 11,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-08-17",
-      "cum_pct": -0.0073,
-      "day_pct": -0.1036,
-      "fills": 3,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-08-18",
-      "cum_pct": -0.5402,
-      "day_pct": -0.533,
-      "fills": 22,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-08-19",
-      "cum_pct": -5.3885,
-      "day_pct": -4.8483,
-      "fills": 57,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-08-20",
-      "cum_pct": -12.7411,
-      "day_pct": -7.3525,
-      "fills": 39,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-08-21",
-      "cum_pct": -21.9396,
-      "day_pct": -9.1986,
-      "fills": 66,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-08-24",
-      "cum_pct": -25.9257,
-      "day_pct": -3.9861,
-      "fills": 60,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-08-25",
-      "cum_pct": -26.3187,
-      "day_pct": -0.393,
-      "fills": 22,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-08-26",
-      "cum_pct": -29.376,
-      "day_pct": -3.0573,
-      "fills": 12,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-08-27",
-      "cum_pct": -30.9044,
-      "day_pct": -1.5283,
-      "fills": 42,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-08-28",
-      "cum_pct": -34.143,
-      "day_pct": -3.2387,
-      "fills": 63,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-08-31",
-      "cum_pct": -33.5475,
-      "day_pct": 0.5955,
-      "fills": 38,
-      "phase": "paper"
-    },
-    {
-      "date": "2026-09-01",
-      "cum_pct": -1.3406,
-      "day_pct": -1.3406,
-      "fills": 89,
-      "phase": "real_seeded"
+  "equity_asia": {
+    "currency": "KRW",
+    "seed": 4560069,
+    "seed_basis": "현금+이월보유",
+    "seed_basis_en": "cash + carried position",
+    "rows": [
+      {
+        "date": "2026-09-02",
+        "cum_pct": -0.3769,
+        "day_pct": -0.3769,
+        "fills": 13,
+        "phase": "real_seeded"
+      }
+    ],
+    "chart": {
+      "y_axis": {
+        "min": -0.5569,
+        "max": 0.18,
+        "ticks": [
+          0.18,
+          0.09,
+          0.0,
+          -0.2784,
+          -0.5569
+        ],
+        "zero": 0.0
+      },
+      "phase_boundaries": []
     }
-  ],
+  },
+  "equity_us": {
+    "currency": "USD",
+    "seed": 6201.86,
+    "seed_basis": "현금만",
+    "seed_basis_en": "cash only",
+    "rows": [
+      {
+        "date": "2026-09-01",
+        "cum_pct": -0.2683,
+        "day_pct": -0.2683,
+        "fills": 40,
+        "phase": "real_seeded"
+      }
+    ],
+    "chart": {
+      "y_axis": {
+        "min": -0.4483,
+        "max": 0.18,
+        "ticks": [
+          0.18,
+          0.09,
+          0.0,
+          -0.2241,
+          -0.4483
+        ],
+        "zero": 0.0
+      },
+      "phase_boundaries": []
+    }
+  },
+  "prior_paper": {
+    "sessions": 17,
+    "fills": 549,
+    "net_krw": -3486245,
+    "note": "가상 자본 1천만원 시대 — 실계좌 이식 전 기록이라 현재 곡선에 포함하지 않는다",
+    "note_en": "From the virtual-capital (10,000,000 KRW) era — predates the real-account transition, so it is excluded from the current curve"
+  },
   "strategies": [
     {
       "id": "confluence",
       "name_ko": "복합 신호 합류",
-      "trips": 27,
-      "wins": 10,
-      "win_rate": 0.3704,
-      "ci_low": 0.2153,
-      "ci_high": 0.5577,
-      "expectancy_bp": -45.0,
-      "verdict": "판단 불가",
-      "sample_warning": true,
-      "markets": [
-        "KR",
-        "US"
-      ]
+      "total": {
+        "trips": 27,
+        "wins": 10,
+        "win_rate": 0.3704,
+        "ci_low": 0.2153,
+        "ci_high": 0.5577,
+        "expectancy_bp": -45.0,
+        "verdict": "판단 불가",
+        "sample_warning": true,
+        "markets": [
+          "KR",
+          "US"
+        ]
+      },
+      "by_market": {
+        "asia": {
+          "trips": 22,
+          "wins": 8,
+          "win_rate": 0.3636,
+          "ci_low": 0.1973,
+          "ci_high": 0.5705,
+          "expectancy_bp": -55.09,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        },
+        "us": {
+          "trips": 5,
+          "wins": 2,
+          "win_rate": 0.4,
+          "ci_low": 0.1176,
+          "ci_high": 0.7693,
+          "expectancy_bp": -0.63,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        }
+      }
     },
     {
       "id": "donchian",
       "name_ko": "돈치안 채널 추세추종",
-      "trips": 2,
-      "wins": 0,
-      "win_rate": 0.0,
-      "ci_low": 0.0,
-      "ci_high": 0.6576,
-      "expectancy_bp": -15.0,
-      "verdict": "판단 불가",
-      "sample_warning": true,
-      "markets": [
-        "US"
-      ]
+      "total": {
+        "trips": 2,
+        "wins": 0,
+        "win_rate": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.6576,
+        "expectancy_bp": -15.0,
+        "verdict": "판단 불가",
+        "sample_warning": true,
+        "markets": [
+          "US"
+        ]
+      },
+      "by_market": {
+        "asia": null,
+        "us": {
+          "trips": 2,
+          "wins": 0,
+          "win_rate": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.6576,
+          "expectancy_bp": -15.0,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        }
+      }
     },
     {
       "id": "gap_fade",
       "name_ko": "갭 페이드",
-      "trips": 8,
-      "wins": 0,
-      "win_rate": 0.0,
-      "ci_low": 0.0,
-      "ci_high": 0.3244,
-      "expectancy_bp": -60.02,
-      "verdict": "유의(음)",
-      "sample_warning": true,
-      "markets": [
-        "US"
-      ]
+      "total": {
+        "trips": 8,
+        "wins": 0,
+        "win_rate": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.3244,
+        "expectancy_bp": -60.02,
+        "verdict": "유의(음)",
+        "sample_warning": true,
+        "markets": [
+          "US"
+        ]
+      },
+      "by_market": {
+        "asia": null,
+        "us": {
+          "trips": 8,
+          "wins": 0,
+          "win_rate": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.3244,
+          "expectancy_bp": -60.02,
+          "verdict": "유의(음)",
+          "sample_warning": true
+        }
+      }
     },
     {
       "id": "intraday_momentum",
       "name_ko": "장중 모멘텀",
-      "trips": 3,
-      "wins": 0,
-      "win_rate": 0.0,
-      "ci_low": 0.0,
-      "ci_high": 0.5615,
-      "expectancy_bp": -86.02,
-      "verdict": "판단 불가",
-      "sample_warning": true,
-      "markets": [
-        "US"
-      ]
+      "total": {
+        "trips": 3,
+        "wins": 0,
+        "win_rate": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.5615,
+        "expectancy_bp": -86.02,
+        "verdict": "판단 불가",
+        "sample_warning": true,
+        "markets": [
+          "US"
+        ]
+      },
+      "by_market": {
+        "asia": null,
+        "us": {
+          "trips": 3,
+          "wins": 0,
+          "win_rate": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.5615,
+          "expectancy_bp": -86.02,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        }
+      }
     },
     {
       "id": "intraday_scan",
       "name_ko": "장중 신고가 스캐너",
-      "trips": 40,
-      "wins": 12,
-      "win_rate": 0.3,
-      "ci_low": 0.1807,
-      "ci_high": 0.4543,
-      "expectancy_bp": -72.0,
-      "verdict": "유의(음)",
-      "sample_warning": false,
-      "markets": [
-        "KR",
-        "US"
-      ]
+      "total": {
+        "trips": 40,
+        "wins": 12,
+        "win_rate": 0.3,
+        "ci_low": 0.1807,
+        "ci_high": 0.4543,
+        "expectancy_bp": -72.0,
+        "verdict": "유의(음)",
+        "sample_warning": false,
+        "markets": [
+          "KR",
+          "US"
+        ]
+      },
+      "by_market": {
+        "asia": {
+          "trips": 22,
+          "wins": 5,
+          "win_rate": 0.2273,
+          "ci_low": 0.1012,
+          "ci_high": 0.4344,
+          "expectancy_bp": -115.59,
+          "verdict": "유의(음)",
+          "sample_warning": true
+        },
+        "us": {
+          "trips": 18,
+          "wins": 7,
+          "win_rate": 0.3889,
+          "ci_low": 0.2031,
+          "ci_high": 0.6138,
+          "expectancy_bp": -18.71,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        }
+      }
     },
     {
       "id": "llm_trader",
       "name_ko": "AI 트레이더",
-      "trips": 11,
-      "wins": 3,
-      "win_rate": 0.2727,
-      "ci_low": 0.0975,
-      "ci_high": 0.5656,
-      "expectancy_bp": -24.59,
-      "verdict": "판단 불가",
-      "sample_warning": true,
-      "markets": [
-        "KR"
-      ]
+      "total": {
+        "trips": 12,
+        "wins": 3,
+        "win_rate": 0.25,
+        "ci_low": 0.0889,
+        "ci_high": 0.5323,
+        "expectancy_bp": -67.07,
+        "verdict": "판단 불가",
+        "sample_warning": true,
+        "markets": [
+          "KR"
+        ]
+      },
+      "by_market": {
+        "asia": {
+          "trips": 12,
+          "wins": 3,
+          "win_rate": 0.25,
+          "ci_low": 0.0889,
+          "ci_high": 0.5323,
+          "expectancy_bp": -67.07,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        },
+        "us": null
+      }
     },
     {
       "id": "news_momentum",
       "name_ko": "뉴스 모멘텀",
-      "trips": 6,
-      "wins": 1,
-      "win_rate": 0.1667,
-      "ci_low": 0.0301,
-      "ci_high": 0.5635,
-      "expectancy_bp": -90.43,
-      "verdict": "판단 불가",
-      "sample_warning": true,
-      "markets": [
-        "KR"
-      ]
+      "total": {
+        "trips": 6,
+        "wins": 1,
+        "win_rate": 0.1667,
+        "ci_low": 0.0301,
+        "ci_high": 0.5635,
+        "expectancy_bp": -90.43,
+        "verdict": "판단 불가",
+        "sample_warning": true,
+        "markets": [
+          "KR"
+        ]
+      },
+      "by_market": {
+        "asia": {
+          "trips": 6,
+          "wins": 1,
+          "win_rate": 0.1667,
+          "ci_low": 0.0301,
+          "ci_high": 0.5635,
+          "expectancy_bp": -90.43,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        },
+        "us": null
+      }
     },
     {
       "id": "news_scalp",
       "name_ko": "뉴스 스캘프",
-      "trips": 6,
-      "wins": 1,
-      "win_rate": 0.1667,
-      "ci_low": 0.0301,
-      "ci_high": 0.5635,
-      "expectancy_bp": -174.48,
-      "verdict": "판단 불가",
-      "sample_warning": true,
-      "markets": [
-        "KR"
-      ]
+      "total": {
+        "trips": 6,
+        "wins": 1,
+        "win_rate": 0.1667,
+        "ci_low": 0.0301,
+        "ci_high": 0.5635,
+        "expectancy_bp": -174.48,
+        "verdict": "판단 불가",
+        "sample_warning": true,
+        "markets": [
+          "KR"
+        ]
+      },
+      "by_market": {
+        "asia": {
+          "trips": 6,
+          "wins": 1,
+          "win_rate": 0.1667,
+          "ci_low": 0.0301,
+          "ci_high": 0.5635,
+          "expectancy_bp": -174.48,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        },
+        "us": null
+      }
     },
     {
       "id": "orb_scan",
       "name_ko": "개장 돌파 스캐너",
-      "trips": 8,
-      "wins": 2,
-      "win_rate": 0.25,
-      "ci_low": 0.0715,
-      "ci_high": 0.5907,
-      "expectancy_bp": -93.12,
-      "verdict": "판단 불가",
-      "sample_warning": true,
-      "markets": [
-        "KR"
-      ]
+      "total": {
+        "trips": 8,
+        "wins": 2,
+        "win_rate": 0.25,
+        "ci_low": 0.0715,
+        "ci_high": 0.5907,
+        "expectancy_bp": -93.12,
+        "verdict": "판단 불가",
+        "sample_warning": true,
+        "markets": [
+          "KR"
+        ]
+      },
+      "by_market": {
+        "asia": {
+          "trips": 8,
+          "wins": 2,
+          "win_rate": 0.25,
+          "ci_low": 0.0715,
+          "ci_high": 0.5907,
+          "expectancy_bp": -93.12,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        },
+        "us": null
+      }
     },
     {
       "id": "overnight_drift",
       "name_ko": "오버나이트 드리프트",
-      "trips": 2,
-      "wins": 0,
-      "win_rate": 0.0,
-      "ci_low": 0.0,
-      "ci_high": 0.6576,
-      "expectancy_bp": -103.53,
-      "verdict": "판단 불가",
-      "sample_warning": true,
-      "markets": [
-        "US"
-      ]
+      "total": {
+        "trips": 2,
+        "wins": 0,
+        "win_rate": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.6576,
+        "expectancy_bp": -103.53,
+        "verdict": "판단 불가",
+        "sample_warning": true,
+        "markets": [
+          "US"
+        ]
+      },
+      "by_market": {
+        "asia": null,
+        "us": {
+          "trips": 2,
+          "wins": 0,
+          "win_rate": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.6576,
+          "expectancy_bp": -103.53,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        }
+      }
     },
     {
       "id": "pullback_impulse",
       "name_ko": "눌림목 임펄스",
-      "trips": 18,
-      "wins": 7,
-      "win_rate": 0.3889,
-      "ci_low": 0.2031,
-      "ci_high": 0.6138,
-      "expectancy_bp": -11.75,
-      "verdict": "판단 불가",
-      "sample_warning": true,
-      "markets": [
-        "US"
-      ]
+      "total": {
+        "trips": 18,
+        "wins": 7,
+        "win_rate": 0.3889,
+        "ci_low": 0.2031,
+        "ci_high": 0.6138,
+        "expectancy_bp": -11.75,
+        "verdict": "판단 불가",
+        "sample_warning": true,
+        "markets": [
+          "US"
+        ]
+      },
+      "by_market": {
+        "asia": null,
+        "us": {
+          "trips": 18,
+          "wins": 7,
+          "win_rate": 0.3889,
+          "ci_low": 0.2031,
+          "ci_high": 0.6138,
+          "expectancy_bp": -11.75,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        }
+      }
     },
     {
       "id": "scalp_1m",
       "name_ko": "1분봉 스캘핑",
-      "trips": 118,
-      "wins": 28,
-      "win_rate": 0.2373,
-      "ci_low": 0.1696,
-      "ci_high": 0.3216,
-      "expectancy_bp": -48.62,
-      "verdict": "유의(음)",
-      "sample_warning": false,
-      "markets": [
-        "KR",
-        "US"
-      ]
+      "total": {
+        "trips": 122,
+        "wins": 30,
+        "win_rate": 0.2459,
+        "ci_low": 0.178,
+        "ci_high": 0.3293,
+        "expectancy_bp": -47.11,
+        "verdict": "유의(음)",
+        "sample_warning": false,
+        "markets": [
+          "KR",
+          "US"
+        ]
+      },
+      "by_market": {
+        "asia": {
+          "trips": 74,
+          "wins": 20,
+          "win_rate": 0.2703,
+          "ci_low": 0.1823,
+          "ci_high": 0.3809,
+          "expectancy_bp": -59.19,
+          "verdict": "유의(음)",
+          "sample_warning": false
+        },
+        "us": {
+          "trips": 48,
+          "wins": 10,
+          "win_rate": 0.2083,
+          "ci_low": 0.1173,
+          "ci_high": 0.3426,
+          "expectancy_bp": -28.48,
+          "verdict": "유의(음)",
+          "sample_warning": false
+        }
+      }
     },
     {
       "id": "vol_breakout",
       "name_ko": "변동성 돌파",
-      "trips": 3,
-      "wins": 2,
-      "win_rate": 0.6667,
-      "ci_low": 0.2077,
-      "ci_high": 0.9385,
-      "expectancy_bp": -17.06,
-      "verdict": "판단 불가",
-      "sample_warning": true,
-      "markets": [
-        "KR",
-        "US"
-      ]
+      "total": {
+        "trips": 3,
+        "wins": 2,
+        "win_rate": 0.6667,
+        "ci_low": 0.2077,
+        "ci_high": 0.9385,
+        "expectancy_bp": -17.06,
+        "verdict": "판단 불가",
+        "sample_warning": true,
+        "markets": [
+          "KR",
+          "US"
+        ]
+      },
+      "by_market": {
+        "asia": {
+          "trips": 2,
+          "wins": 2,
+          "win_rate": 1.0,
+          "ci_low": 0.3424,
+          "ci_high": 1.0,
+          "expectancy_bp": 19.12,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        },
+        "us": {
+          "trips": 1,
+          "wins": 0,
+          "win_rate": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.7935,
+          "expectancy_bp": -89.42,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        }
+      }
     }
   ],
   "excluded": {
     "seeding_liquidation": {
       "fills": 7,
       "note": "이식 시 물려받은 레거시 포지션 정리 — 프로그램의 매매 판단이 아니므로 성과에서 제외",
+      "note_en": "Liquidation of legacy positions inherited at the real-account transition — excluded from performance since it was not a trading decision made by the program",
       "krw_impact": -142291.15,
       "usd_impact": -1111.75
     }
@@ -359,6 +544,8 @@
     "kr_stock_roundtrip_bp": 23.0,
     "kr_etf_roundtrip_bp": 3.0,
     "us_roundtrip_bp": 20.0,
-    "note": "KR 개별주 왕복 23bp 중 20bp가 증권거래세+농특세 (US SEC Fee/TAF 등 소액 항목은 미포함)"
+    "kr_tax_bp": 20.0,
+    "note": "KR 개별주 왕복 23bp 중 20bp가 증권거래세+농특세 (US SEC Fee/TAF 등 소액 항목은 미포함)",
+    "note_en": "Of the 23bp KR individual-stock round-trip cost, 20bp is securities transaction tax + rural development surtax (small items like US SEC Fee/TAF not included)"
   }
 }
