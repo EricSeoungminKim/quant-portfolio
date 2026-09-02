@@ -20,7 +20,11 @@ export default function Home() {
         <CostTruth costs={performance.costs} />
         <Safety />
       </main>
-      <Footer generatedAt={performance.generated_at} disclaimer={performance.disclaimer} />
+      <Footer
+        generatedAt={performance.generated_at}
+        disclaimer={performance.disclaimer}
+        disclaimerEn={performance.disclaimer_en}
+      />
     </>
   );
 }

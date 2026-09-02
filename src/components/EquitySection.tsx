@@ -1,47 +1,100 @@
-import type { PerformanceData } from "@/types/performance";
+"use client";
+
+import type { EquityBook, PerformanceData } from "@/types/performance";
 import EquityChart from "./EquityChart";
 import SectionHeading from "./SectionHeading";
+import { useLocale, useT } from "@/lib/i18n";
+import { translateDataText, translatePhaseLabel, translateSeedBasis } from "@/lib/i18nData";
+import { formatDateOnly, formatMoney } from "@/lib/format";
 
 export default function EquitySection({ data }: { data: PerformanceData }) {
+  const t = useT();
+  const { locale } = useLocale();
+
   return (
     <section id="equity" className="mx-auto max-w-6xl px-5 py-16 md:py-20">
-      <SectionHeading
-        eyebrow="Equity Curve"
-        title="수익 곡선"
-        description="시작 시드 대비 누적 수익률. 점을 클릭하거나 키보드로 이동하면 그날의 체결 수와 당일 등락을 볼 수 있습니다."
-      />
+      <SectionHeading eyebrow={t.equity.eyebrow} title={t.equity.title} description={t.equity.description} />
 
       <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-[var(--muted)]">
-        <Legend swatch="var(--up)" label="양수(+) — 국내 관행상 빨강" />
-        <Legend swatch="var(--down)" label="음수(−) — 국내 관행상 파랑" />
+        <Legend swatch="var(--up)" label={t.equity.legendUp} />
+        <Legend swatch="var(--down)" label={t.equity.legendDown} />
         <span className="flex items-center gap-1.5">
           <span className="inline-block h-2.5 w-0.5 bg-[var(--accent)]" />
-          단계 경계 (실계좌 이식)
+          {t.equity.legendPhaseBoundary}
         </span>
       </div>
 
-      <div className="mt-6 rounded border border-[var(--border)] bg-[var(--surface)] p-4 md:p-6">
-        <EquityChart equity={data.equity} phases={data.phases} />
+      {/* Two currency-separate books (no FX conversion between them, per the
+          2026-09-02 owner directive) — stacked on narrow screens, side by
+          side from md up. */}
+      <div className="mt-6 grid gap-6 md:grid-cols-2">
+        <BookPanel title={t.equity.bookAsiaTitle} book={data.equity_asia} />
+        <BookPanel title={t.equity.bookUsTitle} book={data.equity_us} />
       </div>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         {data.phases.map((phase) => (
           <div key={phase.id} className="rounded border border-[var(--border)] bg-[var(--surface)] p-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium">{phase.label}</span>
+              <span className="text-sm font-medium">
+                {translatePhaseLabel(phase.id, phase.label, phase.label_en, locale)}
+              </span>
               <span className="tnum text-xs text-[var(--muted-2)]">
-                {phase.from} {phase.to ? `– ${phase.to}` : "– 진행 중"}
+                {formatDateOnly(phase.from)} {phase.to ? `– ${formatDateOnly(phase.to)}` : `– ${t.equity.ongoing}`}
               </span>
             </div>
-            <p className="mt-2 text-xs leading-relaxed text-[var(--muted)]">{phase.note}</p>
+            <p className="mt-2 text-xs leading-relaxed text-[var(--muted)]">
+              {translateDataText(phase.note, phase.note_en, locale)}
+            </p>
           </div>
         ))}
       </div>
 
-      <p className="mt-4 text-xs leading-relaxed text-[var(--muted-2)]">
-        {data.excluded.seeding_liquidation.note} (제외된 체결 {data.excluded.seeding_liquidation.fills}건)
-      </p>
+      {/* `excluded.seeding_liquidation` is only present once a real-account
+          transplant event has happened (quant.control.performance._excluded_summary
+          returns {} until then) — guard rather than assume it's always there. */}
+      {data.excluded.seeding_liquidation && (
+        <p className="mt-4 text-xs leading-relaxed text-[var(--muted-2)]">
+          {translateDataText(
+            data.excluded.seeding_liquidation.note,
+            data.excluded.seeding_liquidation.note_en,
+            locale
+          )}{" "}
+          {t.equity.excludedNote(data.excluded.seeding_liquidation.fills)}
+        </p>
+      )}
+
+      {data.prior_paper && "sessions" in data.prior_paper && (
+        <p className="mt-1.5 text-xs leading-relaxed text-[var(--muted-2)]">
+          {t.equity.priorPaperNote(data.prior_paper.sessions)}
+          {data.prior_paper.note
+            ? ` — ${translateDataText(data.prior_paper.note, data.prior_paper.note_en, locale)}`
+            : ""}
+        </p>
+      )}
     </section>
+  );
+}
+
+function BookPanel({ title, book }: { title: string; book: EquityBook }) {
+  const t = useT();
+  const { locale } = useLocale();
+  const seedBasisText = translateSeedBasis(book.seed_basis, book.seed_basis_en, locale);
+
+  return (
+    <div className="rounded border border-[var(--border)] bg-[var(--surface)] p-4 md:p-6">
+      <div className="mb-3 flex items-baseline justify-between gap-2">
+        <h3 className="text-sm font-semibold">{title}</h3>
+        <span className="text-[10px] text-[var(--muted-2)]">{book.currency}</span>
+      </div>
+      <EquityChart rows={book.rows} yAxis={book.chart.y_axis} phaseBoundaries={book.chart.phase_boundaries} title={title} />
+      {book.seed != null && (
+        <div className="mt-2 text-[10px] text-[var(--muted-2)]">
+          {t.equity.seedBasisLabel}
+          {seedBasisText ? `: ${seedBasisText}` : ""} · {t.equity.seedLabel} {formatMoney(book.seed, book.currency, locale)}
+        </div>
+      )}
+    </div>
   );
 }
 

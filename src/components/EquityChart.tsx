@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
-import type { EquityPoint, Phase } from "@/types/performance";
-import { formatDate, formatPct } from "@/lib/format";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { ChartYAxis, EquityPoint, PhaseBoundaryMark } from "@/types/performance";
+import { formatDateLocale, formatPct } from "@/lib/format";
+import { useLocale, useT } from "@/lib/i18n";
 
-const W = 880;
+const DEFAULT_W = 880;
 const H = 340;
 const PAD_L = 46;
 const PAD_R = 10;
@@ -12,29 +13,61 @@ const PAD_T = 20;
 const PAD_B = 30;
 
 export default function EquityChart({
-  equity,
-  phases,
+  rows,
+  yAxis,
+  phaseBoundaries,
+  title,
 }: {
-  equity: EquityPoint[];
-  phases: Phase[];
+  rows: EquityPoint[];
+  yAxis: ChartYAxis;
+  phaseBoundaries: PhaseBoundaryMark[];
+  title: string;
 }) {
+  const t = useT();
+  const { locale } = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
+
+  // Only points with a computable percentage can be plotted (cum_pct/day_pct
+  // are null when the book's seed is 0/unknown for that stretch — nothing to
+  // divide by). This is a defensive filter: in practice a book's seed is a
+  // single value for its whole visible range, so it's all-or-nothing.
+  const equity = useMemo(
+    () => rows.filter((r): r is EquityPoint & { cum_pct: number; day_pct: number } =>
+      r.cum_pct !== null && r.day_pct !== null
+    ),
+    [rows]
+  );
+
+  // Match the SVG's viewBox width to the container's real pixel width so
+  // 1 viewBox unit ≈ 1 CSS px at all times. Without this, a fixed viewBox
+  // scaled down to a narrow phone shrinks the (fixed user-unit) font size
+  // right along with it — a 10px label can render at ~3px on a 320px phone.
+  const [W, setW] = useState(DEFAULT_W);
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver((entries) => {
+      const w = entries[0]?.contentRect.width;
+      if (w && w > 0) setW(Math.round(w));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   const innerW = W - PAD_L - PAD_R;
   const innerH = H - PAD_T - PAD_B;
 
   const n = equity.length;
-  const values = equity.map((p) => p.cum_pct);
-  const rawMax = Math.max(0, ...values);
-  const rawMin = Math.min(0, ...values);
-  const span = Math.max(rawMax - rawMin, 1);
-  const maxV = rawMax + span * 0.18;
-  const minV = rawMin - span * 0.18;
+  // Range/ticks come from the generator (chart.y_axis) — the same 18%-padding,
+  // 5-tick formula that used to run here now runs server-side against the
+  // full dataset (2026-09-02 "render-ready JSON" directive). Only the pixel
+  // mapping (xAt/yAt) — genuinely a rendering concern — stays client-side.
+  const { min: minV, max: maxV, ticks: yTicks, zero } = yAxis;
 
   const xAt = (i: number) => PAD_L + (n === 1 ? innerW / 2 : (i / (n - 1)) * innerW);
   const yAt = (v: number) => PAD_T + ((maxV - v) / (maxV - minV)) * innerH;
-  const zeroY = yAt(0);
+  const zeroY = yAt(zero);
 
   const linePath = useMemo(
     () =>
@@ -42,34 +75,21 @@ export default function EquityChart({
         .map((p, i) => `${i === 0 ? "M" : "L"} ${xAt(i).toFixed(1)} ${yAt(p.cum_pct).toFixed(1)}`)
         .join(" "),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [equity, maxV, minV]
+    [equity, maxV, minV, W]
   );
 
   const areaPath = useMemo(() => {
+    if (n === 0) return "";
     const first = `M ${xAt(0).toFixed(1)} ${zeroY.toFixed(1)}`;
     const mid = equity.map((p, i) => `L ${xAt(i).toFixed(1)} ${yAt(p.cum_pct).toFixed(1)}`).join(" ");
     const last = `L ${xAt(n - 1).toFixed(1)} ${zeroY.toFixed(1)} Z`;
     return `${first} ${mid} ${last}`;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [equity, maxV, minV]);
-
-  // First index of each phase after the initial one — draws the boundary marker.
-  const boundaries = useMemo(() => {
-    const marks: { index: number; label: string }[] = [];
-    let prevPhase: string | null = null;
-    equity.forEach((p, i) => {
-      if (prevPhase !== null && p.phase !== prevPhase) {
-        const phase = phases.find((ph) => ph.id === p.phase);
-        marks.push({ index: i, label: phase?.label ?? p.phase });
-      }
-      prevPhase = p.phase;
-    });
-    return marks;
-  }, [equity, phases]);
+  }, [equity, maxV, minV, W]);
 
   function handlePointer(clientX: number) {
     const svg = containerRef.current?.querySelector("svg");
-    if (!svg) return;
+    if (!svg || n === 0) return;
     const rect = svg.getBoundingClientRect();
     const fracX = (clientX - rect.left) / rect.width;
     const vbX = fracX * W;
@@ -78,166 +98,218 @@ export default function EquityChart({
   }
 
   const active = activeIdx !== null ? equity[activeIdx] : null;
-  const yTicks = [maxV, (maxV + minV) / 2, minV];
 
-  // X labels: sparse, roughly 6 across the width.
-  const xLabelEvery = Math.max(1, Math.round(n / 6));
+  // X labels: space them by available pixel width, not just point count, so
+  // narrow screens automatically drop to fewer labels. First and last are
+  // always shown regardless. English labels ("Aug 11") run noticeably wider
+  // than Korean ones ("8/11"), so the per-label budget is locale-aware —
+  // otherwise English labels overlap at widths where Korean ones still fit.
+  // This (like xAt/yAt above) depends on the actual rendered container pixel
+  // width, so it can't be precomputed server-side.
+  const approxLabelPx = locale === "ko" ? 30 : 48;
+  const maxLabels = Math.max(2, Math.floor(innerW / approxLabelPx));
+  const xLabelEvery = n <= maxLabels ? 1 : Math.max(1, Math.ceil((n - 1) / (maxLabels - 1)));
+
+  // The last point is always forced into the shown set (below), which can
+  // land closer than one label-width to the last regularly-spaced label —
+  // drop that one instead of letting the two overlap.
+  const shownXLabels = useMemo(() => {
+    const idx: number[] = [];
+    for (let i = 0; i < n; i += xLabelEvery) idx.push(i);
+    const last = n - 1;
+    const prev = idx[idx.length - 1];
+    if (prev !== last) {
+      if (prev !== undefined && last - prev < xLabelEvery / 2) idx.pop();
+      idx.push(last);
+    }
+    return new Set(idx);
+  }, [n, xLabelEvery]);
+
+  if (n === 0) {
+    return (
+      <div className="flex h-40 items-center justify-center text-xs text-[var(--muted-2)]">
+        {t.equity.emptyBook}
+      </div>
+    );
+  }
 
   return (
-    <div ref={containerRef} className="relative select-none">
-      <svg
-        viewBox={`0 0 ${W} ${H}`}
-        className="w-full touch-none"
-        role="img"
-        aria-label="시작 시드 대비 누적 수익률 곡선"
-        onPointerMove={(e) => handlePointer(e.clientX)}
-        onPointerDown={(e) => handlePointer(e.clientX)}
-        onPointerLeave={() => setActiveIdx(null)}
-      >
-        {/* horizontal grid ticks */}
-        {yTicks.map((v, i) => (
-          <g key={i}>
-            <line
-              x1={PAD_L}
-              x2={W - PAD_R}
-              y1={yAt(v)}
-              y2={yAt(v)}
-              stroke="var(--grid-line)"
-              strokeWidth={1}
-            />
-            <text
-              x={PAD_L - 8}
-              y={yAt(v)}
-              textAnchor="end"
-              dominantBaseline="middle"
-              className="tnum"
-              fontSize={10}
-              fill="var(--muted-2)"
-            >
-              {v.toFixed(1)}%
-            </text>
-          </g>
-        ))}
-
-        {/* zero baseline, emphasized */}
-        <line
-          x1={PAD_L}
-          x2={W - PAD_R}
-          y1={zeroY}
-          y2={zeroY}
-          stroke="var(--muted-2)"
-          strokeWidth={1}
-          strokeDasharray="3 3"
-        />
-
-        {/* phase boundary markers */}
-        {boundaries.map((b) => (
-          <g key={b.index}>
-            <line
-              x1={xAt(b.index)}
-              x2={xAt(b.index)}
-              y1={PAD_T}
-              y2={H - PAD_B}
-              stroke="var(--accent)"
-              strokeWidth={1}
-              strokeDasharray="2 3"
-            />
-            <text
-              x={xAt(b.index) + 5}
-              y={PAD_T + 10}
-              fontSize={10}
-              fill="var(--accent)"
-            >
-              {b.label}
-            </text>
-          </g>
-        ))}
-
-        <defs>
-          <clipPath id="clip-positive">
-            <rect x={PAD_L} y={PAD_T} width={innerW} height={Math.max(0, zeroY - PAD_T)} />
-          </clipPath>
-          <clipPath id="clip-negative">
-            <rect x={PAD_L} y={zeroY} width={innerW} height={Math.max(0, H - PAD_B - zeroY)} />
-          </clipPath>
-        </defs>
-
-        <path d={areaPath} fill="var(--up-bg)" clipPath="url(#clip-positive)" />
-        <path d={areaPath} fill="var(--down-bg)" clipPath="url(#clip-negative)" />
-        <path d={linePath} fill="none" stroke="var(--up)" strokeWidth={1.75} clipPath="url(#clip-positive)" />
-        <path d={linePath} fill="none" stroke="var(--down)" strokeWidth={1.75} clipPath="url(#clip-negative)" />
-
-        {/* x labels */}
-        {equity.map((p, i) =>
-          i % xLabelEvery === 0 || i === n - 1 ? (
-            <text
-              key={p.date}
-              x={xAt(i)}
-              y={H - PAD_B + 16}
-              textAnchor="middle"
-              className="tnum"
-              fontSize={10}
-              fill="var(--muted-2)"
-            >
-              {formatDate(p.date)}
-            </text>
-          ) : null
-        )}
-
-        {/* points */}
-        {equity.map((p, i) => (
-          <circle
-            key={p.date}
-            cx={xAt(i)}
-            cy={yAt(p.cum_pct)}
-            r={activeIdx === i ? 4 : 2.5}
-            fill={p.day_pct >= 0 ? "var(--up)" : "var(--down)"}
-            stroke="var(--surface)"
-            strokeWidth={1}
-            tabIndex={0}
-            role="img"
-            aria-label={`${p.date}, 누적 ${formatPct(p.cum_pct)}, 당일 ${formatPct(p.day_pct)}, 체결 ${p.fills}건`}
-            onFocus={() => setActiveIdx(i)}
-          />
-        ))}
-
-        {activeIdx !== null && (
-          <line
-            x1={xAt(activeIdx)}
-            x2={xAt(activeIdx)}
-            y1={PAD_T}
-            y2={H - PAD_B}
-            stroke="var(--foreground)"
-            strokeOpacity={0.15}
-            strokeWidth={1}
-          />
-        )}
-      </svg>
-
-      {active && (
+    <div>
+      <div className="flex gap-1.5 sm:gap-2.5">
         <div
-          className="pointer-events-none absolute top-2 right-2 min-w-[9.5rem] rounded border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-xs shadow-sm"
-          style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.12)" }}
+          aria-hidden
+          className="flex w-4 shrink-0 items-center justify-center text-center text-[10px] leading-tight text-[var(--muted-2)]"
+          style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
         >
-          <div className="tnum font-medium">{active.date}</div>
-          <div className="mt-1 flex justify-between gap-4 text-[var(--muted)]">
-            <span>누적</span>
-            <span className={`tnum ${active.cum_pct >= 0 ? "text-[var(--up)]" : "text-[var(--down)]"}`}>
-              {formatPct(active.cum_pct)}
-            </span>
-          </div>
-          <div className="flex justify-between gap-4 text-[var(--muted)]">
-            <span>당일</span>
-            <span className={`tnum ${active.day_pct >= 0 ? "text-[var(--up)]" : "text-[var(--down)]"}`}>
-              {formatPct(active.day_pct)}
-            </span>
-          </div>
-          <div className="flex justify-between gap-4 text-[var(--muted)]">
-            <span>체결</span>
-            <span className="tnum">{active.fills}건</span>
-          </div>
+          {t.equity.yAxisTitle}
         </div>
-      )}
+
+        <div ref={containerRef} className="relative min-w-0 flex-1 select-none">
+          <svg
+            viewBox={`0 0 ${W} ${H}`}
+            className="w-full touch-none"
+            role="img"
+            aria-label={t.equity.chartAriaLabel(title)}
+            onPointerMove={(e) => handlePointer(e.clientX)}
+            onPointerDown={(e) => handlePointer(e.clientX)}
+            onPointerLeave={() => setActiveIdx(null)}
+          >
+            {/* horizontal grid ticks, each labeled with its signed value + unit */}
+            {yTicks.map((v) => {
+              const isZero = Math.abs(v) < 1e-9;
+              return (
+                <g key={v}>
+                  <line
+                    x1={PAD_L}
+                    x2={W - PAD_R}
+                    y1={yAt(v)}
+                    y2={yAt(v)}
+                    stroke={isZero ? "var(--muted)" : "var(--grid-line)"}
+                    strokeWidth={isZero ? 1.5 : 1}
+                    strokeDasharray={isZero ? "4 3" : undefined}
+                  />
+                  <text
+                    x={PAD_L - 8}
+                    y={yAt(v)}
+                    textAnchor="end"
+                    dominantBaseline="middle"
+                    className="tnum"
+                    fontSize={10}
+                    fontWeight={isZero ? 600 : 400}
+                    fill={isZero ? "var(--foreground)" : "var(--muted-2)"}
+                  >
+                    {isZero ? "0%" : formatPct(v, 1)}
+                  </text>
+                </g>
+              );
+            })}
+
+            {/* zero baseline callout, drawn just inside the plot area so it
+                never gets clipped against the left edge of the viewBox */}
+            <text
+              x={PAD_L + 4}
+              y={Math.max(PAD_T + 8, zeroY - 4)}
+              fontSize={9}
+              fill="var(--muted)"
+              className="tnum"
+            >
+              {t.equity.zeroBaseline}
+            </text>
+
+            {/* phase boundary markers (indices computed server-side) */}
+            {phaseBoundaries.map((b) => (
+              <g key={b.index}>
+                <line
+                  x1={xAt(b.index)}
+                  x2={xAt(b.index)}
+                  y1={PAD_T}
+                  y2={H - PAD_B}
+                  stroke="var(--accent)"
+                  strokeWidth={1}
+                  strokeDasharray="2 3"
+                />
+                <text x={xAt(b.index) + 5} y={PAD_T + 10} fontSize={10} fill="var(--accent)">
+                  {locale === "ko" ? b.label : b.label_en ?? b.label}
+                </text>
+              </g>
+            ))}
+
+            <defs>
+              <clipPath id="clip-positive">
+                <rect x={PAD_L} y={PAD_T} width={innerW} height={Math.max(0, zeroY - PAD_T)} />
+              </clipPath>
+              <clipPath id="clip-negative">
+                <rect x={PAD_L} y={zeroY} width={innerW} height={Math.max(0, H - PAD_B - zeroY)} />
+              </clipPath>
+            </defs>
+
+            <path d={areaPath} fill="var(--up-bg)" clipPath="url(#clip-positive)" />
+            <path d={areaPath} fill="var(--down-bg)" clipPath="url(#clip-negative)" />
+            <path d={linePath} fill="none" stroke="var(--up)" strokeWidth={1.75} clipPath="url(#clip-positive)" />
+            <path d={linePath} fill="none" stroke="var(--down)" strokeWidth={1.75} clipPath="url(#clip-negative)" />
+
+            {/* x labels — the last one is right-anchored so it never gets
+                clipped against the plot's right edge (2026-09-02 fix: it used
+                to render center-anchored like every other label, so "Sep 2"
+                could get cut down to "Sep" at narrow widths). */}
+            {equity.map((p, i) =>
+              shownXLabels.has(i) ? (
+                <text
+                  key={p.date}
+                  x={xAt(i)}
+                  y={H - PAD_B + 16}
+                  textAnchor={i === n - 1 ? "end" : "middle"}
+                  className="tnum"
+                  fontSize={10}
+                  fill="var(--muted-2)"
+                >
+                  {formatDateLocale(p.date, locale)}
+                </text>
+              ) : null
+            )}
+
+            {/* points */}
+            {equity.map((p, i) => (
+              <circle
+                key={p.date}
+                cx={xAt(i)}
+                cy={yAt(p.cum_pct)}
+                r={activeIdx === i ? 4 : 2.5}
+                fill={p.day_pct >= 0 ? "var(--up)" : "var(--down)"}
+                stroke="var(--surface)"
+                strokeWidth={1}
+                tabIndex={0}
+                role="img"
+                aria-label={t.equity.pointAriaLabel(p.date, formatPct(p.cum_pct), formatPct(p.day_pct), p.fills)}
+                onFocus={() => setActiveIdx(i)}
+              />
+            ))}
+
+            {activeIdx !== null && (
+              <line
+                x1={xAt(activeIdx)}
+                x2={xAt(activeIdx)}
+                y1={PAD_T}
+                y2={H - PAD_B}
+                stroke="var(--foreground)"
+                strokeOpacity={0.15}
+                strokeWidth={1}
+              />
+            )}
+          </svg>
+
+          {active && (
+            <div
+              className="pointer-events-none absolute top-2 right-2 min-w-[9.5rem] max-w-[calc(100%-1rem)] rounded border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-xs shadow-sm"
+              style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.12)" }}
+            >
+              <div className="tnum font-medium">{active.date}</div>
+              <div className="mt-1 flex justify-between gap-4 text-[var(--muted)]">
+                <span>{t.equity.tooltipCum}</span>
+                <span className={`tnum ${active.cum_pct >= 0 ? "text-[var(--up)]" : "text-[var(--down)]"}`}>
+                  {formatPct(active.cum_pct)}
+                </span>
+              </div>
+              <div className="flex justify-between gap-4 text-[var(--muted)]">
+                <span>{t.equity.tooltipDay}</span>
+                <span className={`tnum ${active.day_pct >= 0 ? "text-[var(--up)]" : "text-[var(--down)]"}`}>
+                  {formatPct(active.day_pct)}
+                </span>
+              </div>
+              <div className="flex justify-between gap-4 text-[var(--muted)]">
+                <span>{t.equity.tooltipFills}</span>
+                <span className="tnum">
+                  {active.fills} {t.equity.fillsSuffix}
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-1.5 ml-[calc(1rem+0.375rem)] text-[10px] text-[var(--muted-2)] sm:ml-[calc(1rem+0.625rem)]">
+        {t.equity.xAxisTitle}
+      </div>
     </div>
   );
 }

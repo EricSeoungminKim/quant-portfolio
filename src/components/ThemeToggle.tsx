@@ -1,5 +1,7 @@
 "use client";
 
+import { useT } from "@/lib/i18n";
+
 function currentTheme(): "light" | "dark" {
   const attr = document.documentElement.getAttribute("data-theme");
   if (attr === "light" || attr === "dark") return attr;
@@ -10,6 +12,8 @@ function currentTheme(): "light" | "dark" {
 // (see globals.css .icon-sun/.icon-moon rules keyed off [data-theme] and
 // prefers-color-scheme), so there is nothing to hydrate or flash.
 export default function ThemeToggle() {
+  const t = useT();
+
   function toggle() {
     const next = currentTheme() === "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", next);
@@ -24,7 +28,7 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      aria-label="테마 전환"
+      aria-label={t.nav.themeToggle}
       className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-[var(--border)] text-[var(--muted)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
     >
       <svg
