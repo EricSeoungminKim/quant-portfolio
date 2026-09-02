@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-09-02T16:20:02+09:00",
+  "generated_at": "2026-09-03T06:20:02+09:00",
   "disclaimer": "모의투자(paper) 기록입니다. 실제 자금이 투입되지 않았습니다.",
   "disclaimer_en": "Paper trading record. No real capital was deployed.",
   "period": {
     "start": "2026-09-01",
     "end": "2026-09-02",
     "sessions": 2,
-    "total_fills": 53
+    "total_fills": 82
   },
   "phases": [
     {
@@ -74,18 +74,25 @@
         "day_pct": -0.2683,
         "fills": 40,
         "phase": "real_seeded"
+      },
+      {
+        "date": "2026-09-02",
+        "cum_pct": -0.4174,
+        "day_pct": -0.149,
+        "fills": 29,
+        "phase": "real_seeded"
       }
     ],
     "chart": {
       "y_axis": {
-        "min": -0.4483,
+        "min": -0.5974,
         "max": 0.18,
         "ticks": [
           0.18,
           0.09,
           0.0,
-          -0.2241,
-          -0.4483
+          -0.2987,
+          -0.5974
         ],
         "zero": 0.0
       },
@@ -204,13 +211,13 @@
       "id": "intraday_momentum",
       "name_ko": "장중 모멘텀",
       "total": {
-        "trips": 3,
+        "trips": 5,
         "wins": 0,
         "win_rate": 0.0,
         "ci_low": 0.0,
-        "ci_high": 0.5615,
-        "expectancy_bp": -86.02,
-        "verdict": "판단 불가",
+        "ci_high": 0.4345,
+        "expectancy_bp": -77.51,
+        "verdict": "유의(음)",
         "sample_warning": true,
         "markets": [
           "US"
@@ -219,13 +226,13 @@
       "by_market": {
         "asia": null,
         "us": {
-          "trips": 3,
+          "trips": 5,
           "wins": 0,
           "win_rate": 0.0,
           "ci_low": 0.0,
-          "ci_high": 0.5615,
-          "expectancy_bp": -86.02,
-          "verdict": "판단 불가",
+          "ci_high": 0.4345,
+          "expectancy_bp": -77.51,
+          "verdict": "유의(음)",
           "sample_warning": true
         }
       }
@@ -298,6 +305,36 @@
           "sample_warning": true
         },
         "us": null
+      }
+    },
+    {
+      "id": "mr_vwap_quiet",
+      "name_ko": "VWAP 평균회귀(저변동)",
+      "total": {
+        "trips": 1,
+        "wins": 1,
+        "win_rate": 1.0,
+        "ci_low": 0.2065,
+        "ci_high": 1.0,
+        "expectancy_bp": 70.26,
+        "verdict": "판단 불가",
+        "sample_warning": true,
+        "markets": [
+          "US"
+        ]
+      },
+      "by_market": {
+        "asia": null,
+        "us": {
+          "trips": 1,
+          "wins": 1,
+          "win_rate": 1.0,
+          "ci_low": 0.2065,
+          "ci_high": 1.0,
+          "expectancy_bp": 70.26,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        }
       }
     },
     {
@@ -424,12 +461,12 @@
       "id": "pullback_impulse",
       "name_ko": "눌림목 임펄스",
       "total": {
-        "trips": 18,
-        "wins": 7,
-        "win_rate": 0.3889,
-        "ci_low": 0.2031,
-        "ci_high": 0.6138,
-        "expectancy_bp": -11.75,
+        "trips": 23,
+        "wins": 8,
+        "win_rate": 0.3478,
+        "ci_low": 0.1881,
+        "ci_high": 0.5511,
+        "expectancy_bp": -18.16,
         "verdict": "판단 불가",
         "sample_warning": true,
         "markets": [
@@ -439,12 +476,12 @@
       "by_market": {
         "asia": null,
         "us": {
-          "trips": 18,
-          "wins": 7,
-          "win_rate": 0.3889,
-          "ci_low": 0.2031,
-          "ci_high": 0.6138,
-          "expectancy_bp": -11.75,
+          "trips": 23,
+          "wins": 8,
+          "win_rate": 0.3478,
+          "ci_low": 0.1881,
+          "ci_high": 0.5511,
+          "expectancy_bp": -18.16,
           "verdict": "판단 불가",
           "sample_warning": true
         }
@@ -454,12 +491,12 @@
       "id": "scalp_1m",
       "name_ko": "1분봉 스캘핑",
       "total": {
-        "trips": 122,
+        "trips": 128,
         "wins": 30,
-        "win_rate": 0.2459,
-        "ci_low": 0.178,
-        "ci_high": 0.3293,
-        "expectancy_bp": -47.11,
+        "win_rate": 0.2344,
+        "ci_low": 0.1694,
+        "ci_high": 0.3148,
+        "expectancy_bp": -46.84,
         "verdict": "유의(음)",
         "sample_warning": false,
         "markets": [
@@ -479,12 +516,12 @@
           "sample_warning": false
         },
         "us": {
-          "trips": 48,
+          "trips": 54,
           "wins": 10,
-          "win_rate": 0.2083,
-          "ci_low": 0.1173,
-          "ci_high": 0.3426,
-          "expectancy_bp": -28.48,
+          "win_rate": 0.1852,
+          "ci_low": 0.1038,
+          "ci_high": 0.3084,
+          "expectancy_bp": -29.91,
           "verdict": "유의(음)",
           "sample_warning": false
         }
