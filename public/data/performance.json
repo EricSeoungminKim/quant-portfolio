@@ -1,12 +1,15 @@
 {
-  "generated_at": "2026-09-03T16:20:02+09:00",
+  "generated_at": "2026-09-04T06:20:02+09:00",
   "disclaimer": "모의투자(paper) 기록입니다. 실제 자금이 투입되지 않았습니다.",
   "disclaimer_en": "Paper trading record. No real capital was deployed.",
   "period": {
     "start": "2026-09-01",
     "end": "2026-09-03",
     "sessions": 3,
-    "total_fills": 97
+    "total_fills": 143,
+    "scope": "real_seeded",
+    "note": "실계좌 이식 이후",
+    "note_en": "Since real-account transplant"
   },
   "phases": [
     {
@@ -53,6 +56,7 @@
         "phase": "real_seeded"
       }
     ],
+    "max_drawdown_pct": 0.2992,
     "chart": {
       "y_axis": {
         "min": -0.855,
@@ -88,18 +92,26 @@
         "day_pct": -0.149,
         "fills": 29,
         "phase": "real_seeded"
+      },
+      {
+        "date": "2026-09-03",
+        "cum_pct": -0.7791,
+        "day_pct": -0.3618,
+        "fills": 46,
+        "phase": "real_seeded"
       }
     ],
+    "max_drawdown_pct": 0.5122,
     "chart": {
       "y_axis": {
-        "min": -0.5974,
+        "min": -0.9591,
         "max": 0.18,
         "ticks": [
           0.18,
           0.09,
           0.0,
-          -0.2987,
-          -0.5974
+          -0.4796,
+          -0.9591
         ],
         "zero": 0.0
       },
@@ -117,6 +129,7 @@
     {
       "id": "confluence",
       "name_ko": "복합 신호 합류",
+      "name_en": "Signal Confluence",
       "total": {
         "trips": 27,
         "wins": 10,
@@ -131,6 +144,9 @@
           "US"
         ]
       },
+      "trades_per_day": 3.38,
+      "avg_hold_minutes": 16.0,
+      "enabled": false,
       "by_market": {
         "asia": {
           "trips": 22,
@@ -157,6 +173,7 @@
     {
       "id": "donchian",
       "name_ko": "돈치안 채널 추세추종",
+      "name_en": "Donchian Channel Trend Following",
       "total": {
         "trips": 2,
         "wins": 0,
@@ -170,6 +187,9 @@
           "US"
         ]
       },
+      "trades_per_day": 1.0,
+      "avg_hold_minutes": 203.0,
+      "enabled": false,
       "by_market": {
         "asia": null,
         "us": {
@@ -187,28 +207,32 @@
     {
       "id": "gap_fade",
       "name_ko": "갭 페이드",
+      "name_en": "Gap Fade",
       "total": {
-        "trips": 8,
-        "wins": 0,
-        "win_rate": 0.0,
-        "ci_low": 0.0,
-        "ci_high": 0.3244,
-        "expectancy_bp": -60.02,
+        "trips": 9,
+        "wins": 1,
+        "win_rate": 0.1111,
+        "ci_low": 0.0199,
+        "ci_high": 0.435,
+        "expectancy_bp": -35.13,
         "verdict": "유의(음)",
         "sample_warning": true,
         "markets": [
           "US"
         ]
       },
+      "trades_per_day": 4.5,
+      "avg_hold_minutes": 50.1,
+      "enabled": true,
       "by_market": {
         "asia": null,
         "us": {
-          "trips": 8,
-          "wins": 0,
-          "win_rate": 0.0,
-          "ci_low": 0.0,
-          "ci_high": 0.3244,
-          "expectancy_bp": -60.02,
+          "trips": 9,
+          "wins": 1,
+          "win_rate": 0.1111,
+          "ci_low": 0.0199,
+          "ci_high": 0.435,
+          "expectancy_bp": -35.13,
           "verdict": "유의(음)",
           "sample_warning": true
         }
@@ -217,28 +241,32 @@
     {
       "id": "intraday_momentum",
       "name_ko": "장중 모멘텀",
+      "name_en": "Intraday Momentum",
       "total": {
-        "trips": 5,
+        "trips": 7,
         "wins": 0,
         "win_rate": 0.0,
         "ci_low": 0.0,
-        "ci_high": 0.4345,
-        "expectancy_bp": -77.51,
+        "ci_high": 0.3543,
+        "expectancy_bp": -72.51,
         "verdict": "유의(음)",
         "sample_warning": true,
         "markets": [
           "US"
         ]
       },
+      "trades_per_day": 1.75,
+      "avg_hold_minutes": 56.3,
+      "enabled": true,
       "by_market": {
         "asia": null,
         "us": {
-          "trips": 5,
+          "trips": 7,
           "wins": 0,
           "win_rate": 0.0,
           "ci_low": 0.0,
-          "ci_high": 0.4345,
-          "expectancy_bp": -77.51,
+          "ci_high": 0.3543,
+          "expectancy_bp": -72.51,
           "verdict": "유의(음)",
           "sample_warning": true
         }
@@ -247,6 +275,7 @@
     {
       "id": "intraday_scan",
       "name_ko": "장중 신고가 스캐너",
+      "name_en": "Intraday New-High Scanner",
       "total": {
         "trips": 40,
         "wins": 12,
@@ -261,6 +290,9 @@
           "US"
         ]
       },
+      "trades_per_day": 3.33,
+      "avg_hold_minutes": 170.1,
+      "enabled": false,
       "by_market": {
         "asia": {
           "trips": 22,
@@ -287,6 +319,7 @@
     {
       "id": "llm_trader",
       "name_ko": "AI 트레이더",
+      "name_en": "AI Trader",
       "total": {
         "trips": 13,
         "wins": 3,
@@ -300,6 +333,9 @@
           "KR"
         ]
       },
+      "trades_per_day": 4.33,
+      "avg_hold_minutes": 46.6,
+      "enabled": true,
       "by_market": {
         "asia": {
           "trips": 13,
@@ -317,6 +353,7 @@
     {
       "id": "mr_vwap_quiet",
       "name_ko": "VWAP 평균회귀(저변동)",
+      "name_en": "VWAP Mean Reversion (Quiet)",
       "total": {
         "trips": 1,
         "wins": 1,
@@ -330,6 +367,9 @@
           "US"
         ]
       },
+      "trades_per_day": 1.0,
+      "avg_hold_minutes": 75.1,
+      "enabled": true,
       "by_market": {
         "asia": null,
         "us": {
@@ -347,6 +387,7 @@
     {
       "id": "news_momentum",
       "name_ko": "뉴스 모멘텀",
+      "name_en": "News Momentum",
       "total": {
         "trips": 6,
         "wins": 1,
@@ -360,6 +401,9 @@
           "KR"
         ]
       },
+      "trades_per_day": 3.0,
+      "avg_hold_minutes": 82.8,
+      "enabled": true,
       "by_market": {
         "asia": {
           "trips": 6,
@@ -377,6 +421,7 @@
     {
       "id": "news_scalp",
       "name_ko": "뉴스 스캘프",
+      "name_en": "News Scalp",
       "total": {
         "trips": 6,
         "wins": 1,
@@ -390,6 +435,9 @@
           "KR"
         ]
       },
+      "trades_per_day": 3.0,
+      "avg_hold_minutes": 196.6,
+      "enabled": true,
       "by_market": {
         "asia": {
           "trips": 6,
@@ -407,6 +455,7 @@
     {
       "id": "orb_scan",
       "name_ko": "개장 돌파 스캐너",
+      "name_en": "Opening Range Breakout Scanner",
       "total": {
         "trips": 8,
         "wins": 2,
@@ -420,6 +469,9 @@
           "KR"
         ]
       },
+      "trades_per_day": 2.67,
+      "avg_hold_minutes": 98.6,
+      "enabled": false,
       "by_market": {
         "asia": {
           "trips": 8,
@@ -437,6 +489,7 @@
     {
       "id": "overnight_drift",
       "name_ko": "오버나이트 드리프트",
+      "name_en": "Overnight Drift",
       "total": {
         "trips": 2,
         "wins": 0,
@@ -450,6 +503,9 @@
           "US"
         ]
       },
+      "trades_per_day": 1.0,
+      "avg_hold_minutes": 2495.0,
+      "enabled": false,
       "by_market": {
         "asia": null,
         "us": {
@@ -467,28 +523,66 @@
     {
       "id": "pullback_impulse",
       "name_ko": "눌림목 임펄스",
+      "name_en": "Pullback Impulse",
       "total": {
-        "trips": 23,
+        "trips": 29,
         "wins": 8,
-        "win_rate": 0.3478,
-        "ci_low": 0.1881,
-        "ci_high": 0.5511,
-        "expectancy_bp": -18.16,
+        "win_rate": 0.2759,
+        "ci_low": 0.147,
+        "ci_high": 0.4572,
+        "expectancy_bp": -22.84,
+        "verdict": "유의(음)",
+        "sample_warning": true,
+        "markets": [
+          "US"
+        ]
+      },
+      "trades_per_day": 5.8,
+      "avg_hold_minutes": 49.6,
+      "enabled": true,
+      "by_market": {
+        "asia": null,
+        "us": {
+          "trips": 29,
+          "wins": 8,
+          "win_rate": 0.2759,
+          "ci_low": 0.147,
+          "ci_high": 0.4572,
+          "expectancy_bp": -22.84,
+          "verdict": "유의(음)",
+          "sample_warning": true
+        }
+      }
+    },
+    {
+      "id": "pullback_impulse_cat",
+      "name_ko": "눌림목 임펄스(촉매 갈래)",
+      "name_en": "Pullback Impulse (catalyst arm)",
+      "total": {
+        "trips": 2,
+        "wins": 1,
+        "win_rate": 0.5,
+        "ci_low": 0.0945,
+        "ci_high": 0.9055,
+        "expectancy_bp": 12.1,
         "verdict": "판단 불가",
         "sample_warning": true,
         "markets": [
           "US"
         ]
       },
+      "trades_per_day": 2.0,
+      "avg_hold_minutes": 31.9,
+      "enabled": true,
       "by_market": {
         "asia": null,
         "us": {
-          "trips": 23,
-          "wins": 8,
-          "win_rate": 0.3478,
-          "ci_low": 0.1881,
-          "ci_high": 0.5511,
-          "expectancy_bp": -18.16,
+          "trips": 2,
+          "wins": 1,
+          "win_rate": 0.5,
+          "ci_low": 0.0945,
+          "ci_high": 0.9055,
+          "expectancy_bp": 12.1,
           "verdict": "판단 불가",
           "sample_warning": true
         }
@@ -497,13 +591,14 @@
     {
       "id": "scalp_1m",
       "name_ko": "1분봉 스캘핑",
+      "name_en": "1-Minute Scalping",
       "total": {
-        "trips": 133,
+        "trips": 137,
         "wins": 31,
-        "win_rate": 0.2331,
-        "ci_low": 0.1693,
-        "ci_high": 0.3118,
-        "expectancy_bp": -47.17,
+        "win_rate": 0.2263,
+        "ci_low": 0.1642,
+        "ci_high": 0.3032,
+        "expectancy_bp": -48.18,
         "verdict": "유의(음)",
         "sample_warning": false,
         "markets": [
@@ -511,6 +606,9 @@
           "US"
         ]
       },
+      "trades_per_day": 10.54,
+      "avg_hold_minutes": 19.9,
+      "enabled": true,
       "by_market": {
         "asia": {
           "trips": 79,
@@ -523,27 +621,62 @@
           "sample_warning": false
         },
         "us": {
-          "trips": 54,
+          "trips": 58,
           "wins": 10,
-          "win_rate": 0.1852,
-          "ci_low": 0.1038,
-          "ci_high": 0.3084,
-          "expectancy_bp": -29.91,
+          "win_rate": 0.1724,
+          "ci_low": 0.0964,
+          "ci_high": 0.2891,
+          "expectancy_bp": -33.49,
           "verdict": "유의(음)",
           "sample_warning": false
         }
       }
     },
     {
+      "id": "scalp_1m_cat",
+      "name_ko": "1분봉 스캘핑(촉매 갈래)",
+      "name_en": "1-Minute Scalping (catalyst arm)",
+      "total": {
+        "trips": 5,
+        "wins": 1,
+        "win_rate": 0.2,
+        "ci_low": 0.0362,
+        "ci_high": 0.6245,
+        "expectancy_bp": -34.27,
+        "verdict": "판단 불가",
+        "sample_warning": true,
+        "markets": [
+          "US"
+        ]
+      },
+      "trades_per_day": 5.0,
+      "avg_hold_minutes": 35.3,
+      "enabled": true,
+      "by_market": {
+        "asia": null,
+        "us": {
+          "trips": 5,
+          "wins": 1,
+          "win_rate": 0.2,
+          "ci_low": 0.0362,
+          "ci_high": 0.6245,
+          "expectancy_bp": -34.27,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        }
+      }
+    },
+    {
       "id": "vol_breakout",
       "name_ko": "변동성 돌파",
+      "name_en": "Volatility Breakout",
       "total": {
-        "trips": 3,
+        "trips": 4,
         "wins": 2,
-        "win_rate": 0.6667,
-        "ci_low": 0.2077,
-        "ci_high": 0.9385,
-        "expectancy_bp": -17.06,
+        "win_rate": 0.5,
+        "ci_low": 0.15,
+        "ci_high": 0.85,
+        "expectancy_bp": -31.8,
         "verdict": "판단 불가",
         "sample_warning": true,
         "markets": [
@@ -551,6 +684,9 @@
           "US"
         ]
       },
+      "trades_per_day": 1.33,
+      "avg_hold_minutes": 45.4,
+      "enabled": true,
       "by_market": {
         "asia": {
           "trips": 2,
@@ -563,18 +699,56 @@
           "sample_warning": true
         },
         "us": {
-          "trips": 1,
+          "trips": 2,
           "wins": 0,
           "win_rate": 0.0,
           "ci_low": 0.0,
-          "ci_high": 0.7935,
-          "expectancy_bp": -89.42,
+          "ci_high": 0.6576,
+          "expectancy_bp": -82.72,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        }
+      }
+    },
+    {
+      "id": "vol_breakout_cat",
+      "name_ko": "변동성 돌파(촉매 갈래)",
+      "name_en": "Volatility Breakout (catalyst arm)",
+      "total": {
+        "trips": 3,
+        "wins": 2,
+        "win_rate": 0.6667,
+        "ci_low": 0.2077,
+        "ci_high": 0.9385,
+        "expectancy_bp": -46.35,
+        "verdict": "판단 불가",
+        "sample_warning": true,
+        "markets": [
+          "US"
+        ]
+      },
+      "trades_per_day": 3.0,
+      "avg_hold_minutes": 180.9,
+      "enabled": true,
+      "by_market": {
+        "asia": null,
+        "us": {
+          "trips": 3,
+          "wins": 2,
+          "win_rate": 0.6667,
+          "ci_low": 0.2077,
+          "ci_high": 0.9385,
+          "expectancy_bp": -46.35,
           "verdict": "판단 불가",
           "sample_warning": true
         }
       }
     }
   ],
+  "strategies_scope": "lifetime",
+  "enabled_count": 12,
+  "strategies_note": "전략 통계는 모의 시대 포함 누적 301왕복",
+  "strategies_note_en": "Strategy stats are lifetime incl. paper era, 301 round trips",
   "excluded": {
     "seeding_liquidation": {
       "fills": 7,
@@ -588,6 +762,7 @@
     "kr_stock_roundtrip_bp": 23.0,
     "kr_etf_roundtrip_bp": 3.0,
     "us_roundtrip_bp": 20.0,
+    "fee_drag_pct_of_gross": 71.94,
     "kr_tax_bp": 20.0,
     "note": "KR 개별주 왕복 23bp 중 20bp가 증권거래세+농특세 (US SEC Fee/TAF 등 소액 항목은 미포함)",
     "note_en": "Of the 23bp KR individual-stock round-trip cost, 20bp is securities transaction tax + rural development surtax (small items like US SEC Fee/TAF not included)"
