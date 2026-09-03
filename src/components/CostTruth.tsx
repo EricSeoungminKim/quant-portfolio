@@ -23,6 +23,17 @@ export default function CostTruth({ costs }: { costs: Costs }) {
     <section id="cost" className="mx-auto max-w-6xl px-5 py-16 md:py-20">
       <SectionHeading eyebrow={t.cost.eyebrow} title={t.cost.title} description={t.cost.description} />
 
+      {costs.fee_drag_pct_of_gross != null && (
+        <div className="mt-8 rounded border border-[var(--down)] bg-[var(--down-bg)] p-5 md:p-7">
+          <p className="tnum text-4xl font-semibold text-[var(--down)] md:text-5xl">
+            {costs.fee_drag_pct_of_gross.toFixed(0)}%
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-[var(--foreground)]">
+            {t.cost.feeDragHeadline(costs.fee_drag_pct_of_gross)}
+          </p>
+        </div>
+      )}
+
       <div className="mt-8 rounded border border-[var(--border)] bg-[var(--surface)] p-5 md:p-7">
         <div className="space-y-5">
           {bars.map((b) => (

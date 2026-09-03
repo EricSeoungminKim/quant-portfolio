@@ -23,6 +23,7 @@ interface Messages {
     strategies: string;
     how: string;
     cost: string;
+    methodology: string;
     safety: string;
     themeToggle: string;
     localeToggle: string;
@@ -36,11 +37,15 @@ interface Messages {
     statFills: string;
     whyNowLabel: string;
     bullets: string[];
+    // Only rendered when the data carries an `enabled` flag on strategies.
+    liveCount: (enabledCount: number, totalCount: number) => string;
   };
   equity: {
     eyebrow: string;
     title: string;
     description: string;
+    periodLabel: string;
+    sessionsCount: (n: number) => string;
     legendUp: string;
     legendDown: string;
     legendPhaseBoundary: string;
@@ -54,6 +59,8 @@ interface Messages {
     seedLabel: string;
     bookAsiaTitle: string;
     bookUsTitle: string;
+    maxDrawdownLabel: string;
+    maxDrawdownNA: string;
     emptyBook: string;
     chartAriaLabel: (bookTitle: string) => string;
     pointAriaLabel: (date: string, cum: string, day: string, fills: number) => string;
@@ -77,7 +84,10 @@ interface Messages {
     headerWinRate: string;
     headerExpectancy: string;
     headerVerdict: string;
+    headerTradesPerDay: string;
+    headerAvgHold: string;
     sampleWarning: string;
+    offBadge: string;
   };
   how: {
     eyebrow: string;
@@ -103,6 +113,8 @@ interface Messages {
     bars: { label: string }[];
     taxLabel: (bp: number) => string;
     otherLabel: (bp: number) => string;
+    // Only rendered when costs.fee_drag_pct_of_gross is present.
+    feeDragHeadline: (pct: number) => string;
     noteMeasuredTitle: string;
     noteMeasuredBody: string;
     noteEdgeTitle: string;
@@ -114,10 +126,18 @@ interface Messages {
     description: string;
     items: { title: string; detail: string }[];
   };
+  methodology: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    items: { title: string; detail: string }[];
+  };
   footer: {
     lastUpdated: string;
     kstSuffix: string;
     notAdvice: string;
+    updatedAgo: (hours: number) => string;
+    stale: string;
   };
 }
 
@@ -128,6 +148,7 @@ const en: Messages = {
     strategies: "Strategies",
     how: "How It Works",
     cost: "Cost",
+    methodology: "Methodology",
     safety: "Safeguards",
     themeToggle: "Toggle theme",
     localeToggle: "한국어",
@@ -135,7 +156,7 @@ const en: Messages = {
   hero: {
     badge: "Paper trading — not real returns",
     title: (n) =>
-      `A personal automated trading engine running ${n} strategies at once across Korea and US market hours`,
+      `A personal automated trading engine running ${n} strategies with recorded round trips across Korea and US market hours`,
     body: "This page isn't here to brag about returns. It's here to show how rigorously we measure. When the sample is small we hold off judgment, taxes and fees are reflected at actual cost, and losses are disclosed as-is.",
     statStrategies: "Strategies",
     statSessions: "Trading days",
@@ -146,12 +167,16 @@ const en: Messages = {
       "Week 3 of paper trading is a cumulative loss stretch. We're not cutting out only the favorable periods.",
       "Every strategy is shown with its confidence interval and a sample-size warning, to keep overconfidence in check.",
     ],
+    liveCount: (enabledCount, totalCount) =>
+      `${enabledCount} strategies live now · ${totalCount} with recorded round trips`,
   },
   equity: {
     eyebrow: "Equity Curve",
     title: "Equity Curve",
     description:
       "Cumulative return against each book's own starting seed, kept separate by currency — no FX conversion between them. Hover or click a point, or move focus with the keyboard, to see that day's fill count and daily change.",
+    periodLabel: "Period",
+    sessionsCount: (n) => `${n} session${n === 1 ? "" : "s"}`,
     legendUp: "Positive (+) — shown in red, per local market convention",
     legendDown: "Negative (−) — shown in blue, per local market convention",
     legendPhaseBoundary: "Phase boundary (live-account transplant)",
@@ -167,6 +192,8 @@ const en: Messages = {
     seedLabel: "Seed",
     bookAsiaTitle: "Asia (KRX)",
     bookUsTitle: "US (NYSE·NASDAQ)",
+    maxDrawdownLabel: "Max drawdown",
+    maxDrawdownNA: "n/a (<2 points)",
     emptyBook: "No fills recorded yet in this book.",
     chartAriaLabel: (bookTitle) => `${bookTitle} cumulative return curve against its starting seed`,
     pointAriaLabel: (date, cum, day, fills) =>
@@ -192,14 +219,17 @@ const en: Messages = {
     headerWinRate: "Win rate (95% CI)",
     headerExpectancy: "Expectancy",
     headerVerdict: "Verdict",
+    headerTradesPerDay: "Trades/day",
+    headerAvgHold: "Avg hold",
     sampleWarning: "Small sample",
+    offBadge: "off",
   },
   how: {
     eyebrow: "Architecture",
     title: "How It Works",
     description:
       "The code is split into four planes by what you lose when it's wrong — not by feature. A test enforces the allowed dependency direction between planes via the import graph.",
-    liveBadge: "Live trading",
+    liveBadge: "Money plane — paper today",
     whenWrong: "If wrong →",
     planes: [
       { name: "Collect", risk: "Data goes missing", allowed: "Scraping, LLM summarization, failures and retries allowed" },
@@ -210,8 +240,8 @@ const en: Messages = {
     timelineTitle: "Daily timeline (KST)",
     timeline: [
       { time: "00:00", label: "Regime call", detail: "Refresh the per-market offense/neutral/defense multiplier" },
-      { time: "07:50", label: "Daily report", detail: "Feed watchlist candidates into the confidence-scoring engine" },
-      { time: "09:00", label: "KR market open", detail: "Channel breakout, opening-range breakout, and session-high strategies go live" },
+      { time: "08:00", label: "Daily report", detail: "Our own report builds; at 08:12 own_brief.sh feeds its engine JSON into the confidence-scoring engine, auto-registering candidates that clear the threshold" },
+      { time: "09:00", label: "KR market open", detail: "KR strategies (news momentum, 1-minute scalp, foreign-flow accumulation, volatility breakout, LLM lane) become active" },
       { time: "22:30", label: "US market open", detail: "The same strategy set expands to the US universe" },
       { time: "06:00", label: "Settlement", detail: "Persist fills to the trade ledger; aggregate per-strategy win rate and expectancy" },
     ],
@@ -241,6 +271,7 @@ const en: Messages = {
     ],
     taxLabel: (bp) => `tax ${bp}bp`,
     otherLabel: (bp) => `fees & slippage ${bp}bp`,
+    feeDragHeadline: (pct) => `${pct.toFixed(0)}% of gross P&L was eaten by fees and tax`,
     noteMeasuredTitle: "Reflected in measurement",
     noteMeasuredBody:
       "Every fill logs actual fees, taxes, and slippage to the ledger, and per-strategy expectancy (bp) is always shown net of cost.",
@@ -261,10 +292,52 @@ const en: Messages = {
       { title: "No deploys during market hours", detail: "The deploy/restart pipeline itself is blocked while regular market hours are open." },
     ],
   },
+  methodology: {
+    eyebrow: "Methodology",
+    title: "How the Numbers Are Computed",
+    description: "The definitions behind every stat on this page, so a number never has to be taken on faith.",
+    items: [
+      {
+        title: "Round trip",
+        detail: "One entry paired with its matching exit — the unit every win rate, expectancy, and trip count on this page counts.",
+      },
+      {
+        title: "95% confidence interval (Wilson score)",
+        detail:
+          "Win rate is shown with a Wilson-score interval, which stays well-behaved at small sample sizes instead of the normal approximation's overconfident bounds near 0% or 100%.",
+      },
+      {
+        title: "Expectancy (bp)",
+        detail: "Average return per round trip in basis points, net of fees, tax, and slippage — not a gross P&L figure.",
+      },
+      {
+        title: "KR round-trip cost",
+        detail:
+          "A KR single-stock round trip carries a fixed 20bp securities transaction tax on top of brokerage fees, deducted before expectancy is computed.",
+      },
+      {
+        title: "Trading-day boundary",
+        detail:
+          "Each row in the equity curve is one trading day, closed out at the 06:00 KST settlement that follows both the KR and US sessions — not a naive midnight cutoff.",
+      },
+      {
+        title: "Why 30 trips",
+        detail:
+          "Below 30 round trips the confidence interval is wide enough that a strategy's true edge can't be distinguished from noise — the sample-size badge marks every strategy under that line.",
+      },
+      {
+        title: "Per-currency equity curves",
+        detail:
+          "The KRW and USD books are shown separately with no FX conversion between them — each curve is normalized only against its own currency's starting seed.",
+      },
+    ],
+  },
   footer: {
     lastUpdated: "Last updated:",
     kstSuffix: "(KST)",
     notAdvice: "Nothing on this page is investment advice.",
+    updatedAgo: (hours) => `updated ${hours}h ago`,
+    stale: "stale",
   },
 };
 
@@ -275,13 +348,14 @@ const ko: Messages = {
     strategies: "전략별 성적",
     how: "작동 원리",
     cost: "비용",
+    methodology: "산출 방식",
     safety: "안전장치",
     themeToggle: "테마 전환",
     localeToggle: "EN",
   },
   hero: {
     badge: "모의투자 (paper) — 실제 수익이 아닙니다",
-    title: (n) => `한국·미국 정규장에서 ${n}개 전략이 동시에 도는 개인용 자동매매 엔진`,
+    title: (n) => `한국·미국 정규장에서 왕복 기록이 있는 전략 ${n}개가 동시에 도는 개인용 자동매매 엔진`,
     body: "수익률을 자랑하려는 페이지가 아닙니다. 이 프로젝트는 “측정을 얼마나 엄격하게 하는가”를 보여주는 페이지입니다. 표본이 작으면 판단을 보류하고, 세금·수수료를 실비로 반영하고, 손실도 그대로 공개합니다.",
     statStrategies: "전략",
     statSessions: "거래일",
@@ -292,12 +366,16 @@ const ko: Messages = {
       "3주차 모의투자는 누적 손실 구간입니다. 유리한 구간만 잘라 보여주지 않습니다.",
       "전략마다 신뢰구간과 표본 경고를 함께 표기해 과신을 막습니다.",
     ],
+    liveCount: (enabledCount, totalCount) =>
+      `지금 가동 ${enabledCount}개 · 왕복 기록 ${totalCount}개`,
   },
   equity: {
     eyebrow: "Equity Curve",
     title: "수익 곡선",
     description:
       "각자 통화의 시작 시드 대비 누적 수익률 — 환전 없이 통화별로 완전히 분리해 보여줍니다. 점 위에 마우스를 올리거나 클릭하거나 키보드로 이동하면 그날의 체결 수와 당일 등락을 볼 수 있습니다.",
+    periodLabel: "기간",
+    sessionsCount: (n) => `${n}거래일`,
     legendUp: "양수(+) — 국내 관행상 빨강",
     legendDown: "음수(−) — 국내 관행상 파랑",
     legendPhaseBoundary: "단계 경계 (실계좌 이식)",
@@ -312,6 +390,8 @@ const ko: Messages = {
     seedLabel: "시드",
     bookAsiaTitle: "아시아 (KRX)",
     bookUsTitle: "미국 (NYSE·NASDAQ)",
+    maxDrawdownLabel: "최대 낙폭",
+    maxDrawdownNA: "해당없음 (2개 미만)",
     emptyBook: "이 북에는 아직 집계된 체결이 없습니다.",
     chartAriaLabel: (bookTitle) => `${bookTitle} 시작 시드 대비 누적 수익률 곡선`,
     pointAriaLabel: (date, cum, day, fills) =>
@@ -337,14 +417,17 @@ const ko: Messages = {
     headerWinRate: "승률 (95% CI)",
     headerExpectancy: "기대값",
     headerVerdict: "판정",
+    headerTradesPerDay: "일평균 거래",
+    headerAvgHold: "평균 보유",
     sampleWarning: "표본 부족",
+    offBadge: "비활성",
   },
   how: {
     eyebrow: "Architecture",
     title: "어떻게 작동하는가",
     description:
       "코드는 기능이 아니라 '틀렸을 때 무엇을 잃는가'로 4개 평면으로 나뉩니다. 평면 간 의존 방향은 테스트가 임포트 그래프로 강제합니다.",
-    liveBadge: "실거래",
+    liveBadge: "돈이 걸리는 평면 — 현재 모의",
     whenWrong: "틀리면 →",
     planes: [
       { name: "수집", risk: "데이터가 빈다", allowed: "스크래핑, LLM 요약, 실패·재시도 허용" },
@@ -355,8 +438,8 @@ const ko: Messages = {
     timelineTitle: "하루 시각표 (KST)",
     timeline: [
       { time: "00:00", label: "국면(regime) 판정", detail: "시장별 공격/중립/방어 배율 갱신" },
-      { time: "07:50", label: "일일 리포트", detail: "관심종목 후보를 확신도 엔진에 태움" },
-      { time: "09:00", label: "한국장 개장", detail: "채널 돌파 · 개장 돌파 · 세션 신고가 전략 가동" },
+      { time: "08:00", label: "일일 리포트", detail: "자체 리포트 발행. 08:12에 own_brief.sh가 엔진 JSON을 확신도 엔진에 태워 임계 통과 후보를 자동 등록" },
+      { time: "09:00", label: "한국장 개장", detail: "KR 전략(뉴스 모멘텀, 1분봉 스캘핑, 외국인 수급 누적, 변동성 돌파, LLM 레인) 가동" },
       { time: "22:30", label: "미국장 개장", detail: "동일 전략군이 US 유니버스로 확장 운용" },
       { time: "06:00", label: "정산", detail: "체결을 거래 원장에 영속화, 전략별 승률·기대값 집계" },
     ],
@@ -380,6 +463,7 @@ const ko: Messages = {
     ],
     taxLabel: (bp) => `세금 ${bp}bp`,
     otherLabel: (bp) => `수수료·슬리피지 ${bp}bp`,
+    feeDragHeadline: (pct) => `총손익의 ${pct.toFixed(0)}%가 수수료·세금으로 사라졌습니다`,
     noteMeasuredTitle: "측정에 반영",
     noteMeasuredBody:
       "체결마다 실제 수수료·세금·슬리피지를 원장에 기록하고, 전략별 기대값(bp)은 항상 비용 차감 후 수치로 표기합니다.",
@@ -400,10 +484,47 @@ const ko: Messages = {
       { title: "장중 배포 차단", detail: "정규장이 열려 있는 동안에는 배포·재시작 파이프라인 자체가 막힘." },
     ],
   },
+  methodology: {
+    eyebrow: "Methodology",
+    title: "숫자를 계산하는 방식",
+    description: "이 페이지의 모든 수치가 어떻게 계산되는지 — 숫자를 그냥 믿을 필요가 없도록.",
+    items: [
+      {
+        title: "왕복(Round trip)",
+        detail: "진입과 그에 대응하는 청산을 짝지은 한 단위 — 이 페이지의 모든 승률·기대값·왕복 수가 세는 기준입니다.",
+      },
+      {
+        title: "95% 신뢰구간 (Wilson score)",
+        detail: "승률은 Wilson score 구간으로 표기합니다. 표본이 작을 때 정규근사가 0%·100% 근처에서 과신하는 문제를 피합니다.",
+      },
+      {
+        title: "기대값(bp)",
+        detail: "왕복 1회당 평균 수익률(bp) — 수수료·세금·슬리피지를 뺀 순수치이며 총손익이 아닙니다.",
+      },
+      {
+        title: "KR 왕복 비용",
+        detail: "KR 개별주 왕복에는 수수료 외에 고정 20bp의 증권거래세가 더해지며, 기대값 계산 전에 이미 차감된 값입니다.",
+      },
+      {
+        title: "거래일 경계",
+        detail: "수익 곡선의 한 행은 하루치 거래일이며, 한국·미국 두 세션이 모두 끝난 뒤의 정산 시각(06:00 KST) 기준으로 마감됩니다 — 단순 자정 기준이 아닙니다.",
+      },
+      {
+        title: "왜 30왕복인가",
+        detail: "왕복 30회 미만에서는 신뢰구간이 넓어 전략의 실제 엣지와 잡음을 구분하기 어렵습니다 — 그 기준 아래 모든 전략에 표본 부족 뱃지가 붙습니다.",
+      },
+      {
+        title: "통화별로 분리된 수익 곡선",
+        detail: "KRW·USD 북은 환전 없이 완전히 분리해서 보여줍니다 — 각 곡선은 자기 통화의 시작 시드에만 대비해 정규화됩니다.",
+      },
+    ],
+  },
   footer: {
     lastUpdated: "마지막 갱신:",
     kstSuffix: "(KST)",
     notAdvice: "이 페이지의 어떤 내용도 투자 조언이 아닙니다.",
+    updatedAgo: (hours) => `${hours}시간 전 갱신`,
+    stale: "갱신 지연",
   },
 };
 

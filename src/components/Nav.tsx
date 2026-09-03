@@ -11,6 +11,7 @@ export default function Nav() {
     { href: "#strategies", label: t.nav.strategies },
     { href: "#how", label: t.nav.how },
     { href: "#cost", label: t.nav.cost },
+    { href: "#methodology", label: t.nav.methodology },
     { href: "#safety", label: t.nav.safety },
   ];
 

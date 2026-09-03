@@ -8,6 +8,15 @@ export default function Hero({ data }: { data: PerformanceData }) {
   const { locale } = useLocale();
   const strategyCount = data.strategies.length;
   const { sessions, total_fills } = data.period;
+  // `enabled` is only present once the generator started emitting it —
+  // absent on older snapshots, in which case the existing copy stands.
+  const hasEnabledFlag =
+    typeof data.enabled_count === "number" ||
+    data.strategies.some((s) => typeof s.enabled === "boolean");
+  // Prefer the generator's settings-based count: strategies with no round
+  // trips yet are enabled too, but never appear in `strategies[]`.
+  const enabledCount =
+    data.enabled_count ?? data.strategies.filter((s) => s.enabled).length;
 
   return (
     <section id="top" className="mx-auto max-w-6xl px-5 pt-14 pb-16 md:pt-20 md:pb-20">
@@ -20,6 +29,12 @@ export default function Hero({ data }: { data: PerformanceData }) {
           <h1 className="mt-6 max-w-xl text-3xl font-semibold leading-[1.25] tracking-tight md:text-[2.6rem]">
             {t.hero.title(strategyCount)}
           </h1>
+
+          {hasEnabledFlag && (
+            <p className="tnum mt-3 text-sm font-medium text-[var(--accent)]">
+              {t.hero.liveCount(enabledCount, strategyCount)}
+            </p>
+          )}
 
           <p className="mt-5 max-w-lg text-[0.95rem] leading-relaxed text-[var(--muted)]">
             {t.hero.body}

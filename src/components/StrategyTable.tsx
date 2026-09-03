@@ -2,14 +2,32 @@
 
 import { useMemo, useState } from "react";
 import type { Market, MarketStats, Strategy } from "@/types/performance";
-import { formatBp } from "@/lib/format";
+import { formatBp, formatHoldMinutes } from "@/lib/format";
 import { useLocale, useT } from "@/lib/i18n";
-import { translateStrategyName, translateVerdict } from "@/lib/i18nData";
+import { translateDataText, translateStrategyName, translateVerdict } from "@/lib/i18nData";
 import SectionHeading from "./SectionHeading";
 
 type SortKey = "expectancy_bp" | "win_rate" | "trips";
 
-export default function StrategyTable({ strategies }: { strategies: Strategy[] }) {
+// Which stats to read for a given market filter — ALL reads the
+// market-agnostic total, KR/US read that market's own numbers so a filtered
+// view never shows the mixed-market figures under a single-market label. A
+// strategy that doesn't trade the filtered market has no entry (null) and
+// must be guarded at the call site.
+function statsForMarket(s: Strategy, market: "ALL" | Market): MarketStats | null {
+  if (market === "ALL") return s.total;
+  return market === "KR" ? s.by_market.asia : s.by_market.us;
+}
+
+export default function StrategyTable({
+  strategies,
+  note,
+  noteEn,
+}: {
+  strategies: Strategy[];
+  note?: string;
+  noteEn?: string;
+}) {
   const t = useT();
   const { locale } = useLocale();
   const [market, setMarket] = useState<"ALL" | Market>("ALL");
@@ -26,7 +44,9 @@ export default function StrategyTable({ strategies }: { strategies: Strategy[] }
     const filtered =
       market === "ALL" ? strategies : strategies.filter((s) => s.total.markets.includes(market));
     const sorted = [...filtered].sort((a, b) => {
-      const diff = a.total[sortKey] - b.total[sortKey];
+      const av = statsForMarket(a, market)?.[sortKey] ?? -Infinity;
+      const bv = statsForMarket(b, market)?.[sortKey] ?? -Infinity;
+      const diff = av - bv;
       return asc ? diff : -diff;
     });
     return sorted;
@@ -44,6 +64,10 @@ export default function StrategyTable({ strategies }: { strategies: Strategy[] }
   return (
     <section id="strategies" className="mx-auto max-w-6xl px-5 py-16 md:py-20">
       <SectionHeading eyebrow={t.strategies.eyebrow} title={t.strategies.title} description={t.strategies.description} />
+
+      {(note || noteEn) && (
+        <p className="mt-2 text-xs text-[var(--muted-2)]">{translateDataText(note ?? "", noteEn, locale)}</p>
+      )}
 
       <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
         <div className="flex gap-1.5">
@@ -89,40 +113,68 @@ export default function StrategyTable({ strategies }: { strategies: Strategy[] }
               <th className="px-4 py-3 font-medium">{t.strategies.headerWinRate}</th>
               <th className="px-4 py-3 font-medium">{t.strategies.headerExpectancy}</th>
               <th className="px-4 py-3 font-medium">{t.strategies.headerVerdict}</th>
+              <th className="hidden px-4 py-3 font-medium sm:table-cell">{t.strategies.headerTradesPerDay}</th>
+              <th className="hidden px-4 py-3 font-medium sm:table-cell">{t.strategies.headerAvgHold}</th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((s) => (
-              <tr key={s.id} className="border-b border-[var(--border)] last:border-0 bg-[var(--surface)]">
-                <td className="px-4 py-3.5 font-medium">
-                  <div className="flex items-center gap-2">
-                    {translateStrategyName(s.id, s.name_ko, locale)}
-                    {s.total.sample_warning && (
-                      <span className="rounded border border-[var(--accent)] px-1.5 py-0.5 text-[10px] font-normal text-[var(--accent)]">
-                        {t.strategies.sampleWarning}
-                      </span>
+            {rows.map((s) => {
+              // null when this strategy has no round trips in the filtered
+              // market — treated as a sample-size warning ("—" cells) rather
+              // than silently falling back to the mixed-market total.
+              const stats = statsForMarket(s, market);
+              const sampleWarning = stats ? stats.sample_warning : true;
+              return (
+                <tr key={s.id} className="border-b border-[var(--border)] last:border-0 bg-[var(--surface)]">
+                  <td className="px-4 py-3.5 font-medium">
+                    <div className="flex items-center gap-2">
+                      {translateStrategyName(s.id, s.name_ko, locale)}
+                      {s.enabled === false && (
+                        <span className="rounded border border-[var(--muted-2)] px-1.5 py-0.5 text-[10px] font-normal text-[var(--muted-2)]">
+                          {t.strategies.offBadge}
+                        </span>
+                      )}
+                      {sampleWarning && (
+                        <span className="rounded border border-[var(--accent)] px-1.5 py-0.5 text-[10px] font-normal text-[var(--accent)]">
+                          {t.strategies.sampleWarning}
+                        </span>
+                      )}
+                    </div>
+                  </td>
+                  <td className="px-4 py-3.5 text-[var(--muted)]">
+                    <MarketBadges asia={s.by_market.asia} us={s.by_market.us} />
+                  </td>
+                  <td className="tnum px-4 py-3.5">{stats ? stats.trips : "—"}</td>
+                  <td className="px-4 py-3.5">
+                    {stats ? (
+                      <WinRateBar winRate={stats.win_rate} ciLow={stats.ci_low} ciHigh={stats.ci_high} />
+                    ) : (
+                      <span className="tnum text-xs text-[var(--muted-2)]">—</span>
                     )}
-                  </div>
-                </td>
-                <td className="px-4 py-3.5 text-[var(--muted)]">
-                  <MarketBadges asia={s.by_market.asia} us={s.by_market.us} />
-                </td>
-                <td className="tnum px-4 py-3.5">{s.total.trips}</td>
-                <td className="px-4 py-3.5">
-                  <WinRateBar winRate={s.total.win_rate} ciLow={s.total.ci_low} ciHigh={s.total.ci_high} />
-                </td>
-                <td
-                  className={`tnum px-4 py-3.5 font-medium ${
-                    s.total.expectancy_bp >= 0 ? "text-[var(--up)]" : "text-[var(--down)]"
-                  }`}
-                >
-                  {formatBp(s.total.expectancy_bp)}
-                </td>
-                <td className="px-4 py-3.5 text-xs text-[var(--muted)]">
-                  {translateVerdict(s.total.verdict, locale)}
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td
+                    className={`tnum px-4 py-3.5 font-medium ${
+                      stats
+                        ? stats.expectancy_bp >= 0
+                          ? "text-[var(--up)]"
+                          : "text-[var(--down)]"
+                        : "text-[var(--muted-2)]"
+                    }`}
+                  >
+                    {stats ? formatBp(stats.expectancy_bp) : "—"}
+                  </td>
+                  <td className="px-4 py-3.5 text-xs text-[var(--muted)]">
+                    {stats ? translateVerdict(stats.verdict, locale) : "—"}
+                  </td>
+                  <td className="tnum hidden px-4 py-3.5 text-xs text-[var(--muted)] sm:table-cell">
+                    {s.trades_per_day != null ? `${s.trades_per_day.toFixed(1)}/day` : "—"}
+                  </td>
+                  <td className="tnum hidden px-4 py-3.5 text-xs text-[var(--muted)] sm:table-cell">
+                    {s.avg_hold_minutes != null ? formatHoldMinutes(s.avg_hold_minutes) : "—"}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

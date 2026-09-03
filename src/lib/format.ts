@@ -39,6 +39,15 @@ export function formatKrw(value: number): string {
   return `${value.toLocaleString("ko-KR")}원`;
 }
 
+// Compact hold-duration label for the strategy table's avg-hold column:
+// minutes under an hour, hours under a day, days beyond that.
+export function formatHoldMinutes(minutes: number): string {
+  if (minutes < 60) return `${Math.round(minutes)}m`;
+  const hours = minutes / 60;
+  if (hours < 24) return `${hours.toFixed(1)}h`;
+  return `${(hours / 24).toFixed(1)}d`;
+}
+
 // Generic currency-amount formatter for the per-book equity seed footnote
 // (KRW for the Asia book, USD for the US book) — locale controls digit
 // grouping only, not which currency symbol is used (the book's own

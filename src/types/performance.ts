@@ -54,6 +54,9 @@ export interface EquityBook {
   seed_basis: string;
   seed_basis_en?: string;
   rows: EquityPoint[];
+  // Fraction (0.0373 = 3.7%), null when the book has fewer than 2 points
+  // to compute a drawdown from. Optional — absent on older snapshots.
+  max_drawdown_pct?: number | null;
   chart: {
     y_axis: ChartYAxis;
     phase_boundaries: PhaseBoundaryMark[];
@@ -87,6 +90,10 @@ export interface Strategy {
     asia: MarketStats | null;
     us: MarketStats | null;
   };
+  // Optional — absent on older snapshots.
+  trades_per_day?: number;
+  avg_hold_minutes?: number;
+  enabled?: boolean;
 }
 
 export interface ExcludedEntry {
@@ -104,6 +111,8 @@ export interface Costs {
   kr_tax_bp: number;
   note: string;
   note_en?: string;
+  // Percentage points (71.49 = 71.49%), optional — absent on older snapshots.
+  fee_drag_pct_of_gross?: number | null;
 }
 
 export interface PriorPaper {
@@ -123,11 +132,21 @@ export interface PerformanceData {
     end: string | null;
     sessions: number;
     total_fills: number;
+    // Optional — absent on older snapshots.
+    scope?: string;
+    note?: string;
+    note_en?: string;
   };
   phases: Phase[];
   equity_asia: EquityBook;
   equity_us: EquityBook;
   strategies: Strategy[];
+  // Optional — absent on older snapshots.
+  strategies_scope?: string;
+  /** Enabled strategies per settings — includes ones with no round trips yet. */
+  enabled_count?: number;
+  strategies_note?: string;
+  strategies_note_en?: string;
   // Empty ({}) until a real-account transplant event has happened —
   // `quant.control.performance._excluded_summary` returns {} until then.
   excluded: {

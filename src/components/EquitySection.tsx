@@ -5,7 +5,7 @@ import EquityChart from "./EquityChart";
 import SectionHeading from "./SectionHeading";
 import { useLocale, useT } from "@/lib/i18n";
 import { translateDataText, translatePhaseLabel, translateSeedBasis } from "@/lib/i18nData";
-import { formatDateOnly, formatMoney } from "@/lib/format";
+import { formatDateOnly, formatMoney, formatPct } from "@/lib/format";
 
 export default function EquitySection({ data }: { data: PerformanceData }) {
   const t = useT();
@@ -14,6 +14,17 @@ export default function EquitySection({ data }: { data: PerformanceData }) {
   return (
     <section id="equity" className="mx-auto max-w-6xl px-5 py-16 md:py-20">
       <SectionHeading eyebrow={t.equity.eyebrow} title={t.equity.title} description={t.equity.description} />
+
+      {data.period.start && (
+        <p className="tnum mt-4 text-xs text-[var(--muted-2)]">
+          {t.equity.periodLabel}: {formatDateOnly(data.period.start)}
+          {data.period.end ? ` – ${formatDateOnly(data.period.end)}` : ""}
+          {typeof data.period.sessions === "number" ? ` · ${t.equity.sessionsCount(data.period.sessions)}` : ""}
+          {(data.period.note || data.period.note_en)
+            ? ` · ${translateDataText(data.period.note ?? "", data.period.note_en, locale)}`
+            : ""}
+        </p>
+      )}
 
       <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-[var(--muted)]">
         <Legend swatch="var(--up)" label={t.equity.legendUp} />
@@ -80,12 +91,24 @@ function BookPanel({ title, book }: { title: string; book: EquityBook }) {
   const t = useT();
   const { locale } = useLocale();
   const seedBasisText = translateSeedBasis(book.seed_basis, book.seed_basis_en, locale);
+  const hasDrawdown = book.max_drawdown_pct !== undefined;
+  const drawdownText =
+    book.max_drawdown_pct != null
+      ? formatPct(-Math.abs(book.max_drawdown_pct) * 100, 1)
+      : t.equity.maxDrawdownNA;
 
   return (
     <div className="rounded border border-[var(--border)] bg-[var(--surface)] p-4 md:p-6">
-      <div className="mb-3 flex items-baseline justify-between gap-2">
+      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-2 gap-y-1">
         <h3 className="text-sm font-semibold">{title}</h3>
-        <span className="text-[10px] text-[var(--muted-2)]">{book.currency}</span>
+        <div className="flex items-baseline gap-2.5">
+          {hasDrawdown && (
+            <span className="tnum text-[10px] text-[var(--muted-2)]">
+              {t.equity.maxDrawdownLabel} {drawdownText}
+            </span>
+          )}
+          <span className="text-[10px] text-[var(--muted-2)]">{book.currency}</span>
+        </div>
       </div>
       <EquityChart rows={book.rows} yAxis={book.chart.y_axis} phaseBoundaries={book.chart.phase_boundaries} title={title} />
       {book.seed != null && (
