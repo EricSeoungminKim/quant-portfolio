@@ -128,7 +128,7 @@ export default function StrategyTable({
                 <tr key={s.id} className="border-b border-[var(--border)] last:border-0 bg-[var(--surface)]">
                   <td className="px-4 py-3.5 font-medium">
                     <div className="flex items-center gap-2">
-                      {translateStrategyName(s.id, s.name_ko, locale)}
+                      {translateStrategyName(s.id, s.name_ko, s.name_en, locale)}
                       {s.enabled === false && (
                         <span className="rounded border border-[var(--muted-2)] px-1.5 py-0.5 text-[10px] font-normal text-[var(--muted-2)]">
                           {t.strategies.offBadge}

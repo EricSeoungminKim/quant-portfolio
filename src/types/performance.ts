@@ -81,6 +81,10 @@ export interface StrategyTotal extends MarketStats {
 export interface Strategy {
   id: string;
   name_ko: string;
+  // English display name from the generator (2026-09-03) — preferred over the
+  // static STRATEGY_NAME_EN lookup table in lib/i18nData.ts when present.
+  // Optional — absent on older snapshots.
+  name_en?: string;
   // Currency/market-agnostic aggregate (KR+US round trips together).
   total: StrategyTotal;
   // Same stats computed independently per market, each with its own

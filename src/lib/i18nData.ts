@@ -69,9 +69,30 @@ const DATA_TEXT_EN: Record<string, string> = {
     "This is a paper-trading record. No real funds were used.",
 };
 
-export function translateStrategyName(id: string, nameKo: string, locale: Locale): string {
+// A/B catalyst-arm ids (`<id>_cat`, 2026-09-03) share the base strategy's
+// class on a different universe filter — strip the suffix to find the base
+// lookup entry (mirrors quant.core.strategy_ids.base_strategy_id on the
+// generator side, `_cat` only — this repo never sees `_pure` ids).
+function baseStrategyId(id: string): string {
+  return id.endsWith("_cat") ? id.slice(0, -4) : id;
+}
+
+export function translateStrategyName(
+  id: string,
+  nameKo: string,
+  nameEn: string | undefined,
+  locale: Locale
+): string {
   if (locale === "ko") return nameKo;
-  return STRATEGY_NAME_EN[id] ?? "";
+  // Priority (2026-09-03, F6): the generator's own name_en field first (can't
+  // drift out of sync with a new strategy id the way this static table can),
+  // then the base-id lookup table with a catalyst-arm suffix, then the id
+  // itself — never an empty string, that reads as a missing row.
+  if (nameEn) return nameEn;
+  const base = baseStrategyId(id);
+  const baseName = STRATEGY_NAME_EN[base];
+  if (baseName) return base !== id ? `${baseName} (catalyst arm)` : baseName;
+  return id;
 }
 
 export function translateVerdict(verdict: string, locale: Locale): string {
