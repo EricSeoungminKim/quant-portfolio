@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-09-04T06:20:02+09:00",
+  "generated_at": "2026-09-04T16:20:02+09:00",
   "disclaimer": "모의투자(paper) 기록입니다. 실제 자금이 투입되지 않았습니다.",
   "disclaimer_en": "Paper trading record. No real capital was deployed.",
   "period": {
     "start": "2026-09-01",
-    "end": "2026-09-03",
-    "sessions": 3,
-    "total_fills": 143,
+    "end": "2026-09-04",
+    "sessions": 4,
+    "total_fills": 183,
     "scope": "real_seeded",
     "note": "실계좌 이식 이후",
     "note_en": "Since real-account transplant"
@@ -54,19 +54,26 @@
         "day_pct": -0.2981,
         "fills": 15,
         "phase": "real_seeded"
+      },
+      {
+        "date": "2026-09-04",
+        "cum_pct": -2.2076,
+        "day_pct": -1.5326,
+        "fills": 40,
+        "phase": "real_seeded"
       }
     ],
-    "max_drawdown_pct": 0.2992,
+    "max_drawdown_pct": 1.8376,
     "chart": {
       "y_axis": {
-        "min": -0.855,
-        "max": 0.18,
+        "min": -2.605,
+        "max": 0.3974,
         "ticks": [
-          0.18,
-          0.09,
+          0.3974,
+          0.1987,
           0.0,
-          -0.4275,
-          -0.855
+          -1.3025,
+          -2.605
         ],
         "zero": 0.0
       },
@@ -147,6 +154,20 @@
       "trades_per_day": 3.38,
       "avg_hold_minutes": 16.0,
       "enabled": false,
+      "help": {
+        "category": "intraday",
+        "theory_ko": "MACD·볼린저·RSI·이동평균·박스권 5개 보조지표 중 다수(3개 이상)가 동시에 동의할 때만 진입하면 단일 지표보다 신뢰도가 높다는 다중 신호 합류 가설.",
+        "theory_en": "Signal-confluence hypothesis: requiring a majority (3+) of five indicators (MACD, Bollinger, RSI, moving averages, range-box) to agree simultaneously is more reliable than any single indicator.",
+        "entry_ko": "5분봉 SMA20/50·RSI14·MACD(12,26,9)·볼린저(20봉,2.0σ)·박스권 5축 중 최소 3축 동의 + 거래량 1.5배",
+        "entry_en": "On 5-min bars, requires at least 3 of 5 signals (SMA20/50, RSI14, MACD(12,26,9), Bollinger(20,2.0sigma), range-box) to agree, plus 1.5x volume",
+        "exit_ko": "ATR14 x 1.0(분봉) 손절, 1.5R 도달 시 30.0% 부분익절 · 마감 1분 전 강제청산",
+        "exit_en": "Stop at ATR14 x 1.0 (intraday); at 1.5R, take partial profit on 30.0%; force-flatten 1 minutes before close",
+        "evidence_ko": "burn_in — 파라미터 전부 문헌 표준값(튜닝 없음), 백테스트 미검증. 2026-08-25 한국장 4종 체제 재편으로 비활성.",
+        "evidence_en": "burn_in — all parameters use textbook default values (no tuning), unvalidated by backtest. Disabled since 2026-08-25's KR-focused realignment.",
+        "refs": [],
+        "sizing_ko": "KR 자본배분 7.5% · US 자본배분 20% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "KR capital allocation 7.5%; US capital allocation 20%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+      },
       "by_market": {
         "asia": {
           "trips": 22,
@@ -168,6 +189,84 @@
           "verdict": "판단 불가",
           "sample_warning": true
         }
+      },
+      "curve": {
+        "asia": [
+          {
+            "date": "2026-08-12",
+            "day_net": -599.83,
+            "cum_net": -599.83,
+            "cum_trips": 2
+          },
+          {
+            "date": "2026-08-13",
+            "day_net": -7968.55,
+            "cum_net": -8568.38,
+            "cum_trips": 4
+          },
+          {
+            "date": "2026-08-14",
+            "day_net": -34.43,
+            "cum_net": -8602.81,
+            "cum_trips": 5
+          },
+          {
+            "date": "2026-08-19",
+            "day_net": -281551.49,
+            "cum_net": -290154.3,
+            "cum_trips": 10
+          },
+          {
+            "date": "2026-08-20",
+            "day_net": -25943.59,
+            "cum_net": -316097.89,
+            "cum_trips": 12
+          },
+          {
+            "date": "2026-08-21",
+            "day_net": -173497.88,
+            "cum_net": -489595.77,
+            "cum_trips": 17
+          },
+          {
+            "date": "2026-08-24",
+            "day_net": -40112.46,
+            "cum_net": -529708.23,
+            "cum_trips": 18
+          },
+          {
+            "date": "2026-08-25",
+            "day_net": 34752.65,
+            "cum_net": -494955.58,
+            "cum_trips": 22
+          }
+        ],
+        "us": [
+          {
+            "date": "2026-08-13",
+            "day_net": 0.12,
+            "cum_net": 0.12,
+            "cum_trips": 1
+          },
+          {
+            "date": "2026-08-19",
+            "day_net": -2.39,
+            "cum_net": -2.27,
+            "cum_trips": 2
+          },
+          {
+            "date": "2026-08-21",
+            "day_net": -14.74,
+            "cum_net": -17.01,
+            "cum_trips": 3
+          },
+          {
+            "date": "2026-08-24",
+            "day_net": 28.22,
+            "cum_net": 11.21,
+            "cum_trips": 5
+          }
+        ]
       }
     },
     {
@@ -190,6 +289,20 @@
       "trades_per_day": 1.0,
       "avg_hold_minutes": 203.0,
       "enabled": false,
+      "help": {
+        "category": "intraday",
+        "theory_ko": "15분봉 40봉 신고가/신저가 채널을 거래량 확인 후 돌파하면 그 방향 추세가 이어진다는 추세추종 가설(TQQQ/SQQQ).",
+        "theory_en": "Trend-following hypothesis: a volume-confirmed breakout of a 40-bar, 15-min Donchian channel tends to continue in that direction (TQQQ/SQQQ).",
+        "entry_ko": "15분봉 40봉 돈치안 채널 상단/하단 돌파 + 거래량 1.5배 이상 확인 후 추세추종 진입(TQQQ/SQQQ, 역방향 동시보유 금지)",
+        "entry_en": "Enter on a 15-min, 40-bar Donchian channel breakout confirmed by 1.5x average volume (TQQQ/SQQQ, no simultaneous opposite-direction holding)",
+        "exit_ko": "손절폭 하한 30bp, 목표 손익비 R:R=2.5 · 1.5R 도달 시 보유의 30.0% 부분익절 후 본전 이동 · 마감 10분 전 강제청산",
+        "exit_en": "stop distance floored at 30bp, target risk:reward = 2.5; at 1.5R, take partial profit on 30.0% of the position and move stop to breakeven; force-flatten 10 minutes before close",
+        "evidence_ko": "verified — 전작 stock-algo-trade에서 라이브 검증된 파라미터를 계승하고 본 저장소 백테스트/회계 사다리를 통과했다(ADR-0007). 2026-08-25 한국장 4종 체제 재편으로 현재 비활성(성과 저하가 아니라 재배분).",
+        "evidence_en": "verified — inherits parameters live-validated in the predecessor repo stock-algo-trade and passed this repo's backtest/accounting ladder (ADR-0007). Disabled since 2026-08-25's KR-focused 4-strategy realignment (a reallocation, not a performance failure).",
+        "refs": [],
+        "sizing_ko": "US 자본배분 30% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
+        "sizing_en": "US capital allocation 30%; intraday hard rail: stop capped at -5%, target capped at +10%"
+      },
       "by_market": {
         "asia": null,
         "us": {
@@ -202,6 +315,82 @@
           "verdict": "판단 불가",
           "sample_warning": true
         }
+      },
+      "curve": {
+        "asia": [],
+        "us": [
+          {
+            "date": "2026-08-11",
+            "day_net": -0.02,
+            "cum_net": -0.02,
+            "cum_trips": 1
+          },
+          {
+            "date": "2026-08-18",
+            "day_net": -1.03,
+            "cum_net": -1.05,
+            "cum_trips": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "frgn_accumulate",
+      "name_ko": "외국인 수급 적립매수",
+      "name_en": "Foreign Flow Accumulation",
+      "total": {
+        "trips": 2,
+        "wins": 2,
+        "win_rate": 1.0,
+        "ci_low": 0.3424,
+        "ci_high": 1.0,
+        "expectancy_bp": 370.5,
+        "verdict": "판단 불가",
+        "sample_warning": true,
+        "markets": [
+          "KR"
+        ]
+      },
+      "trades_per_day": 1.0,
+      "avg_hold_minutes": 2107.0,
+      "enabled": false,
+      "help": {
+        "category": "swing",
+        "theory_ko": "외국인 순매수가 여러 날 이어지는(FRGN 태그) 종목을 매일 조금씩 사서 추세를 따라가고, 이탈(FRGN_EXIT) 시 나눠 파는 외국인 수급 추세추종 가설.",
+        "theory_en": "Foreign-flow trend-following hypothesis: accumulate small daily buys in symbols with sustained net foreign buying (tagged FRGN), and scale out on a reversal (tagged FRGN_EXIT).",
+        "entry_ko": "외국인 순매수 지속 태그(FRGN)가 붙은 종목에, 개장 60분 후 평가 시점마다 1주씩 매수(일 1회)",
+        "entry_en": "For symbols tagged FRGN (sustained net foreign buying), buys 1 share(s) at an evaluation point 60 minutes after open (once per day)",
+        "exit_ko": "태그가 FRGN_EXIT(이탈)로 바뀌면 보유의 50.0%를 먼저 매도, 나머지는 다음 이탈 평가에서 청산 — 오버나이트 보유형",
+        "exit_en": "When the tag flips to FRGN_EXIT, sells 50.0% of the position first, exiting the rest at the next re-evaluation — an overnight-carry design",
+        "evidence_ko": "burn_in — 백테스트 미검증(원장 20거래일 승격 기준 도달 전). 오버나이트 보유가 전략 정의라 2026-09-03 정책으로 비활성. 과거 일별 재평가가 그날 리포트 랭킹 안 종목만 대상이라 랭킹 밖 보유 종목이 영영 재평가 안 되던 결함(매수 34/매도 1 불균형)을 2026-09-03 수리했다.",
+        "evidence_en": "burn_in — unvalidated by backtest (had not yet reached the 20-trading-day promotion threshold). Disabled since the 2026-09-03 policy because overnight holding is core to its definition. A bug where daily re-evaluation only covered symbols still in that day's report ranking (causing a 34-buy/1-sell imbalance) was fixed 2026-09-03.",
+        "refs": [],
+        "sizing_ko": "KR 자본배분 14% · 오버나이트 보유형 — 장중 손절 −5%/목표 +10% 하드레일 적용 제외 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "KR capital allocation 14%; overnight-carry design — exempt from the intraday -5%/+10% hard stop/target rail; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+      },
+      "by_market": {
+        "asia": {
+          "trips": 2,
+          "wins": 2,
+          "win_rate": 1.0,
+          "ci_low": 0.3424,
+          "ci_high": 1.0,
+          "expectancy_bp": 370.5,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        },
+        "us": null
+      },
+      "curve": {
+        "asia": [
+          {
+            "date": "2026-09-04",
+            "day_net": 14953.54,
+            "cum_net": 14953.54,
+            "cum_trips": 2
+          }
+        ],
+        "us": []
       }
     },
     {
@@ -224,6 +413,25 @@
       "trades_per_day": 4.5,
       "avg_hold_minutes": 50.1,
       "enabled": true,
+      "help": {
+        "category": "intraday",
+        "theory_ko": "야간에 생긴 시가 갭은 개장 후 일정 부분 되돌려진다는 갭 페이드 가설(Della Corte·Kosowski, Akbas 2022 등) — 단, 선물 시장 반증 연구가 있어 근거가 혼재된 전략이다.",
+        "theory_en": "Gap-fade hypothesis that an overnight opening gap partially reverts after the open (Della Corte & Kosowski, Akbas 2022, among others) — evidence is mixed, as a futures-market study contradicts it.",
+        "entry_ko": "시가 갭이 100~400bp인 종목을 개장 30분 안에 갭의 50.0%가 메워지는 방향으로 매수(고거래량 갭·300bp 초과 대형 갭은 문헌 필터로 제외)",
+        "entry_en": "Buys symbols gapping 100-400bp, betting on 50.0% gap-fill within 30 minutes of open (excludes high-relative-volume gaps and gaps over 300bp per literature-based filters)",
+        "exit_ko": "손절폭 하한 40bp, 최대 120분 보유, 마감 5분 전 강제청산",
+        "exit_en": "Stop distance floored at 40bp; holds at most 120 minutes; force-flattens 5 minutes before close",
+        "evidence_ko": "burn_in — 근거가 8개 레인 중 가장 약해 소액으로 출전 중. 원장 실측 9왕복 승률 11%(사실상 전패) — 이 방향과 일치하는 문헌 필터(고RVOL·대형 갭 제외)만 2026-09-02 추가했다.",
+        "evidence_en": "burn_in — the weakest-evidenced of the 8 parallel scalping lanes, run at minimal size for that reason. Ledger data (9 round trips) showed an 11% win rate (near-total losses) — literature-based filters (excluding high-RVOL and oversized gaps) matching that direction were added 2026-09-02.",
+        "refs": [
+          {
+            "label": "arXiv:2605.04004 (gap-fill fade study)",
+            "url": "https://arxiv.org/abs/2605.04004"
+          }
+        ],
+        "sizing_ko": "US 자본배분 6% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
+        "sizing_en": "US capital allocation 6%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+      },
       "by_market": {
         "asia": null,
         "us": {
@@ -236,6 +444,23 @@
           "verdict": "유의(음)",
           "sample_warning": true
         }
+      },
+      "curve": {
+        "asia": [],
+        "us": [
+          {
+            "date": "2026-08-31",
+            "day_net": -6.29,
+            "cum_net": -6.29,
+            "cum_trips": 1
+          },
+          {
+            "date": "2026-09-01",
+            "day_net": -9.6,
+            "cum_net": -15.89,
+            "cum_trips": 9
+          }
+        ]
       }
     },
     {
@@ -258,6 +483,25 @@
       "trades_per_day": 1.75,
       "avg_hold_minutes": 56.3,
       "enabled": true,
+      "help": {
+        "category": "intraday",
+        "theory_ko": "장중 변동성 밴드를 이탈한 방향으로 추세가 이어진다는 노이즈 밴드 돌파 가설(Zarattini·Aziz·Barbon 2024, SPY 2007~2024 비용 차감 후 Sharpe 1.33 보고).",
+        "theory_en": "Noise-band breakout hypothesis that a break outside an intraday volatility band tends to continue in that direction (Zarattini, Aziz & Barbon 2024, reporting a cost-adjusted Sharpe of 1.33 on SPY 2007-2024).",
+        "entry_ko": "5분봉 QQQ 변동성 밴드(1.0x, 14일 σ) 상단 이탈 시 TQQQ 매수, 하단 이탈 시 SQQQ(인버스) 매수 — 롱온리 계좌에서 하락장도 롱으로 표현",
+        "entry_en": "On 5-min bars, buys TQQQ when QQQ breaks above a 1.0x, 14-day volatility band, or buys SQQQ (inverse) on a break below — expresses downside as a long position",
+        "exit_ko": "손절 −1.5%(하한 40bp), 하루 같은 방향 진입 최대 2회, 마감 5분 전 강제청산",
+        "exit_en": "Stop at -1.5% (floored at 40bp); up to 2 same-direction entries per day; force-flattens 5 minutes before close",
+        "evidence_ko": "burn_in — 문헌 인용(SPY 대상), 우리 원장 실측 0. 롱온리 계좌라 하락 신호는 인버스(SQQQ) 매수로 표현 — 이 저장소의 '하락장 레인'.",
+        "evidence_en": "burn_in — a literature citation (measured on SPY), zero measurements from our own ledger. Since the account is long-only, downside signals are expressed by buying the inverse (SQQQ) — this repo's 'bear-market lane'.",
+        "refs": [
+          {
+            "label": "Zarattini, Aziz & Barbon (2024), SSRN 4824172",
+            "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4824172"
+          }
+        ],
+        "sizing_ko": "US 자본배분 9% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
+        "sizing_en": "US capital allocation 9%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+      },
       "by_market": {
         "asia": null,
         "us": {
@@ -270,6 +514,35 @@
           "verdict": "유의(음)",
           "sample_warning": true
         }
+      },
+      "curve": {
+        "asia": [],
+        "us": [
+          {
+            "date": "2026-08-31",
+            "day_net": -5.65,
+            "cum_net": -5.65,
+            "cum_trips": 1
+          },
+          {
+            "date": "2026-09-01",
+            "day_net": -1.61,
+            "cum_net": -7.25,
+            "cum_trips": 3
+          },
+          {
+            "date": "2026-09-02",
+            "day_net": -0.9,
+            "cum_net": -8.16,
+            "cum_trips": 5
+          },
+          {
+            "date": "2026-09-03",
+            "day_net": -0.85,
+            "cum_net": -9.0,
+            "cum_trips": 7
+          }
+        ]
       }
     },
     {
@@ -293,6 +566,20 @@
       "trades_per_day": 3.33,
       "avg_hold_minutes": 170.1,
       "enabled": false,
+      "help": {
+        "category": "intraday",
+        "theory_ko": "개장 30분 이후에도 세션 신고가를 거래량과 함께 돌파하는 종목은 그날 남은 시간에도 상승이 이어진다는 가설(orb_scan이 놓치는 구간을 담당).",
+        "theory_en": "Hypothesis that a volume-confirmed session-high breakout occurring after the first 30 minutes still tends to continue for the rest of the day (covers the window orb_scan misses).",
+        "entry_ko": "개장 30분 이후부터 5분봉 세션 신고가 돌파 + 거래량 2.0배 이상 시 진입(관심종목 전체, 롱 온리)",
+        "entry_en": "After 30 minutes from open, enter on a 5-min-bar session-high breakout confirmed by 2.0x volume (across the watchlist universe, long only)",
+        "exit_ko": "목표 1.0R(=진입가+R×(진입가−손절가)), 손절폭 상한 100bp · 마감 1분 전 강제청산",
+        "exit_en": "Target 1.0R (entry + R x (entry - stop)), stop distance capped at 100bp; force-flatten 1 minutes before close",
+        "evidence_ko": "burn_in — 원장 재생 27건(전체 종결 63건 중 1분봉 보유분)에서 현행 청산 규칙 중앙 −85.4bp를 익절+100bp/손절−100bp 규칙이 중앙 −7.6bp로 개선했지만 표본이 작아 판단 불가에 가깝다. 2026-08-25 한국장 4종 체제 재편으로 비활성.",
+        "evidence_en": "burn_in — replaying 27 ledger exits (of 63 total, minute-bar-holdable subset) showed the current exit rule's median -85.4bp improving to -7.6bp under a fixed +100bp/-100bp rule, but the sample is small enough to be near-inconclusive. Disabled since 2026-08-25's KR-focused realignment.",
+        "refs": [],
+        "sizing_ko": "KR 자본배분 10% · US 자본배분 10% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "KR capital allocation 10%; US capital allocation 10%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+      },
       "by_market": {
         "asia": {
           "trips": 22,
@@ -314,6 +601,138 @@
           "verdict": "판단 불가",
           "sample_warning": true
         }
+      },
+      "curve": {
+        "asia": [
+          {
+            "date": "2026-08-10",
+            "day_net": 4402.01,
+            "cum_net": 4402.01,
+            "cum_trips": 3
+          },
+          {
+            "date": "2026-08-11",
+            "day_net": -7.72,
+            "cum_net": 4394.29,
+            "cum_trips": 4
+          },
+          {
+            "date": "2026-08-12",
+            "day_net": -17411.46,
+            "cum_net": -13017.17,
+            "cum_trips": 7
+          },
+          {
+            "date": "2026-08-13",
+            "day_net": -2852.4,
+            "cum_net": -15869.57,
+            "cum_trips": 9
+          },
+          {
+            "date": "2026-08-14",
+            "day_net": -541.53,
+            "cum_net": -16411.1,
+            "cum_trips": 10
+          },
+          {
+            "date": "2026-08-18",
+            "day_net": -10201.95,
+            "cum_net": -26613.06,
+            "cum_trips": 11
+          },
+          {
+            "date": "2026-08-19",
+            "day_net": -100844.02,
+            "cum_net": -127457.08,
+            "cum_trips": 13
+          },
+          {
+            "date": "2026-08-20",
+            "day_net": -23429.28,
+            "cum_net": -150886.36,
+            "cum_trips": 15
+          },
+          {
+            "date": "2026-08-21",
+            "day_net": -213970.94,
+            "cum_net": -364857.3,
+            "cum_trips": 19
+          },
+          {
+            "date": "2026-08-24",
+            "day_net": -3368.92,
+            "cum_net": -368226.22,
+            "cum_trips": 21
+          },
+          {
+            "date": "2026-08-25",
+            "day_net": -33565.78,
+            "cum_net": -401792.0,
+            "cum_trips": 22
+          }
+        ],
+        "us": [
+          {
+            "date": "2026-08-10",
+            "day_net": 7.67,
+            "cum_net": 7.67,
+            "cum_trips": 2
+          },
+          {
+            "date": "2026-08-11",
+            "day_net": -1.69,
+            "cum_net": 5.97,
+            "cum_trips": 3
+          },
+          {
+            "date": "2026-08-12",
+            "day_net": 14.78,
+            "cum_net": 20.75,
+            "cum_trips": 4
+          },
+          {
+            "date": "2026-08-13",
+            "day_net": -23.33,
+            "cum_net": -2.58,
+            "cum_trips": 7
+          },
+          {
+            "date": "2026-08-14",
+            "day_net": -0.47,
+            "cum_net": -3.05,
+            "cum_trips": 8
+          },
+          {
+            "date": "2026-08-17",
+            "day_net": -7.52,
+            "cum_net": -10.57,
+            "cum_trips": 9
+          },
+          {
+            "date": "2026-08-18",
+            "day_net": -3.03,
+            "cum_net": -13.6,
+            "cum_trips": 10
+          },
+          {
+            "date": "2026-08-20",
+            "day_net": -8.08,
+            "cum_net": -21.68,
+            "cum_trips": 11
+          },
+          {
+            "date": "2026-08-21",
+            "day_net": -18.96,
+            "cum_net": -40.65,
+            "cum_trips": 13
+          },
+          {
+            "date": "2026-08-24",
+            "day_net": -9.52,
+            "cum_net": -50.16,
+            "cum_trips": 18
+          }
+        ]
       }
     },
     {
@@ -321,33 +740,76 @@
       "name_ko": "AI 트레이더",
       "name_en": "AI Trader",
       "total": {
-        "trips": 13,
-        "wins": 3,
-        "win_rate": 0.2308,
-        "ci_low": 0.0818,
-        "ci_high": 0.5026,
-        "expectancy_bp": -88.56,
+        "trips": 17,
+        "wins": 5,
+        "win_rate": 0.2941,
+        "ci_low": 0.1328,
+        "ci_high": 0.5313,
+        "expectancy_bp": -54.54,
         "verdict": "판단 불가",
         "sample_warning": true,
         "markets": [
           "KR"
         ]
       },
-      "trades_per_day": 4.33,
-      "avg_hold_minutes": 46.6,
+      "trades_per_day": 4.25,
+      "avg_hold_minutes": 120.8,
       "enabled": true,
+      "help": {
+        "category": "experimental",
+        "theory_ko": "규칙을 사람이 코드로 정하는 대신, 그 판단 자체를 LLM에 맡기면 규칙 기반 전략과 다른 방식으로 기회를 잡을 수 있는지 시험하는 실험 레인(12번째 참가자, 한 달 테스트).",
+        "theory_en": "An experimental lane testing whether handing the trading decision itself to an LLM — instead of hand-coded rules — can find opportunities the rule-based strategies miss (the 12th entrant, run as a one-month trial).",
+        "entry_ko": "별도 프로세스(거래 핫패스 밖)가 내린 LLM 판단을 인박스 파일로 읽어 그대로 집행 — 최대 5종목, 종목당 최대 34.0% 비중",
+        "entry_en": "Reads LLM trading decisions produced by a separate process outside the trading hot path from an inbox file and executes them as-is — up to 5 positions, max 34.0% weight per position",
+        "exit_ko": "하드 손절 −5.0%, 마감 강제청산(오버나이트 금지)",
+        "exit_en": "Hard stop at -5.0%; force-flattened at close (no overnight holding)",
+        "evidence_ko": "burn_in — 백테스트 표본 0(LLM 판단은 리플레이 불가). paper 번인(한 달 테스트)이 유일한 검증 경로. LLM 호출은 거래 핫패스 밖 별도 프로세스에서만 이뤄진다(엔진은 인박스 파일을 읽기만 함).",
+        "evidence_en": "burn_in — zero backtest samples (an LLM's judgment cannot be replayed). Paper burn-in (a one-month trial) is the only validation path. The LLM call happens only in a separate process outside the trading hot path — the engine only reads an inbox file.",
+        "refs": [],
+        "sizing_ko": "KR 자본배분 8% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "KR capital allocation 8%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+      },
       "by_market": {
         "asia": {
-          "trips": 13,
-          "wins": 3,
-          "win_rate": 0.2308,
-          "ci_low": 0.0818,
-          "ci_high": 0.5026,
-          "expectancy_bp": -88.56,
+          "trips": 17,
+          "wins": 5,
+          "win_rate": 0.2941,
+          "ci_low": 0.1328,
+          "ci_high": 0.5313,
+          "expectancy_bp": -54.54,
           "verdict": "판단 불가",
           "sample_warning": true
         },
         "us": null
+      },
+      "curve": {
+        "asia": [
+          {
+            "date": "2026-09-01",
+            "day_net": -40370.0,
+            "cum_net": -40370.0,
+            "cum_trips": 11
+          },
+          {
+            "date": "2026-09-02",
+            "day_net": -16422.57,
+            "cum_net": -56792.58,
+            "cum_trips": 12
+          },
+          {
+            "date": "2026-09-03",
+            "day_net": -5426.4,
+            "cum_net": -62218.98,
+            "cum_trips": 13
+          },
+          {
+            "date": "2026-09-04",
+            "day_net": 2138.13,
+            "cum_net": -60080.86,
+            "cum_trips": 17
+          }
+        ],
+        "us": []
       }
     },
     {
@@ -370,6 +832,20 @@
       "trades_per_day": 1.0,
       "avg_hold_minutes": 75.1,
       "enabled": true,
+      "help": {
+        "category": "intraday",
+        "theory_ko": "원장 실측 — 고거래량(RVOL) 진입은 오히려 나쁘다(D+1 스피어만 −0.46, 장중 고RVOL −79.8bp vs 저RVOL −31.3bp): 정반대로 '조용한' 종목이 밴드 밖에서 안으로 복귀할 때만 매매하는 가설.",
+        "theory_en": "Ledger-derived hypothesis (high relative-volume entries measured worse: Spearman -0.46 on D+1, -79.8bp for high-RVOL vs -31.3bp for low-RVOL intraday): trades only 'quiet' symbols reverting from outside a band back inside it.",
+        "entry_ko": "5분봉, 상대거래량 ≤ 1.2·ADX ≤ 20인 '조용한' 종목만 대상 — VWAP 밴드(2.0σ) 밖으로 나갔다가 안으로 복귀한 종가에 매수(개장 60분 후 ~ 마감 60분 전, 세션당 최대 1회)",
+        "entry_en": "On 5-min bars, only trades 'quiet' symbols (relative volume ≤ 1.2, ADX ≤ 20) — buys when the close moves back inside a 2.0-sigma VWAP band from outside it (between 60 min after open and 60 min before close, up to 1 entries/session)",
+        "exit_ko": "목표 최소 60bp, 75분 타임아웃 청산",
+        "exit_en": "Targets at least 60bp; times out after 75 minutes",
+        "evidence_ko": "burn_in — 백테스트 표본 0. 문헌이 '스프레드 조정 시 단기 반전의 유의성 급감'을 반복 경고 — KR 개별주에서 먼저 죽고 US·KR ETF에서만 살아남을 수 있다는 것을 알고 가동한다.",
+        "evidence_en": "burn_in — zero backtest samples. The literature repeatedly warns that short-term reversal significance collapses after spread adjustment; this is run knowing it may fail first on KR individual stocks and survive only on US/KR ETFs, if at all.",
+        "refs": [],
+        "sizing_ko": "US 자본배분 6% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
+        "sizing_en": "US capital allocation 6%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+      },
       "by_market": {
         "asia": null,
         "us": {
@@ -382,6 +858,17 @@
           "verdict": "판단 불가",
           "sample_warning": true
         }
+      },
+      "curve": {
+        "asia": [],
+        "us": [
+          {
+            "date": "2026-09-02",
+            "day_net": 1.3,
+            "cum_net": 1.3,
+            "cum_trips": 1
+          }
+        ]
       }
     },
     {
@@ -404,6 +891,20 @@
       "trades_per_day": 3.0,
       "avg_hold_minutes": 82.8,
       "enabled": true,
+      "help": {
+        "category": "intraday",
+        "theory_ko": "당일 뉴스 호재(EVENT 태그)가 붙은 종목은 개장 직후 매수해도 그 상승세가 장중 이어진다는 뉴스 모멘텀 가설.",
+        "theory_en": "News-momentum hypothesis that symbols tagged with same-day positive news (EVENT) keep rising through the session even if bought right at the open.",
+        "entry_ko": "당일 뉴스 EVENT 태그 종목만, 개장 첫 1분봉이 양봉으로 마감해야 진입(개장 후 120초 이내), 세션당 최대 5종목",
+        "entry_en": "Only symbols tagged EVENT (news) that day; enters only if the first 1-min bar closes bullish (within 120 seconds of open), up to 5 symbols per session",
+        "exit_ko": "손절 −2.0%, +5.0%에서 50.0% 부분익절, +10.0% 전량 익절 · 시간청산 없음, 마감 1분 전 강제청산",
+        "exit_en": "Stop at -2.0%, partial take-profit (50.0%) at +5.0%, full exit at +10.0%; no time-based exit; force-flatten 1 minutes before close",
+        "evidence_ko": "burn_in — 초기 표본에서 전 전략 중 최악(6청산 1승, 순 −27,018원)이었으나 원인(정보 없이 시가를 사던 결함)을 찾아 '첫봉 양봉 확인' 규칙을 추가했다. 2026-09-03부터 news_scalp를 '같은 유니버스·다른 진입시점' 대조군으로 삼은 A/B로 재검증 중(`run scoreboard --ab`).",
+        "evidence_en": "burn_in — an early sample was the worst of all strategies (6 exits, 1 win, net -27,018 KRW); the root cause (buying at the open with zero price information) was found and a 'first bar must close bullish' rule was added. Since 2026-09-03 it is being re-evaluated in an A/B pairing against news_scalp ('same universe, different entry timing'; see `run scoreboard --ab`).",
+        "refs": [],
+        "sizing_ko": "KR 자본배분 10% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "KR capital allocation 10%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+      },
       "by_market": {
         "asia": {
           "trips": 6,
@@ -416,6 +917,23 @@
           "sample_warning": true
         },
         "us": null
+      },
+      "curve": {
+        "asia": [
+          {
+            "date": "2026-08-13",
+            "day_net": 1978.62,
+            "cum_net": 1978.62,
+            "cum_trips": 3
+          },
+          {
+            "date": "2026-08-18",
+            "day_net": -28996.47,
+            "cum_net": -27017.86,
+            "cum_trips": 6
+          }
+        ],
+        "us": []
       }
     },
     {
@@ -438,6 +956,20 @@
       "trades_per_day": 3.0,
       "avg_hold_minutes": 196.6,
       "enabled": true,
+      "help": {
+        "category": "intraday",
+        "theory_ko": "news_momentum과 같은 뉴스 촉매 종목(EVENT_SCALP)을 대상으로 부분익절 없이 단순 손절+마감청산만 쓰면, '진입 시점'만 다른 결과를 news_momentum과 비교해 볼 수 있다는 A/B 설계.",
+        "theory_en": "An A/B design: trading the same news-catalyst symbols (EVENT_SCALP) as news_momentum but with a simpler stop+close-only exit (no partial take-profit) isolates the effect of entry timing when compared against news_momentum.",
+        "entry_ko": "당일 뉴스 EVENT_SCALP 태그 종목만, 개장 후 120초 이내 즉시 진입, 세션당 최대 3종목",
+        "entry_en": "Only symbols tagged EVENT_SCALP that day; enters immediately within 120 seconds of open, up to 3 symbols per session",
+        "exit_ko": "손절 −3.0%, 목표가 없이 마감까지 보유 · 마감 1분 전 강제청산",
+        "exit_en": "Stop at -3.0%, no fixed target — holds until close; force-flatten 1 minutes before close",
+        "evidence_ko": "burn_in — 2026-08-25 비활성 이전 표본 n=6, −174.5bp(표본 밖이라 판단 불가). 2026-09-03 A/B 목적으로 재활성했고, 배분을 프로토콜 하한 바로 위(KR 4%)로 최소화해 표본을 쌓는 중이다.",
+        "evidence_en": "burn_in — before its 2026-08-25 deactivation, a sample of n=6 showed -174.5bp (too small to be conclusive). Reactivated 2026-09-03 for A/B purposes at a minimal allocation (KR 4%, just above the protocol floor) while it accumulates a sample.",
+        "refs": [],
+        "sizing_ko": "KR 자본배분 4% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "KR capital allocation 4%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+      },
       "by_market": {
         "asia": {
           "trips": 6,
@@ -450,6 +982,23 @@
           "sample_warning": true
         },
         "us": null
+      },
+      "curve": {
+        "asia": [
+          {
+            "date": "2026-08-20",
+            "day_net": -264962.17,
+            "cum_net": -264962.17,
+            "cum_trips": 3
+          },
+          {
+            "date": "2026-08-21",
+            "day_net": -97752.12,
+            "cum_net": -362714.28,
+            "cum_trips": 6
+          }
+        ],
+        "us": []
       }
     },
     {
@@ -472,6 +1021,20 @@
       "trades_per_day": 2.67,
       "avg_hold_minutes": 98.6,
       "enabled": false,
+      "help": {
+        "category": "intraday",
+        "theory_ko": "orb의 임의 종목판 — 개장 레인지 돌파가 특정 두 종목(TQQQ/SQQQ)만이 아니라 관심종목 전반에서도 그날 방향을 예고한다는 가설.",
+        "theory_en": "The any-symbol version of orb — hypothesis that an opening-range breakout signals the day's direction not just for TQQQ/SQQQ but across the watchlist universe.",
+        "entry_ko": "개장 5분 레인지 상단 돌파 시 매수(관심종목 전체, 도지 0.5% 미만 제외, 인버스 쌍이 없어 롱 온리 — 음봉은 스킵)",
+        "entry_en": "Buy on a breakout above the 5-minute opening range across the watchlist universe (excludes doji under 0.5%; long only since there is no inverse pair — bearish range bars are skipped)",
+        "exit_ko": "목표 1.0R(=진입가+R×(진입가−손절가)), 손절폭 상한 100bp · 마감 1분 전 강제청산",
+        "exit_en": "Target 1.0R (entry + R x (entry - stop)), stop distance capped at 100bp; force-flatten 1 minutes before close",
+        "evidence_ko": "burn_in — TQQQ 전용으로 최적화된 파라미터를 임의 종목에 그대로 이식한 것이라 KR 재측정 전까지 근거가 없다. 종결 표본 0건. 2026-08-25 한국장 4종 체제 재편으로 비활성.",
+        "evidence_en": "burn_in — reuses parameters optimized for TQQQ on arbitrary symbols without re-validation. Zero closed trades so far. Disabled since 2026-08-25's KR-focused realignment.",
+        "refs": [],
+        "sizing_ko": "KR 자본배분 10% · US 자본배분 20% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "KR capital allocation 10%; US capital allocation 20%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+      },
       "by_market": {
         "asia": {
           "trips": 8,
@@ -484,6 +1047,29 @@
           "sample_warning": true
         },
         "us": null
+      },
+      "curve": {
+        "asia": [
+          {
+            "date": "2026-08-19",
+            "day_net": -39531.69,
+            "cum_net": -39531.69,
+            "cum_trips": 4
+          },
+          {
+            "date": "2026-08-21",
+            "day_net": -52509.11,
+            "cum_net": -92040.81,
+            "cum_trips": 7
+          },
+          {
+            "date": "2026-08-24",
+            "day_net": -68917.52,
+            "cum_net": -160958.32,
+            "cum_trips": 8
+          }
+        ],
+        "us": []
       }
     },
     {
@@ -506,6 +1092,20 @@
       "trades_per_day": 1.0,
       "avg_hold_minutes": 2495.0,
       "enabled": false,
+      "help": {
+        "category": "swing",
+        "theory_ko": "지수 ETF 수익의 대부분이 장중이 아니라 '밤'(종가~다음 개장)에서 발생한다는 오버나이트 드리프트 가설(Lachance, Review of Financial Economics 2023 등).",
+        "theory_en": "Overnight-drift hypothesis that most index-ETF returns accrue overnight (close to next open) rather than intraday (Lachance, Review of Financial Economics 2023, among others).",
+        "entry_ko": "종가 5분 전 QQQ 매수",
+        "entry_en": "Buys QQQ 5 minutes before the close",
+        "exit_ko": "익일 개장 5분 이내 매도, 손절 −3.0% — 오버나이트 보유형(왕복 1회, 일중 전략들의 벤치마크 역할도 겸함)",
+        "exit_en": "Sells within 5 minutes of the next open; stop at -3.0% — an overnight-carry design (one round trip; also serves as the benchmark intraday strategies must beat)",
+        "evidence_ko": "burn_in — 표본 0(문헌 인용이지 우리 실측이 아니다). 오버나이트 보유가 전략 정의라 2026-09-03 정책으로 비활성.",
+        "evidence_en": "burn_in — zero samples so far (a literature citation, not our own measurement). Disabled since the 2026-09-03 policy because overnight holding is core to its definition.",
+        "refs": [],
+        "sizing_ko": "US 자본배분 15% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 오버나이트 보유형 — 장중 손절 −5%/목표 +10% 하드레일 적용 제외",
+        "sizing_en": "US capital allocation 15%; per-entry size = strategy capital x 50% (target_weight); overnight-carry design — exempt from the intraday -5%/+10% hard stop/target rail"
+      },
       "by_market": {
         "asia": null,
         "us": {
@@ -518,6 +1118,23 @@
           "verdict": "판단 불가",
           "sample_warning": true
         }
+      },
+      "curve": {
+        "asia": [],
+        "us": [
+          {
+            "date": "2026-08-31",
+            "day_net": -17.62,
+            "cum_net": -17.62,
+            "cum_trips": 1
+          },
+          {
+            "date": "2026-09-01",
+            "day_net": -56.63,
+            "cum_net": -74.25,
+            "cum_trips": 2
+          }
+        ]
       }
     },
     {
@@ -540,6 +1157,20 @@
       "trades_per_day": 5.8,
       "avg_hold_minutes": 49.6,
       "enabled": true,
+      "help": {
+        "category": "intraday",
+        "theory_ko": "원장 실측 — scalp_1m 손절 건의 76%(35/46)가 당일 진입가 위로 회복(중앙 +105bp): 방향은 맞았지만 파동 고점에서 샀다는 뜻이라, 같은 임펄스 신호를 눌림목까지 기다렸다 사는 가설.",
+        "theory_en": "Ledger-derived hypothesis: 76% (35/46) of scalp_1m stop-outs recovered above the entry price same-day (median +105bp) — the direction was right but entries were made at the impulse peak, so this strategy buys the same impulse signal on its pullback instead.",
+        "entry_ko": "5분봉에서 80bp 이상 임펄스 발생 후 그 되돌림이 0.38~0.62% 구간(EMA9 부근)일 때 매수 — 파동 고점이 아니라 눌림목에서 진입",
+        "entry_en": "On 5-min bars, after a 80bp+ impulse move, buys the pullback once retracement reaches 0.38-0.62% (near EMA9) — enters on the dip, not the impulse peak",
+        "exit_ko": "손절 = ATR 버퍼 x 0.3, 목표 = 임펄스 x 1.2, 60분 타임아웃 청산",
+        "exit_en": "Stop = ATR buffer x 0.3; target = impulse size x 1.2; times out after 60 minutes",
+        "evidence_ko": "burn_in — 백테스트 표본 0(Toss 5분봉 롤링 히스토리 한계). 리서치 스크리닝(US 1분봉 10.7년 OOS)에서 gross +0.9bp로 유일하게 양수였지만 실측 왕복비용 10.5bp를 못 이겨 순손실 — 게이트 통과 0건. paper 번인이 유일한 검증 경로.",
+        "evidence_en": "burn_in — zero backtest samples (limited by Toss's rolling 5-min history). A 10.7-year US OOS screen found the only positive gross edge among the three tested (+0.9bp), but it still lost net after the measured 10.5bp round-trip cost — zero strategies passed the gate.",
+        "refs": [],
+        "sizing_ko": "US 자본배분 7.5% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
+        "sizing_en": "US capital allocation 7.5%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+      },
       "by_market": {
         "asia": null,
         "us": {
@@ -552,6 +1183,41 @@
           "verdict": "유의(음)",
           "sample_warning": true
         }
+      },
+      "curve": {
+        "asia": [],
+        "us": [
+          {
+            "date": "2026-08-28",
+            "day_net": -23.7,
+            "cum_net": -23.7,
+            "cum_trips": 8
+          },
+          {
+            "date": "2026-08-31",
+            "day_net": 72.74,
+            "cum_net": 49.05,
+            "cum_trips": 15
+          },
+          {
+            "date": "2026-09-01",
+            "day_net": 0.55,
+            "cum_net": 49.6,
+            "cum_trips": 18
+          },
+          {
+            "date": "2026-09-02",
+            "day_net": -5.05,
+            "cum_net": 44.55,
+            "cum_trips": 23
+          },
+          {
+            "date": "2026-09-03",
+            "day_net": -7.73,
+            "cum_net": 36.82,
+            "cum_trips": 29
+          }
+        ]
       }
     },
     {
@@ -574,6 +1240,20 @@
       "trades_per_day": 2.0,
       "avg_hold_minutes": 31.9,
       "enabled": true,
+      "help": {
+        "category": "intraday",
+        "theory_ko": "원장 실측 — scalp_1m 손절 건의 76%(35/46)가 당일 진입가 위로 회복(중앙 +105bp): 방향은 맞았지만 파동 고점에서 샀다는 뜻이라, 같은 임펄스 신호를 눌림목까지 기다렸다 사는 가설.",
+        "theory_en": "Ledger-derived hypothesis: 76% (35/46) of scalp_1m stop-outs recovered above the entry price same-day (median +105bp) — the direction was right but entries were made at the impulse peak, so this strategy buys the same impulse signal on its pullback instead.",
+        "entry_ko": "5분봉에서 80bp 이상 임펄스 발생 후 그 되돌림이 0.38~0.62% 구간(EMA9 부근)일 때 매수 — 파동 고점이 아니라 눌림목에서 진입 (A/B 촉매 갈래 — EVENT/FRGN/TREND 태그가 붙은 종목만 대상)",
+        "entry_en": "On 5-min bars, after a 80bp+ impulse move, buys the pullback once retracement reaches 0.38-0.62% (near EMA9) — enters on the dip, not the impulse peak (A/B catalyst arm — only trades symbols tagged EVENT/FRGN/TREND)",
+        "exit_ko": "손절 = ATR 버퍼 x 0.3, 목표 = 임펄스 x 1.2, 60분 타임아웃 청산",
+        "exit_en": "Stop = ATR buffer x 0.3; target = impulse size x 1.2; times out after 60 minutes",
+        "evidence_ko": "burn_in — 백테스트 표본 0(Toss 5분봉 롤링 히스토리 한계). 리서치 스크리닝(US 1분봉 10.7년 OOS)에서 gross +0.9bp로 유일하게 양수였지만 실측 왕복비용 10.5bp를 못 이겨 순손실 — 게이트 통과 0건. paper 번인이 유일한 검증 경로. pullback_impulse와 파라미터는 동일, 유니버스만 다른 A/B 짝 — `run scoreboard --ab`(양쪽 n≥30 전엔 판단 불가)로 판정.",
+        "evidence_en": "burn_in — zero backtest samples (limited by Toss's rolling 5-min history). A 10.7-year US OOS screen found the only positive gross edge among the three tested (+0.9bp), but it still lost net after the measured 10.5bp round-trip cost — zero strategies passed the gate. An A/B pair with pullback_impulse: identical parameters, different universe — judged via `run scoreboard --ab` (n>=30 both arms).",
+        "refs": [],
+        "sizing_ko": "US 자본배분 7.5% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
+        "sizing_en": "US capital allocation 7.5%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+      },
       "by_market": {
         "asia": null,
         "us": {
@@ -586,6 +1266,17 @@
           "verdict": "판단 불가",
           "sample_warning": true
         }
+      },
+      "curve": {
+        "asia": [],
+        "us": [
+          {
+            "date": "2026-09-03",
+            "day_net": 0.26,
+            "cum_net": 0.26,
+            "cum_trips": 2
+          }
+        ]
       }
     },
     {
@@ -593,12 +1284,12 @@
       "name_ko": "1분봉 스캘핑",
       "name_en": "1-Minute Scalping",
       "total": {
-        "trips": 137,
-        "wins": 31,
-        "win_rate": 0.2263,
-        "ci_low": 0.1642,
-        "ci_high": 0.3032,
-        "expectancy_bp": -48.18,
+        "trips": 142,
+        "wins": 33,
+        "win_rate": 0.2324,
+        "ci_low": 0.1705,
+        "ci_high": 0.3084,
+        "expectancy_bp": -48.75,
         "verdict": "유의(음)",
         "sample_warning": false,
         "markets": [
@@ -606,17 +1297,36 @@
           "US"
         ]
       },
-      "trades_per_day": 10.54,
-      "avg_hold_minutes": 19.9,
+      "trades_per_day": 10.14,
+      "avg_hold_minutes": 20.6,
       "enabled": true,
+      "help": {
+        "category": "intraday",
+        "theory_ko": "1분봉 거래량 서지 또는 이동평균 지지를 짧게 잡아 스캘핑하되, 손절은 구조(스윙 저점) 기반으로 두고 익절은 본전 이동+트레일링으로 상방을 열어 둔다는 가설 — 원장 실측 반사실 분석으로 규칙을 여러 차례 다듬었다.",
+        "theory_en": "Scalps short 1-min volume-surge or moving-average-support setups, using a structure-based (swing-low) stop and a breakeven-plus-trailing exit to leave upside open — rules have been iteratively refined via counterfactual replay of ledger data.",
+        "entry_ko": "1분봉에서 직전 20봉 평균 대비 3.0배 이상인 상승봉(거래량 서지) 또는 60선(1분) 지지(허용오차 0.2%)를 확인해 진입 · KR은 개장 30분간 진입 지연(원장 실측: 08시대 승률 15%·09시대 30%)",
+        "entry_en": "Enters on a 1-min volume-surge bar (3.0x the trailing 20-bar average) or a bounce off the 60-period 1-min moving average (tolerance 0.2%); In KR, entries are delayed 30 minutes after open (ledger data: 15% win rate in the 8am hour vs 30% in the 9am hour)",
+        "exit_ko": "손절 = 최근 스윙 저점(구조) 아래, 하드캡 −2.0%, +1.5R 도달 시 50.0% 부분익절 · +100bp 도달 시 본전 이동 + 70bp 트레일링 스톱, 마감 1분 전 강제청산",
+        "exit_en": "Stop is placed below the recent swing low (structure-based), hard-capped at -2.0%; takes partial profit (50.0%) at +1.5R; at +100bp moves the stop to breakeven and trails by 70bp; force-flattens 1 minutes before close",
+        "evidence_ko": "burn_in — KR 1년 분봉 게이트 NO_GO(6폴드 전부 비양수, 2026-09-04). US 10.7년 OOS(12폴드)에서도 gross −2.2bp로 실측 왕복비용 10.5bp를 못 이겨 순손실, DSR≈0, 게이트 통과 0건. '수수료가 엣지보다 크다'는 원장의 결론을 10년 데이터로 재현한 사례.",
+        "evidence_en": "burn_in — the 1-year KR minute-bar gate returned NO_GO (all 6 folds non-positive, 2026-09-04). A 10.7-year US OOS screen (12 folds) also showed a -2.2bp gross edge, losing net against the measured 10.5bp round-trip cost, DSR≈0, zero gates passed.",
+        "refs": [
+          {
+            "label": "arXiv:1005.3535 (opening-volatility research cited for KR entry delay)",
+            "url": "https://arxiv.org/abs/1005.3535"
+          }
+        ],
+        "sizing_ko": "KR 자본배분 7.5% · US 자본배분 9% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "KR capital allocation 7.5%; US capital allocation 9%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+      },
       "by_market": {
         "asia": {
-          "trips": 79,
-          "wins": 21,
-          "win_rate": 0.2658,
-          "ci_low": 0.1809,
-          "ci_high": 0.3724,
-          "expectancy_bp": -58.97,
+          "trips": 84,
+          "wins": 23,
+          "win_rate": 0.2738,
+          "ci_low": 0.1899,
+          "ci_high": 0.3775,
+          "expectancy_bp": -59.29,
           "verdict": "유의(음)",
           "sample_warning": false
         },
@@ -630,6 +1340,144 @@
           "verdict": "유의(음)",
           "sample_warning": false
         }
+      },
+      "curve": {
+        "asia": [
+          {
+            "date": "2026-08-18",
+            "day_net": -8111.96,
+            "cum_net": -8111.96,
+            "cum_trips": 4
+          },
+          {
+            "date": "2026-08-19",
+            "day_net": -95220.46,
+            "cum_net": -103332.42,
+            "cum_trips": 10
+          },
+          {
+            "date": "2026-08-20",
+            "day_net": -409559.69,
+            "cum_net": -512892.11,
+            "cum_trips": 16
+          },
+          {
+            "date": "2026-08-21",
+            "day_net": -335618.89,
+            "cum_net": -848511.01,
+            "cum_trips": 26
+          },
+          {
+            "date": "2026-08-24",
+            "day_net": -261335.35,
+            "cum_net": -1109846.35,
+            "cum_trips": 35
+          },
+          {
+            "date": "2026-08-26",
+            "day_net": -303272.95,
+            "cum_net": -1413119.31,
+            "cum_trips": 40
+          },
+          {
+            "date": "2026-08-27",
+            "day_net": -92391.58,
+            "cum_net": -1505510.89,
+            "cum_trips": 48
+          },
+          {
+            "date": "2026-08-28",
+            "day_net": -202537.72,
+            "cum_net": -1708048.61,
+            "cum_trips": 65
+          },
+          {
+            "date": "2026-09-01",
+            "day_net": 34011.71,
+            "cum_net": -1674036.9,
+            "cum_trips": 70
+          },
+          {
+            "date": "2026-09-02",
+            "day_net": -732.09,
+            "cum_net": -1674768.99,
+            "cum_trips": 74
+          },
+          {
+            "date": "2026-09-03",
+            "day_net": -8089.86,
+            "cum_net": -1682858.85,
+            "cum_trips": 79
+          },
+          {
+            "date": "2026-09-04",
+            "day_net": -12517.91,
+            "cum_net": -1695376.77,
+            "cum_trips": 84
+          }
+        ],
+        "us": [
+          {
+            "date": "2026-08-18",
+            "day_net": -0.29,
+            "cum_net": -0.29,
+            "cum_trips": 1
+          },
+          {
+            "date": "2026-08-19",
+            "day_net": 25.92,
+            "cum_net": 25.64,
+            "cum_trips": 7
+          },
+          {
+            "date": "2026-08-24",
+            "day_net": -36.71,
+            "cum_net": -11.07,
+            "cum_trips": 14
+          },
+          {
+            "date": "2026-08-25",
+            "day_net": -29.36,
+            "cum_net": -40.44,
+            "cum_trips": 18
+          },
+          {
+            "date": "2026-08-27",
+            "day_net": -43.88,
+            "cum_net": -84.32,
+            "cum_trips": 29
+          },
+          {
+            "date": "2026-08-28",
+            "day_net": -60.81,
+            "cum_net": -145.12,
+            "cum_trips": 33
+          },
+          {
+            "date": "2026-08-31",
+            "day_net": -8.6,
+            "cum_net": -153.72,
+            "cum_trips": 39
+          },
+          {
+            "date": "2026-09-01",
+            "day_net": -35.22,
+            "cum_net": -188.94,
+            "cum_trips": 48
+          },
+          {
+            "date": "2026-09-02",
+            "day_net": -4.6,
+            "cum_net": -193.54,
+            "cum_trips": 54
+          },
+          {
+            "date": "2026-09-03",
+            "day_net": -9.98,
+            "cum_net": -203.52,
+            "cum_trips": 58
+          }
+        ]
       }
     },
     {
@@ -637,23 +1485,52 @@
       "name_ko": "1분봉 스캘핑(촉매 갈래)",
       "name_en": "1-Minute Scalping (catalyst arm)",
       "total": {
-        "trips": 5,
-        "wins": 1,
-        "win_rate": 0.2,
-        "ci_low": 0.0362,
-        "ci_high": 0.6245,
-        "expectancy_bp": -34.27,
+        "trips": 9,
+        "wins": 2,
+        "win_rate": 0.2222,
+        "ci_low": 0.0632,
+        "ci_high": 0.5474,
+        "expectancy_bp": -31.15,
         "verdict": "판단 불가",
         "sample_warning": true,
         "markets": [
+          "KR",
           "US"
         ]
       },
-      "trades_per_day": 5.0,
-      "avg_hold_minutes": 35.3,
+      "trades_per_day": 4.5,
+      "avg_hold_minutes": 37.1,
       "enabled": true,
+      "help": {
+        "category": "intraday",
+        "theory_ko": "1분봉 거래량 서지 또는 이동평균 지지를 짧게 잡아 스캘핑하되, 손절은 구조(스윙 저점) 기반으로 두고 익절은 본전 이동+트레일링으로 상방을 열어 둔다는 가설 — 원장 실측 반사실 분석으로 규칙을 여러 차례 다듬었다.",
+        "theory_en": "Scalps short 1-min volume-surge or moving-average-support setups, using a structure-based (swing-low) stop and a breakeven-plus-trailing exit to leave upside open — rules have been iteratively refined via counterfactual replay of ledger data.",
+        "entry_ko": "1분봉에서 직전 20봉 평균 대비 3.0배 이상인 상승봉(거래량 서지) 또는 60선(1분) 지지(허용오차 0.2%)를 확인해 진입 · KR은 개장 30분간 진입 지연(원장 실측: 08시대 승률 15%·09시대 30%) (A/B 촉매 갈래 — EVENT/FRGN/TREND 태그가 붙은 종목만 대상)",
+        "entry_en": "Enters on a 1-min volume-surge bar (3.0x the trailing 20-bar average) or a bounce off the 60-period 1-min moving average (tolerance 0.2%); In KR, entries are delayed 30 minutes after open (ledger data: 15% win rate in the 8am hour vs 30% in the 9am hour) (A/B catalyst arm — only trades symbols tagged EVENT/FRGN/TREND)",
+        "exit_ko": "손절 = 최근 스윙 저점(구조) 아래, 하드캡 −2.0%, +1.5R 도달 시 50.0% 부분익절 · +100bp 도달 시 본전 이동 + 70bp 트레일링 스톱, 마감 1분 전 강제청산",
+        "exit_en": "Stop is placed below the recent swing low (structure-based), hard-capped at -2.0%; takes partial profit (50.0%) at +1.5R; at +100bp moves the stop to breakeven and trails by 70bp; force-flattens 1 minutes before close",
+        "evidence_ko": "burn_in — KR 1년 분봉 게이트 NO_GO(6폴드 전부 비양수, 2026-09-04). US 10.7년 OOS(12폴드)에서도 gross −2.2bp로 실측 왕복비용 10.5bp를 못 이겨 순손실, DSR≈0, 게이트 통과 0건. '수수료가 엣지보다 크다'는 원장의 결론을 10년 데이터로 재현한 사례. scalp_1m와 파라미터는 동일, 유니버스만 다른 A/B 짝 — `run scoreboard --ab`(양쪽 n≥30 전엔 판단 불가)로 판정.",
+        "evidence_en": "burn_in — the 1-year KR minute-bar gate returned NO_GO (all 6 folds non-positive, 2026-09-04). A 10.7-year US OOS screen (12 folds) also showed a -2.2bp gross edge, losing net against the measured 10.5bp round-trip cost, DSR≈0, zero gates passed. An A/B pair with scalp_1m: identical parameters, different universe — judged via `run scoreboard --ab` (n>=30 both arms).",
+        "refs": [
+          {
+            "label": "arXiv:1005.3535 (opening-volatility research cited for KR entry delay)",
+            "url": "https://arxiv.org/abs/1005.3535"
+          }
+        ],
+        "sizing_ko": "KR 자본배분 7.5% · US 자본배분 9% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "KR capital allocation 7.5%; US capital allocation 9%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+      },
       "by_market": {
-        "asia": null,
+        "asia": {
+          "trips": 4,
+          "wins": 1,
+          "win_rate": 0.25,
+          "ci_low": 0.0456,
+          "ci_high": 0.6994,
+          "expectancy_bp": -27.25,
+          "verdict": "판단 불가",
+          "sample_warning": true
+        },
         "us": {
           "trips": 5,
           "wins": 1,
@@ -664,6 +1541,24 @@
           "verdict": "판단 불가",
           "sample_warning": true
         }
+      },
+      "curve": {
+        "asia": [
+          {
+            "date": "2026-09-04",
+            "day_net": -4504.23,
+            "cum_net": -4504.23,
+            "cum_trips": 4
+          }
+        ],
+        "us": [
+          {
+            "date": "2026-09-03",
+            "day_net": -3.67,
+            "cum_net": -3.67,
+            "cum_trips": 5
+          }
+        ]
       }
     },
     {
@@ -687,6 +1582,20 @@
       "trades_per_day": 1.33,
       "avg_hold_minutes": 45.4,
       "enabled": true,
+      "help": {
+        "category": "intraday",
+        "theory_ko": "시가에 전일 레인지의 일정 비율을 더한 값을 상향 돌파하면 그날 상승이 확장된다는 변동성 돌파 가설(Larry Williams 원 공식).",
+        "theory_en": "Volatility-breakout hypothesis that a break above open + a fraction of the prior day's range signals expanding upside for the day (Larry Williams' original formula).",
+        "entry_ko": "시가 + 전일 레인지 x 0.5(Larry Williams 원 공식) 상향 돌파 시 매수, 목표 없이 추종",
+        "entry_en": "Buys on a breakout above open + prior-day range x 0.5 (Larry Williams' original formula); no fixed target, follows the trend",
+        "exit_ko": "손절폭 하한 40bp, 마감 5분 전 청산",
+        "exit_en": "Stop distance floored at 40bp; flattens 5 minutes before close",
+        "evidence_ko": "burn_in — Larry Williams 원 공식 인용, 우리 원장 실측 0. KR은 ETF 전용(왕복 ~4bp 실측 — 비용을 이기는 유일한 KR venue), US는 TQQQ.",
+        "evidence_en": "burn_in — a citation of Larry Williams' original formula, zero measurements from our own ledger. KR trades ETFs only (measured ~4bp round-trip cost, the only KR venue that beats cost); US trades TQQQ.",
+        "refs": [],
+        "sizing_ko": "KR 자본배분 7% · US 자본배분 5% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "KR capital allocation 7%; US capital allocation 5%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+      },
       "by_market": {
         "asia": {
           "trips": 2,
@@ -708,6 +1617,30 @@
           "verdict": "판단 불가",
           "sample_warning": true
         }
+      },
+      "curve": {
+        "asia": [
+          {
+            "date": "2026-08-31",
+            "day_net": 11946.71,
+            "cum_net": 11946.71,
+            "cum_trips": 2
+          }
+        ],
+        "us": [
+          {
+            "date": "2026-09-01",
+            "day_net": -0.62,
+            "cum_net": -0.62,
+            "cum_trips": 1
+          },
+          {
+            "date": "2026-09-03",
+            "day_net": -0.54,
+            "cum_net": -1.16,
+            "cum_trips": 2
+          }
+        ]
       }
     },
     {
@@ -715,23 +1648,47 @@
       "name_ko": "변동성 돌파(촉매 갈래)",
       "name_en": "Volatility Breakout (catalyst arm)",
       "total": {
-        "trips": 3,
+        "trips": 9,
         "wins": 2,
-        "win_rate": 0.6667,
-        "ci_low": 0.2077,
-        "ci_high": 0.9385,
-        "expectancy_bp": -46.35,
+        "win_rate": 0.2222,
+        "ci_low": 0.0632,
+        "ci_high": 0.5474,
+        "expectancy_bp": -82.03,
         "verdict": "판단 불가",
         "sample_warning": true,
         "markets": [
+          "KR",
           "US"
         ]
       },
-      "trades_per_day": 3.0,
-      "avg_hold_minutes": 180.9,
+      "trades_per_day": 4.5,
+      "avg_hold_minutes": 107.1,
       "enabled": true,
+      "help": {
+        "category": "intraday",
+        "theory_ko": "시가에 전일 레인지의 일정 비율을 더한 값을 상향 돌파하면 그날 상승이 확장된다는 변동성 돌파 가설(Larry Williams 원 공식).",
+        "theory_en": "Volatility-breakout hypothesis that a break above open + a fraction of the prior day's range signals expanding upside for the day (Larry Williams' original formula).",
+        "entry_ko": "시가 + 전일 레인지 x 0.5(Larry Williams 원 공식) 상향 돌파 시 매수, 목표 없이 추종 (A/B 촉매 갈래 — EVENT/FRGN/TREND 태그가 붙은 종목만 대상)",
+        "entry_en": "Buys on a breakout above open + prior-day range x 0.5 (Larry Williams' original formula); no fixed target, follows the trend (A/B catalyst arm — only trades symbols tagged EVENT/FRGN/TREND)",
+        "exit_ko": "손절폭 하한 40bp, 마감 5분 전 청산",
+        "exit_en": "Stop distance floored at 40bp; flattens 5 minutes before close",
+        "evidence_ko": "burn_in — Larry Williams 원 공식 인용, 우리 원장 실측 0. KR은 ETF 전용(왕복 ~4bp 실측 — 비용을 이기는 유일한 KR venue), US는 TQQQ. vol_breakout와 파라미터는 동일, 유니버스만 다른 A/B 짝 — `run scoreboard --ab`(양쪽 n≥30 전엔 판단 불가)로 판정.",
+        "evidence_en": "burn_in — a citation of Larry Williams' original formula, zero measurements from our own ledger. KR trades ETFs only (measured ~4bp round-trip cost, the only KR venue that beats cost); US trades TQQQ. An A/B pair with vol_breakout: identical parameters, different universe — judged via `run scoreboard --ab` (n>=30 both arms).",
+        "refs": [],
+        "sizing_ko": "KR 자본배분 7% · US 자본배분 5% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "KR capital allocation 7%; US capital allocation 5%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+      },
       "by_market": {
-        "asia": null,
+        "asia": {
+          "trips": 6,
+          "wins": 0,
+          "win_rate": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.3903,
+          "expectancy_bp": -99.87,
+          "verdict": "유의(음)",
+          "sample_warning": true
+        },
         "us": {
           "trips": 3,
           "wins": 2,
@@ -742,13 +1699,33 @@
           "verdict": "판단 불가",
           "sample_warning": true
         }
+      },
+      "curve": {
+        "asia": [
+          {
+            "date": "2026-09-04",
+            "day_net": -14398.52,
+            "cum_net": -14398.52,
+            "cum_trips": 6
+          }
+        ],
+        "us": [
+          {
+            "date": "2026-09-03",
+            "day_net": 0.07,
+            "cum_net": 0.07,
+            "cum_trips": 3
+          }
+        ]
       }
     }
   ],
   "strategies_scope": "lifetime",
   "enabled_count": 12,
-  "strategies_note": "전략 통계는 모의 시대 포함 누적 301왕복",
-  "strategies_note_en": "Strategy stats are lifetime incl. paper era, 301 round trips",
+  "strategies_note": "전략 통계는 모의 시대 포함 누적 322왕복",
+  "strategies_note_en": "Strategy stats are lifetime incl. paper era, 322 round trips",
+  "strategy_curves_note": "전략별 곡선은 종결 왕복 기준 누적 순손익(수수료 차감), 통화별 · 평가손익 미포함",
+  "strategy_curves_note_en": "Per-strategy curves are cumulative net P&L (after fees) from closed round trips, by currency — unrealized (mark-to-market) P&L is not included",
   "excluded": {
     "seeding_liquidation": {
       "fills": 7,
@@ -762,7 +1739,7 @@
     "kr_stock_roundtrip_bp": 23.0,
     "kr_etf_roundtrip_bp": 3.0,
     "us_roundtrip_bp": 20.0,
-    "fee_drag_pct_of_gross": 71.94,
+    "fee_drag_pct_of_gross": 55.38,
     "kr_tax_bp": 20.0,
     "note": "KR 개별주 왕복 23bp 중 20bp가 증권거래세+농특세 (US SEC Fee/TAF 등 소액 항목은 미포함)",
     "note_en": "Of the 23bp KR individual-stock round-trip cost, 20bp is securities transaction tax + rural development surtax (small items like US SEC Fee/TAF not included)"
