@@ -54,8 +54,9 @@ export interface EquityBook {
   seed_basis: string;
   seed_basis_en?: string;
   rows: EquityPoint[];
-  // Fraction (0.0373 = 3.7%), null when the book has fewer than 2 points
-  // to compute a drawdown from. Optional — absent on older snapshots.
+  // Percent, in the same units as rows[].cum_pct (1.387 = 1.387%) — NOT a
+  // fraction. Null when the book has fewer than 2 points to compute a
+  // drawdown from. Optional — absent on older snapshots.
   max_drawdown_pct?: number | null;
   chart: {
     y_axis: ChartYAxis;
@@ -78,6 +79,46 @@ export interface StrategyTotal extends MarketStats {
   markets: Market[];
 }
 
+// ---------------------------------------------------------------------------
+// Strategy help ("전략 도움말 / How this strategy works")
+//
+// Optional block the generator attaches to each strategy so the page can
+// explain what a strategy actually does instead of showing a bare row of
+// statistics. Every field is optional on purpose: the generator rolls this
+// out strategy by strategy, and a half-filled block must still render. The
+// UI shows "설명 준비 중 / Description coming" for anything absent rather
+// than inventing copy.
+// ---------------------------------------------------------------------------
+
+/** A cited source for the strategy's premise — a paper, a book, a post. */
+export interface StrategyHelpRef {
+  label: string;
+  url: string;
+}
+
+/**
+ * Coarse bucket used for the category chip. Kept as a plain string in the
+ * contract (not a union) so an unrecognized value from a newer generator
+ * renders as-is instead of breaking the build; the UI maps the three known
+ * values to localized labels and falls back to the raw string otherwise.
+ */
+export type StrategyCategory = "intraday" | "swing" | "experimental";
+
+export interface StrategyHelp {
+  category?: StrategyCategory | string;
+  theory_ko?: string;
+  theory_en?: string;
+  entry_ko?: string;
+  entry_en?: string;
+  exit_ko?: string;
+  exit_en?: string;
+  sizing_ko?: string;
+  sizing_en?: string;
+  evidence_ko?: string;
+  evidence_en?: string;
+  refs?: StrategyHelpRef[];
+}
+
 export interface Strategy {
   id: string;
   name_ko: string;
@@ -98,6 +139,12 @@ export interface Strategy {
   trades_per_day?: number;
   avg_hold_minutes?: number;
   enabled?: boolean;
+  /**
+   * Long-form explainer rendered by the strategy help drawer. Absent on every
+   * snapshot published before the generator started emitting it — null-guard
+   * at every read site.
+   */
+  help?: StrategyHelp | null;
 }
 
 export interface ExcludedEntry {

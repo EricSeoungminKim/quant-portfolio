@@ -12,8 +12,13 @@ export default function EquitySection({ data }: { data: PerformanceData }) {
   const { locale } = useLocale();
 
   return (
-    <section id="equity" className="mx-auto max-w-6xl px-5 py-16 md:py-20">
-      <SectionHeading eyebrow={t.equity.eyebrow} title={t.equity.title} description={t.equity.description} />
+    <section id="equity" className="mx-auto max-w-6xl px-5 py-16 md:py-24">
+      <SectionHeading
+        index="01"
+        eyebrow={t.equity.eyebrow}
+        title={t.equity.title}
+        description={t.equity.description}
+      />
 
       {data.period.start && (
         <p className="tnum mt-4 text-xs text-[var(--muted-2)]">
@@ -30,7 +35,7 @@ export default function EquitySection({ data }: { data: PerformanceData }) {
         <Legend swatch="var(--up)" label={t.equity.legendUp} />
         <Legend swatch="var(--down)" label={t.equity.legendDown} />
         <span className="flex items-center gap-1.5">
-          <span className="inline-block h-2.5 w-0.5 bg-[var(--accent)]" />
+          <span className="inline-block h-2.5 w-0.5 bg-[var(--accent)]" aria-hidden />
           {t.equity.legendPhaseBoundary}
         </span>
       </div>
@@ -38,14 +43,14 @@ export default function EquitySection({ data }: { data: PerformanceData }) {
       {/* Two currency-separate books (no FX conversion between them, per the
           2026-09-02 owner directive) — stacked on narrow screens, side by
           side from md up. */}
-      <div className="mt-6 grid gap-6 md:grid-cols-2">
+      <div className="mt-6 grid gap-6 md:grid-cols-2" data-reveal>
         <BookPanel title={t.equity.bookAsiaTitle} book={data.equity_asia} />
         <BookPanel title={t.equity.bookUsTitle} book={data.equity_us} />
       </div>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         {data.phases.map((phase) => (
-          <div key={phase.id} className="rounded border border-[var(--border)] bg-[var(--surface)] p-4">
+          <div key={phase.id} className="plate p-4">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium">
                 {translatePhaseLabel(phase.id, phase.label, phase.label_en, locale)}
@@ -92,13 +97,17 @@ function BookPanel({ title, book }: { title: string; book: EquityBook }) {
   const { locale } = useLocale();
   const seedBasisText = translateSeedBasis(book.seed_basis, book.seed_basis_en, locale);
   const hasDrawdown = book.max_drawdown_pct !== undefined;
+  // max_drawdown_pct is emitted in the same units as rows[].cum_pct — percent,
+  // not a fraction. Verified against the data: the Asia book runs -0.3769% to
+  // -1.7587%, a 1.38pp fall, and the generator reports 1.387. Multiplying by
+  // 100 here (as this did until 2026-09-04) printed that as "-138.7%".
   const drawdownText =
     book.max_drawdown_pct != null
-      ? formatPct(-Math.abs(book.max_drawdown_pct) * 100, 1)
+      ? formatPct(-Math.abs(book.max_drawdown_pct), 2)
       : t.equity.maxDrawdownNA;
 
   return (
-    <div className="rounded border border-[var(--border)] bg-[var(--surface)] p-4 md:p-6">
+    <div className="plate p-4 md:p-6">
       <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-2 gap-y-1">
         <h3 className="text-sm font-semibold">{title}</h3>
         <div className="flex items-baseline gap-2.5">
@@ -124,7 +133,7 @@ function BookPanel({ title, book }: { title: string; book: EquityBook }) {
 function Legend({ swatch, label }: { swatch: string; label: string }) {
   return (
     <span className="flex items-center gap-1.5">
-      <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: swatch }} />
+      <span className="inline-block h-2.5 w-2.5" style={{ background: swatch }} aria-hidden />
       {label}
     </span>
   );

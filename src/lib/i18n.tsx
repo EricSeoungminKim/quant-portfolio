@@ -16,29 +16,71 @@ import {
 
 export type Locale = "en" | "ko";
 
+export interface TimelineEntry {
+  time: string;
+  /** Which session this step belongs to — drives the rail colour and legend. */
+  market: "KR" | "US" | "ALL";
+  label: string;
+  detail: string;
+}
+
+export interface PlaneCopy {
+  id: "collect" | "analyze" | "trade" | "control";
+  name: string;
+  risk: string;
+  may: string;
+  mayNot: string;
+}
+
 interface Messages {
   nav: {
     brand: string;
+    tagline: string;
     equity: string;
     strategies: string;
-    how: string;
     cost: string;
+    how: string;
     methodology: string;
     safety: string;
     themeToggle: string;
     localeToggle: string;
+    sectionsLabel: string;
+    progressLabel: string;
   };
   hero: {
     badge: string;
-    title: (strategyCount: number) => string;
+    thesis: string;
     body: string;
-    statStrategies: string;
+    tapeLabel: string;
+    tapeHint: string;
+    bookAsia: string;
+    bookUs: string;
+    cumLabel: string;
+    noData: string;
     statSessions: string;
     statFills: string;
-    whyNowLabel: string;
-    bullets: string[];
-    // Only rendered when the data carries an `enabled` flag on strategies.
+    statTrips: string;
+    statStrategies: string;
     liveCount: (enabledCount: number, totalCount: number) => string;
+    scrollCue: string;
+  };
+  researchLog: {
+    label: string;
+    periodLabel: string;
+    scopeLabel: string;
+    enabledLabel: string;
+    enabledUnit: (n: number) => string;
+    feeDragLabel: string;
+    feeDragValue: (pct: number) => string;
+    tripsLabel: string;
+    sessionsUnit: (n: number) => string;
+  };
+  verdicts: {
+    title: string;
+    description: string;
+    countUnit: (n: number) => string;
+    empty: string;
+    tripsUnit: (n: number) => string;
   };
   equity: {
     eyebrow: string;
@@ -86,20 +128,75 @@ interface Messages {
     headerVerdict: string;
     headerTradesPerDay: string;
     headerAvgHold: string;
+    headerHelp: string;
     sampleWarning: string;
     offBadge: string;
+    liveBadge: string;
+    helpOpen: string;
+    helpOpenFor: (name: string) => string;
+    helpTitle: string;
+    close: string;
+    sectionTheory: string;
+    sectionEntry: string;
+    sectionExit: string;
+    sectionSizing: string;
+    sectionEvidence: string;
+    sectionRefs: string;
+    missing: string;
+    noHelp: string;
+    categoryLabel: string;
+    categoryIntraday: string;
+    categorySwing: string;
+    categoryExperimental: string;
+    armBase: string;
+    armCatalyst: string;
+    armNote: string;
+    statsTitle: string;
+    statTrips: string;
+    statWinRate: string;
+    statExpectancy: string;
+    statVerdict: string;
+    statTradesPerDay: string;
+    statAvgHold: string;
+    perMarketTitle: string;
+    marketAsia: string;
+    marketUs: string;
+    externalLink: string;
   };
   how: {
     eyebrow: string;
     title: string;
     description: string;
-    liveBadge: string;
+    planesTitle: string;
+    planesNote: string;
+    planes: PlaneCopy[];
+    mayLabel: string;
+    mayNotLabel: string;
     whenWrong: string;
-    planes: { name: string; risk: string; allowed: string }[];
+    diagramTitle: string;
+    diagramCaption: string;
+    diagramNewsEdge: string;
+    diagramSettingsEdge: string;
+    diagramNoImport: string;
     timelineTitle: string;
-    timeline: { time: string; label: string; detail: string }[];
-    dataSourcesTitle: string;
-    dataSources: string[];
+    timelineNote: string;
+    timeline: TimelineEntry[];
+    legendKr: string;
+    legendUs: string;
+    legendAll: string;
+    railsTitle: string;
+    rails: { label: string; detail: string }[];
+    sourcesTitle: string;
+    sourcesNote: string;
+    sources: { name: string; detail: string }[];
+    pipelineTitle: string;
+    pipelineNote: string;
+    pipeline: { step: string; label: string; detail: string }[];
+    pipelineCaption: string;
+    abTitle: string;
+    abBody: string;
+    notAutomatedTitle: string;
+    notAutomatedBody: string;
     aiTitle: string;
     aiPresent: string;
     aiPresentDesc: string;
@@ -113,8 +210,9 @@ interface Messages {
     bars: { label: string }[];
     taxLabel: (bp: number) => string;
     otherLabel: (bp: number) => string;
-    // Only rendered when costs.fee_drag_pct_of_gross is present.
-    feeDragHeadline: (pct: number) => string;
+    feeDragHeadline: string;
+    feeDragCaption: string;
+    breakdownTitle: string;
     noteMeasuredTitle: string;
     noteMeasuredBody: string;
     noteEdgeTitle: string;
@@ -132,43 +230,74 @@ interface Messages {
     description: string;
     items: { title: string; detail: string }[];
   };
+  editorsNote: {
+    label: string;
+    title: string;
+    bullets: string[];
+    signoff: string;
+  };
   footer: {
     lastUpdated: string;
     kstSuffix: string;
     notAdvice: string;
     updatedAgo: (hours: number) => string;
+    justNow: string;
     stale: string;
+    freshLabel: string;
   };
 }
 
 const en: Messages = {
   nav: {
     brand: "QUANT TRADING",
+    tagline: "Measurement desk",
     equity: "Equity Curve",
     strategies: "Strategies",
-    how: "How It Works",
     cost: "Cost",
+    how: "How It Works",
     methodology: "Methodology",
     safety: "Safeguards",
     themeToggle: "Toggle theme",
     localeToggle: "한국어",
+    sectionsLabel: "Sections",
+    progressLabel: "Reading progress",
   },
   hero: {
     badge: "Paper trading — not real returns",
-    title: (n) =>
-      `A personal automated trading engine running ${n} strategies with recorded round trips across Korea and US market hours`,
-    body: "This page isn't here to brag about returns. It's here to show how rigorously we measure. When the sample is small we hold off judgment, taxes and fees are reflected at actual cost, and losses are disclosed as-is.",
-    statStrategies: "Strategies",
+    thesis: "Every number here is measured, not selected.",
+    body: "A personal automated trading engine runs intraday strategies through Korean and US regular hours, writes every fill to a ledger, and publishes what that ledger says — including the stretches where it says the engine is losing.",
+    tapeLabel: "Session tape",
+    tapeHint: "Latest close of each currency book, against its own starting seed.",
+    bookAsia: "ASIA · KRW",
+    bookUs: "US · USD",
+    cumLabel: "cumulative",
+    noData: "no fills",
     statSessions: "Trading days",
     statFills: "Fills",
-    whyNowLabel: "Why publish this now",
-    bullets: [
-      "The GitHub repo is private, so we can't show the code directly — instead we publish the principles and the measured numbers.",
-      "Week 3 of paper trading is a cumulative loss stretch. We're not cutting out only the favorable periods.",
-      "Every strategy is shown with its confidence interval and a sample-size warning, to keep overconfidence in check.",
-    ],
+    statTrips: "Round trips",
+    statStrategies: "Strategies",
     liveCount: (enabledCount, totalCount) =>
-      `${enabledCount} strategies live now · ${totalCount} with recorded round trips`,
+      `${enabledCount} live now · ${totalCount} with recorded round trips`,
+    scrollCue: "Read the record",
+  },
+  researchLog: {
+    label: "Research log",
+    periodLabel: "Window",
+    scopeLabel: "Scope",
+    enabledLabel: "Enabled",
+    enabledUnit: (n) => `${n} strategies`,
+    feeDragLabel: "Fee drag",
+    feeDragValue: (pct) => `${pct.toFixed(1)}% of gross`,
+    tripsLabel: "Sample",
+    sessionsUnit: (n) => `${n} sessions`,
+  },
+  verdicts: {
+    title: "Verdicts",
+    description:
+      "Where the evidence currently stands. A verdict is a statement about the sample, not a forecast — most of these say the sample is still too thin to conclude anything.",
+    countUnit: (n) => `${n}`,
+    empty: "No strategy carries this verdict.",
+    tripsUnit: (n) => `${n} trips`,
   },
   equity: {
     eyebrow: "Equity Curve",
@@ -181,8 +310,7 @@ const en: Messages = {
     legendDown: "Negative (−) — shown in blue, per local market convention",
     legendPhaseBoundary: "Phase boundary (live-account transplant)",
     ongoing: "ongoing",
-    excludedNote: (fills) =>
-      `(${fills} excluded fills — see note above)`,
+    excludedNote: (fills) => `(${fills} excluded fills — see note above)`,
     priorPaperNote: (sessions) =>
       `The prior ${sessions}-trading-day paper record is excluded from this curve because it used a different seed.`,
     yAxisTitle: "Cumulative return (%)",
@@ -195,7 +323,8 @@ const en: Messages = {
     maxDrawdownLabel: "Max drawdown",
     maxDrawdownNA: "n/a (<2 points)",
     emptyBook: "No fills recorded yet in this book.",
-    chartAriaLabel: (bookTitle) => `${bookTitle} cumulative return curve against its starting seed`,
+    chartAriaLabel: (bookTitle) =>
+      `${bookTitle} cumulative return curve against its starting seed`,
     pointAriaLabel: (date, cum, day, fills) =>
       `${date}, cumulative ${cum}, daily ${day}, ${fills} fills`,
     tooltipCum: "Cumulative",
@@ -207,7 +336,7 @@ const en: Messages = {
     eyebrow: "Strategy Scoreboard",
     title: "Strategy Scoreboard",
     description:
-      "Fewer round trips means wider confidence intervals on win rate and expectancy — hold off judgment on strategies flagged with a sample-size badge.",
+      "Fewer round trips means wider confidence intervals on win rate and expectancy — hold off judgment on strategies flagged with a sample-size badge. Open any row to read what the strategy actually does.",
     marketAll: "All",
     sortExpectancy: "Expectancy",
     sortWinRate: "Win rate",
@@ -221,49 +350,166 @@ const en: Messages = {
     headerVerdict: "Verdict",
     headerTradesPerDay: "Trades/day",
     headerAvgHold: "Avg hold",
+    headerHelp: "Detail",
     sampleWarning: "Small sample",
     offBadge: "off",
+    liveBadge: "live",
+    helpOpen: "Open",
+    helpOpenFor: (name) => `How ${name} works`,
+    helpTitle: "How this strategy works",
+    close: "Close",
+    sectionTheory: "Theory",
+    sectionEntry: "Entry",
+    sectionExit: "Exit",
+    sectionSizing: "Sizing",
+    sectionEvidence: "Evidence",
+    sectionRefs: "References",
+    missing: "Description coming",
+    noHelp:
+      "No write-up has been published for this strategy yet. Its measured record is shown below regardless.",
+    categoryLabel: "Category",
+    categoryIntraday: "Intraday",
+    categorySwing: "Swing",
+    categoryExperimental: "Experimental",
+    armBase: "Base arm",
+    armCatalyst: "Catalyst arm",
+    armNote:
+      "An A/B pair: both arms run identical parameters and differ only in which universe they are allowed to see.",
+    statsTitle: "Measured record",
+    statTrips: "Round trips",
+    statWinRate: "Win rate (95% CI)",
+    statExpectancy: "Expectancy",
+    statVerdict: "Verdict",
+    statTradesPerDay: "Trades/day",
+    statAvgHold: "Avg hold",
+    perMarketTitle: "By market",
+    marketAsia: "Asia (KRX)",
+    marketUs: "US",
+    externalLink: "opens in a new tab",
   },
   how: {
     eyebrow: "Architecture",
     title: "How It Works",
     description:
-      "The code is split into four planes by what you lose when it's wrong — not by feature. A test enforces the allowed dependency direction between planes via the import graph.",
-    liveBadge: "Money plane — paper today",
-    whenWrong: "If wrong →",
+      "The code is split into four planes by what you lose when a plane is wrong — not by feature. The allowed dependency direction between planes is enforced by a test that walks the import graph, so the rules below are not documentation, they are build failures.",
+    planesTitle: "The four planes",
+    planesNote:
+      "Each plane names the cost of being wrong, then earns permissions from that cost. The trade plane is the strict one because it is the only one that can lose money.",
     planes: [
-      { name: "Collect", risk: "Data goes missing", allowed: "Scraping, LLM summarization, failures and retries allowed" },
-      { name: "Analyze", risk: "Selection gets worse", allowed: "LLM judgment, slow batch jobs allowed" },
-      { name: "Trade", risk: "You lose money", allowed: "Deterministic code only — no LLM or network calls" },
-      { name: "Control", risk: "The next session gets worse", allowed: "Automatic parameter tuning, experiments, rollback" },
+      {
+        id: "collect",
+        name: "Collect",
+        risk: "Data goes missing",
+        may: "Scrape sites, call language models, fail, retry, run slowly. Nothing here is on a clock that matters.",
+        mayNot: "Import the trade plane. Scraped news can edit the universe; it can never reach an order.",
+      },
+      {
+        id: "analyze",
+        name: "Analyze",
+        risk: "Selection gets worse",
+        may: "Score candidates, run language models, batch overnight, publish a watchlist.",
+        mayNot: "Import the trade plane, or place an order. It hands over a list of names, nothing more.",
+      },
+      {
+        id: "trade",
+        name: "Trade",
+        risk: "You lose money",
+        may: "Read prices, apply deterministic rules, size positions, send orders, honour the risk rails.",
+        mayNot:
+          "Call a language model, open an HTTP or database connection, or import collect, analyze or the app layer. A hiccup in MySQL at 09:15 must not stop trading.",
+      },
+      {
+        id: "control",
+        name: "Control",
+        risk: "The next session gets worse",
+        may: "Aggregate the ledger, score strategies, tune parameters, run experiments, roll back, cut allocation.",
+        mayNot:
+          "Import the trade plane. The governor writes settings to a file; the engine picks them up at its next reload.",
+      },
     ],
-    timelineTitle: "Daily timeline (KST)",
+    mayLabel: "May",
+    mayNotLabel: "May not",
+    whenWrong: "If wrong →",
+    diagramTitle: "Allowed dependency direction",
+    diagramCaption:
+      "News and analysis flow into the universe, never into an order. Control never touches the running engine directly — it writes settings, and the engine reads them on its next reload.",
+    diagramNewsEdge: "universe only",
+    diagramSettingsEdge: "settings file",
+    diagramNoImport: "import forbidden",
+    timelineTitle: "A day, as it actually runs",
+    timelineNote:
+      "All times KST. This is the live crontab, not an idealized diagram — the odd minutes are real, and they exist because something once collided at a round number.",
     timeline: [
-      { time: "00:00", label: "Regime call", detail: "Refresh the per-market offense/neutral/defense multiplier" },
-      { time: "08:00", label: "Daily report", detail: "Our own report builds; at 08:12 own_brief.sh feeds its engine JSON into the confidence-scoring engine, auto-registering candidates that clear the threshold" },
-      { time: "09:00", label: "KR market open", detail: "KR strategies (news momentum, 1-minute scalp, foreign-flow accumulation, volatility breakout, LLM lane) become active" },
-      { time: "22:30", label: "US market open", detail: "The same strategy set expands to the US universe" },
-      { time: "06:00", label: "Settlement", detail: "Persist fills to the trade ledger; aggregate per-strategy win rate and expectancy" },
+      { time: "07:30", market: "KR", label: "Report build", detail: "The daily market report is assembled from overnight data." },
+      { time: "08:00", market: "KR", label: "Report publish", detail: "The report goes out, carrying a machine-readable engine JSON alongside the prose." },
+      { time: "08:05", market: "KR", label: "Watchlist reset", detail: "Yesterday's auto-added names are cleared so a stale candidate cannot survive into a new session." },
+      { time: "08:12", market: "KR", label: "Confidence-scored inclusion", detail: "The report's engine JSON is scored; only names above threshold are auto-registered. A market-cap floor of ₩300B and a block on names that hit the previous day's limit-up both apply here. No language model sits on this path." },
+      { time: "08:27", market: "KR", label: "Universe roll", detail: "The tradable universe reloads ahead of the pre-open auction." },
+      { time: "09:00", market: "KR", label: "KR open", detail: "Korean strategies go active behind the risk rails: hard stop at −5%, target cap at +10%, a separate book per strategy, and a kill switch reachable from Telegram." },
+      { time: "14:53", market: "KR", label: "Close-report roll", detail: "The closing report's inputs refresh before the session ends." },
+      { time: "15:20", market: "KR", label: "Flatten window", detail: "15:20–15:30: every intraday position is closed. Nothing this engine trades is held overnight." },
+      { time: "15:35", market: "KR", label: "Session P&L", detail: "Korean fills are reconciled and written to the ledger." },
+      { time: "15:50", market: "KR", label: "Swing recommendations", detail: "Overnight and swing ideas for the manual account are sent to Telegram as recommendations. The engine does not act on them." },
+      { time: "16:20", market: "KR", label: "Performance publish", detail: "The JSON behind this page is regenerated and pushed." },
+      { time: "21:40", market: "US", label: "US watchlist reset", detail: "The US side of the universe is cleared for the coming session." },
+      { time: "21:50", market: "US", label: "US inclusion", detail: "The same confidence scoring runs against US candidates." },
+      { time: "22:10", market: "US", label: "US universe roll", detail: "The tradable universe reloads ahead of the US open." },
+      { time: "22:30", market: "US", label: "US open", detail: "The same strategy set runs against the US universe, under the same rails." },
+      { time: "23:00", market: "ALL", label: "Market pulse", detail: "Digests at 23:00, 01:00, 03:00 and 05:00 summarize what moved overnight." },
+      { time: "06:10", market: "US", label: "US P&L", detail: "US fills are reconciled; the round-trip ledger that feeds this page is closed for the day." },
     ],
-    dataSourcesTitle: "Data sources",
-    dataSources: [
-      "Kiwoom WebSocket (real-time quotes)",
-      "Toss (order execution)",
-      "Naver Finance",
-      "DART",
-      "FRED",
+    legendKr: "Korean session",
+    legendUs: "US session",
+    legendAll: "Both",
+    railsTitle: "Risk rails at the open",
+    rails: [
+      { label: "Hard stop", detail: "−5% per position, server-side" },
+      { label: "Target cap", detail: "+10%, above which the position is taken off" },
+      { label: "Per-strategy books", detail: "One strategy's drawdown cannot spend another's allocation" },
+      { label: "Kill switch", detail: "One Telegram message halts entries or flattens everything" },
     ],
+    sourcesTitle: "What it reads",
+    sourcesNote: "Quotes come from Kiwoom first and fall back to Toss; orders go out through Toss alone.",
+    sources: [
+      { name: "Kiwoom WebSocket", detail: "Real-time quotes, primary feed" },
+      { name: "Toss REST", detail: "Quote fallback and the single order path" },
+      { name: "FRED", detail: "Macro series for the regime call" },
+      { name: "Own daily report", detail: "Published 08:00 KR / 20:00 US from this same box" },
+      { name: "13 Telegram channels", detail: "Flow and catalyst chatter, tagged not traded" },
+      { name: "News RSS", detail: "About 4,600 articles a day, filtered down to event tags" },
+    ],
+    pipelineTitle: "How a strategy earns its way in",
+    pipelineNote:
+      "Nothing is deployed because it looked good in a notebook. A separate local backtest repository has to clear it first, and paper trading has to survive it afterwards.",
+    pipeline: [
+      { step: "01", label: "Data lake", detail: "Bars and fundamentals land locally, versioned, so a result can be re-run against the same inputs." },
+      { step: "02", label: "Stage-1 screening", detail: "A cheap sweep kills obviously dead ideas before anyone spends compute on them." },
+      { step: "03", label: "Walk-forward", detail: "Out-of-sample windows only, scored with a deflated Sharpe ratio so the number of trials the idea survived is priced in." },
+      { step: "04", label: "Go / no-go gate", detail: "An explicit threshold, decided before the run. Failing here ends the idea." },
+      { step: "05", label: "Promote to paper", detail: "A promote command moves the strategy into the live paper engine with real quotes and real costs." },
+      { step: "06", label: "≥ 30 round trips", detail: "Below thirty, the confidence interval is too wide to separate edge from noise. The strategy stays flagged." },
+      { step: "07", label: "Owner decides", detail: "Real capital is never switched on automatically. A person reads the record and makes the call." },
+    ],
+    pipelineCaption: "Ideas enter at the top; almost none reach the bottom.",
+    abTitle: "The catalyst A/B split",
+    abBody:
+      "Several strategies run as a pair: a base arm and a catalyst arm whose id ends in “_cat”. Not one parameter differs between them — the only difference is that the catalyst arm may only look at names carrying a news or flow tag. That isolates a single question: does the catalyst filter help, or does it just cut the sample?",
+    notAutomatedTitle: "What is deliberately not automated",
+    notAutomatedBody:
+      "Overnight and swing ideas are never traded by the engine. They go to Telegram as recommendations for a human-operated account, because the automated lane is intraday-only by decision, not by limitation. Everything the engine opens, it closes the same session.",
     aiTitle: "Where AI is — and isn't",
     aiPresent: "AI used",
-    aiPresentDesc: "Collection summaries, candidate analysis, parameter suggestions in the control plane",
+    aiPresentDesc:
+      "Collection summaries, candidate analysis, and parameter suggestions in the control plane. All of it off the trading clock.",
     aiAbsent: "No AI",
-    aiAbsentDesc: "Entry/exit decisions and order execution — deterministic, price-based code only",
+    aiAbsentDesc:
+      "Entry, exit, sizing and order execution. Deterministic, price-based code only — an architecture test fails the build if a network or model call appears in the trade plane.",
   },
   cost: {
     eyebrow: "Cost Reality",
     title: "The Truth About Costs",
     description:
-      "If a strategy's edge isn't larger than its round-trip cost, trading itself is the source of net loss. More than half of a KR single-stock trade is tax.",
+      "This is the single most important number on the page. If a strategy's edge is not larger than its round-trip cost, trading itself is the source of the loss — and on this record, it is.",
     bars: [
       { label: "KR single stocks (round trip)" },
       { label: "KR ETFs (round trip)" },
@@ -271,13 +517,16 @@ const en: Messages = {
     ],
     taxLabel: (bp) => `tax ${bp}bp`,
     otherLabel: (bp) => `fees & slippage ${bp}bp`,
-    feeDragHeadline: (pct) => `${pct.toFixed(0)}% of gross P&L was eaten by fees and tax`,
+    feeDragHeadline: "of gross P&L, eaten by fees and tax",
+    feeDragCaption:
+      "Measured on this record, not modelled. Several strategies are positive before costs and negative after them.",
+    breakdownTitle: "Round-trip cost by instrument",
     noteMeasuredTitle: "Reflected in measurement",
     noteMeasuredBody:
       "Every fill logs actual fees, taxes, and slippage to the ledger, and per-strategy expectancy (bp) is always shown net of cost.",
     noteEdgeTitle: "When edge < cost",
     noteEdgeBody:
-      'We don’t force entry rules tighter to compensate. The verdict is marked "rejected" or "insufficient sample," and capital allocation to that strategy is reduced.',
+      "We don't tighten entry rules to compensate. The verdict is marked “rejected” or “insufficient sample,” and capital allocation to that strategy is reduced.",
   },
   safety: {
     eyebrow: "Safeguards",
@@ -332,42 +581,78 @@ const en: Messages = {
       },
     ],
   },
+  editorsNote: {
+    label: "Editor's note",
+    title: "Why publish this now",
+    bullets: [
+      "The GitHub repository is private, so the code can't be shown directly — the principles and the measured numbers are published instead.",
+      "This is a cumulative loss stretch. Favourable periods are not cut out to make the curve look better.",
+      "Every strategy is shown with its confidence interval and a sample-size warning, to keep overconfidence in check.",
+    ],
+    signoff: "Published from the same box that runs the engine.",
+  },
   footer: {
     lastUpdated: "Last updated:",
     kstSuffix: "(KST)",
     notAdvice: "Nothing on this page is investment advice.",
     updatedAgo: (hours) => `updated ${hours}h ago`,
+    justNow: "updated just now",
     stale: "stale",
+    freshLabel: "Data freshness",
   },
 };
 
 const ko: Messages = {
   nav: {
     brand: "QUANT TRADING",
+    tagline: "측정 데스크",
     equity: "수익 곡선",
     strategies: "전략별 성적",
-    how: "작동 원리",
     cost: "비용",
+    how: "작동 원리",
     methodology: "산출 방식",
     safety: "안전장치",
     themeToggle: "테마 전환",
     localeToggle: "EN",
+    sectionsLabel: "목차",
+    progressLabel: "읽은 분량",
   },
   hero: {
     badge: "모의투자 (paper) — 실제 수익이 아닙니다",
-    title: (n) => `한국·미국 정규장에서 왕복 기록이 있는 전략 ${n}개가 동시에 도는 개인용 자동매매 엔진`,
-    body: "수익률을 자랑하려는 페이지가 아닙니다. 이 프로젝트는 “측정을 얼마나 엄격하게 하는가”를 보여주는 페이지입니다. 표본이 작으면 판단을 보류하고, 세금·수수료를 실비로 반영하고, 손실도 그대로 공개합니다.",
-    statStrategies: "전략",
+    thesis: "이 페이지의 모든 숫자는 고른 것이 아니라 잰 것입니다.",
+    body: "개인용 자동매매 엔진이 한국·미국 정규장에서 단타 전략을 돌리고, 체결을 하나도 빠짐없이 원장에 적고, 그 원장이 말하는 것을 그대로 공개합니다 — 지고 있다고 말하는 구간까지 포함해서.",
+    tapeLabel: "세션 테이프",
+    tapeHint: "통화별 북의 최근 마감값 — 각자의 시작 시드 대비입니다.",
+    bookAsia: "ASIA · KRW",
+    bookUs: "US · USD",
+    cumLabel: "누적",
+    noData: "체결 없음",
     statSessions: "거래일",
     statFills: "체결",
-    whyNowLabel: "지금 공개하는 이유",
-    bullets: [
-      "GitHub은 비공개라 코드를 직접 보여줄 수 없습니다 — 대신 원리와 실측치를 공개합니다.",
-      "3주차 모의투자는 누적 손실 구간입니다. 유리한 구간만 잘라 보여주지 않습니다.",
-      "전략마다 신뢰구간과 표본 경고를 함께 표기해 과신을 막습니다.",
-    ],
+    statTrips: "왕복",
+    statStrategies: "전략",
     liveCount: (enabledCount, totalCount) =>
       `지금 가동 ${enabledCount}개 · 왕복 기록 ${totalCount}개`,
+    scrollCue: "기록 보기",
+  },
+  researchLog: {
+    label: "연구 로그",
+    periodLabel: "구간",
+    scopeLabel: "범위",
+    enabledLabel: "가동",
+    enabledUnit: (n) => `${n}개 전략`,
+    feeDragLabel: "수수료 잠식",
+    feeDragValue: (pct) => `총손익의 ${pct.toFixed(1)}%`,
+    tripsLabel: "표본",
+    sessionsUnit: (n) => `${n}거래일`,
+  },
+  verdicts: {
+    title: "판정 현황",
+    description:
+      "지금까지의 근거가 어디에 서 있는지를 보여줍니다. 판정은 예측이 아니라 표본에 대한 진술이며, 대부분은 아직 결론을 내리기엔 표본이 얇다고 말하고 있습니다.",
+    countUnit: (n) => `${n}`,
+    empty: "이 판정에 해당하는 전략이 없습니다.",
+    tripsUnit: (n) => `${n}왕복`,
   },
   equity: {
     eyebrow: "Equity Curve",
@@ -405,7 +690,7 @@ const ko: Messages = {
     eyebrow: "Strategy Scoreboard",
     title: "전략별 성적표",
     description:
-      "왕복 수가 적을수록 승률·기대값의 신뢰구간이 넓어집니다 — 표본 부족 뱃지가 붙은 전략은 판단을 보류하세요.",
+      "왕복 수가 적을수록 승률·기대값의 신뢰구간이 넓어집니다 — 표본 부족 뱃지가 붙은 전략은 판단을 보류하세요. 행을 펼치면 그 전략이 실제로 무엇을 하는지 읽을 수 있습니다.",
     marketAll: "전체",
     sortExpectancy: "기대값",
     sortWinRate: "승률",
@@ -419,43 +704,166 @@ const ko: Messages = {
     headerVerdict: "판정",
     headerTradesPerDay: "일평균 거래",
     headerAvgHold: "평균 보유",
+    headerHelp: "설명",
     sampleWarning: "표본 부족",
     offBadge: "비활성",
+    liveBadge: "가동",
+    helpOpen: "열기",
+    helpOpenFor: (name) => `${name} 전략 도움말 열기`,
+    helpTitle: "전략 도움말",
+    close: "닫기",
+    sectionTheory: "이론",
+    sectionEntry: "진입",
+    sectionExit: "청산",
+    sectionSizing: "사이징",
+    sectionEvidence: "근거",
+    sectionRefs: "참고문헌",
+    missing: "설명 준비 중",
+    noHelp:
+      "이 전략의 설명은 아직 발행되지 않았습니다. 그래도 측정된 기록은 아래에 그대로 보여줍니다.",
+    categoryLabel: "분류",
+    categoryIntraday: "단타",
+    categorySwing: "스윙",
+    categoryExperimental: "실험",
+    armBase: "기본 갈래",
+    armCatalyst: "촉매 갈래",
+    armNote:
+      "A/B 짝입니다. 두 갈래의 파라미터는 완전히 같고, 볼 수 있는 유니버스만 다릅니다.",
+    statsTitle: "측정된 기록",
+    statTrips: "왕복",
+    statWinRate: "승률 (95% CI)",
+    statExpectancy: "기대값",
+    statVerdict: "판정",
+    statTradesPerDay: "일평균 거래",
+    statAvgHold: "평균 보유",
+    perMarketTitle: "시장별",
+    marketAsia: "아시아 (KRX)",
+    marketUs: "미국",
+    externalLink: "새 탭에서 열림",
   },
   how: {
     eyebrow: "Architecture",
     title: "어떻게 작동하는가",
     description:
-      "코드는 기능이 아니라 '틀렸을 때 무엇을 잃는가'로 4개 평면으로 나뉩니다. 평면 간 의존 방향은 테스트가 임포트 그래프로 강제합니다.",
-    liveBadge: "돈이 걸리는 평면 — 현재 모의",
-    whenWrong: "틀리면 →",
+      "코드는 기능이 아니라 ‘그 평면이 틀렸을 때 무엇을 잃는가’로 4개 평면으로 나뉩니다. 평면 사이의 허용된 의존 방향은 임포트 그래프를 걷는 테스트가 강제합니다 — 아래 규칙은 문서가 아니라 빌드 실패 조건입니다.",
+    planesTitle: "네 개의 평면",
+    planesNote:
+      "각 평면은 먼저 ‘틀렸을 때의 비용’을 밝히고, 그 비용에서 권한을 받아옵니다. 거래 평면이 가장 엄격한 이유는 그것만이 돈을 잃을 수 있기 때문입니다.",
     planes: [
-      { name: "수집", risk: "데이터가 빈다", allowed: "스크래핑, LLM 요약, 실패·재시도 허용" },
-      { name: "분석", risk: "종목 선정이 나빠진다", allowed: "LLM 판단, 느린 배치 허용" },
-      { name: "거래", risk: "돈을 잃는다", allowed: "결정론적 코드만 — LLM·네트워크 호출 금지" },
-      { name: "제어", risk: "다음 세션이 나빠진다", allowed: "자동 파라미터 조정, 실험, 롤백" },
+      {
+        id: "collect",
+        name: "수집",
+        risk: "데이터가 빈다",
+        may: "스크래핑, 언어모델 호출, 실패, 재시도, 느린 실행 — 여기에는 지켜야 할 시계가 없습니다.",
+        mayNot: "거래 평면 임포트. 스크래핑한 뉴스는 유니버스를 편집할 뿐, 주문까지 갈 수 없습니다.",
+      },
+      {
+        id: "analyze",
+        name: "분석",
+        risk: "종목 선정이 나빠진다",
+        may: "후보 채점, 언어모델 판단, 야간 배치, 관심종목 발행.",
+        mayNot: "거래 평면 임포트, 주문 집행. 넘기는 것은 종목 목록 하나뿐입니다.",
+      },
+      {
+        id: "trade",
+        name: "거래",
+        risk: "돈을 잃는다",
+        may: "시세 읽기, 결정론적 규칙 적용, 사이징, 주문 전송, 리스크 레일 준수.",
+        mayNot:
+          "언어모델 호출, HTTP·DB 연결, collect·analyze·apps 임포트. 09:15에 MySQL이 딸꾹질했다고 매매가 멈추면 안 됩니다.",
+      },
+      {
+        id: "control",
+        name: "제어",
+        risk: "다음 세션이 나빠진다",
+        may: "원장 집계, 전략 채점, 파라미터 조정, 실험, 롤백, 자본 배분 축소.",
+        mayNot:
+          "거래 평면 임포트. 거버너는 설정 파일에 쓰고, 엔진이 다음 리로드에 읽어갑니다.",
+      },
     ],
-    timelineTitle: "하루 시각표 (KST)",
+    mayLabel: "허용",
+    mayNotLabel: "금지",
+    whenWrong: "틀리면 →",
+    diagramTitle: "허용된 의존 방향",
+    diagramCaption:
+      "뉴스와 분석은 유니버스로 흘러갈 뿐 주문으로 이어지지 않습니다. 제어는 돌아가는 엔진을 직접 건드리지 않고 설정을 쓰며, 엔진이 다음 리로드에 그것을 읽습니다.",
+    diagramNewsEdge: "유니버스만",
+    diagramSettingsEdge: "설정 파일",
+    diagramNoImport: "임포트 금지",
+    timelineTitle: "하루가 실제로 도는 순서",
+    timelineNote:
+      "모두 KST입니다. 이상적인 그림이 아니라 실제 크론탭이라, 어중간한 분 단위가 그대로 남아 있습니다 — 예전에 정각에서 뭔가 충돌했기 때문입니다.",
     timeline: [
-      { time: "00:00", label: "국면(regime) 판정", detail: "시장별 공격/중립/방어 배율 갱신" },
-      { time: "08:00", label: "일일 리포트", detail: "자체 리포트 발행. 08:12에 own_brief.sh가 엔진 JSON을 확신도 엔진에 태워 임계 통과 후보를 자동 등록" },
-      { time: "09:00", label: "한국장 개장", detail: "KR 전략(뉴스 모멘텀, 1분봉 스캘핑, 외국인 수급 누적, 변동성 돌파, LLM 레인) 가동" },
-      { time: "22:30", label: "미국장 개장", detail: "동일 전략군이 US 유니버스로 확장 운용" },
-      { time: "06:00", label: "정산", detail: "체결을 거래 원장에 영속화, 전략별 승률·기대값 집계" },
+      { time: "07:30", market: "KR", label: "리포트 빌드", detail: "야간 데이터로 데일리 마켓 리포트를 조립합니다." },
+      { time: "08:00", market: "KR", label: "리포트 발행", detail: "산문과 함께 기계가 읽을 수 있는 엔진 JSON이 같이 나갑니다." },
+      { time: "08:05", market: "KR", label: "관심종목 리셋", detail: "어제 자동 등록된 종목을 비웁니다. 낡은 후보가 새 세션까지 살아남지 못하게." },
+      { time: "08:12", market: "KR", label: "확신도 채점 자동 등록", detail: "리포트의 엔진 JSON을 채점해 임계 통과분만 자동 등록합니다. 시가총액 3,000억원 하한과 전일 상한가 종목 차단이 여기서 걸립니다. 이 경로에 언어모델은 없습니다." },
+      { time: "08:27", market: "KR", label: "유니버스 롤", detail: "동시호가 전에 매매 가능 유니버스를 리로드합니다." },
+      { time: "09:00", market: "KR", label: "한국장 개장", detail: "리스크 레일 뒤에서 KR 전략이 가동됩니다 — 하드 스탑 −5%, 목표 상한 +10%, 전략별 분리 계정, 텔레그램에서 닿는 킬 스위치." },
+      { time: "14:53", market: "KR", label: "마감 리포트 롤", detail: "장 마감 전에 마감 리포트의 입력을 갱신합니다." },
+      { time: "15:20", market: "KR", label: "청산 구간", detail: "15:20–15:30에 모든 일중 포지션을 닫습니다. 이 엔진이 오버나이트로 넘기는 것은 없습니다." },
+      { time: "15:35", market: "KR", label: "세션 손익", detail: "한국장 체결을 정산해 원장에 적습니다." },
+      { time: "15:50", market: "KR", label: "스윙 추천", detail: "오버나이트·스윙 아이디어를 수동 계좌용 추천으로 텔레그램에 보냅니다. 엔진은 이것으로 매매하지 않습니다." },
+      { time: "16:20", market: "KR", label: "성과 발행", detail: "이 페이지가 읽는 JSON을 다시 만들어 배포합니다." },
+      { time: "21:40", market: "US", label: "미국 관심종목 리셋", detail: "다가올 세션을 위해 유니버스의 미국 쪽을 비웁니다." },
+      { time: "21:50", market: "US", label: "미국 자동 등록", detail: "같은 확신도 채점을 미국 후보에 돌립니다." },
+      { time: "22:10", market: "US", label: "미국 유니버스 롤", detail: "미국장 개장 전에 유니버스를 리로드합니다." },
+      { time: "22:30", market: "US", label: "미국장 개장", detail: "같은 전략군이 같은 레일 아래에서 미국 유니버스로 돕니다." },
+      { time: "23:00", market: "ALL", label: "마켓 펄스", detail: "23:00·01:00·03:00·05:00에 밤사이 움직임을 요약해 보냅니다." },
+      { time: "06:10", market: "US", label: "미국 손익", detail: "미국장 체결을 정산하고, 이 페이지가 읽는 왕복 원장을 그날치로 마감합니다." },
     ],
-    dataSourcesTitle: "데이터 출처",
-    dataSources: ["키움 웹소켓 (실시간 시세)", "Toss (주문 집행)", "네이버 증권", "DART", "FRED"],
+    legendKr: "한국장",
+    legendUs: "미국장",
+    legendAll: "공통",
+    railsTitle: "개장 시 리스크 레일",
+    rails: [
+      { label: "하드 스탑", detail: "포지션당 −5%, 서버측 집행" },
+      { label: "목표 상한", detail: "+10% 도달 시 이익 실현" },
+      { label: "전략별 분리 계정", detail: "한 전략의 손실이 다른 전략의 배분을 쓰지 못함" },
+      { label: "킬 스위치", detail: "텔레그램 메시지 한 번으로 진입 중단 또는 전량 청산" },
+    ],
+    sourcesTitle: "무엇을 읽는가",
+    sourcesNote: "시세는 키움이 우선이고 실패하면 Toss로 내려갑니다. 주문은 Toss 하나로만 나갑니다.",
+    sources: [
+      { name: "키움 웹소켓", detail: "실시간 시세, 주 경로" },
+      { name: "Toss REST", detail: "시세 폴백 + 유일한 주문 경로" },
+      { name: "FRED", detail: "국면 판정용 매크로 시계열" },
+      { name: "자체 데일리 리포트", detail: "같은 서버에서 KR 08:00 / US 20:00 발행" },
+      { name: "텔레그램 13개 채널", detail: "수급·촉매 정보 — 태깅용이지 매매 신호가 아님" },
+      { name: "뉴스 RSS", detail: "하루 약 4,600건을 이벤트 태그로 걸러냄" },
+    ],
+    pipelineTitle: "전략이 들어오는 관문",
+    pipelineNote:
+      "노트북에서 좋아 보였다는 이유로 배포되는 것은 없습니다. 별도의 로컬 백테스트 저장소를 먼저 통과해야 하고, 그 다음에는 모의 운용을 버텨야 합니다.",
+    pipeline: [
+      { step: "01", label: "데이터 레이크", detail: "봉·재무 데이터를 버전을 붙여 로컬에 쌓습니다. 같은 입력으로 결과를 다시 돌릴 수 있도록." },
+      { step: "02", label: "1차 스크리닝", detail: "값싼 스윕으로 명백히 죽은 아이디어를 먼저 걸러냅니다." },
+      { step: "03", label: "워크포워드", detail: "표본 외 구간만 사용하고, deflated Sharpe로 채점해 그 아이디어가 통과한 시도 횟수를 값에 반영합니다." },
+      { step: "04", label: "Go / No-go 게이트", detail: "실행 전에 미리 정해 둔 명시적 임계값. 여기서 떨어지면 아이디어는 끝납니다." },
+      { step: "05", label: "모의로 승격", detail: "promote 명령이 전략을 실시세·실비용의 모의 엔진으로 옮깁니다." },
+      { step: "06", label: "30왕복 이상", detail: "30회 미만에서는 신뢰구간이 넓어 엣지와 잡음을 구분할 수 없습니다. 그때까지 표본 부족 표시가 유지됩니다." },
+      { step: "07", label: "사람이 결정", detail: "실자금은 자동으로 켜지지 않습니다. 사람이 기록을 읽고 판단합니다." },
+    ],
+    pipelineCaption: "아이디어는 위로 들어오고, 아래까지 내려오는 것은 거의 없습니다.",
+    abTitle: "촉매 A/B 분할",
+    abBody:
+      "여러 전략이 짝으로 돕니다 — 기본 갈래와, id가 “_cat”으로 끝나는 촉매 갈래. 둘 사이에 다른 파라미터는 하나도 없습니다. 촉매 갈래는 뉴스·수급 태그가 붙은 종목만 볼 수 있다는 것뿐입니다. 이 설계는 질문 하나만 남깁니다: 촉매 필터가 도움이 되는가, 아니면 표본만 깎는가?",
+    notAutomatedTitle: "일부러 자동화하지 않은 것",
+    notAutomatedBody:
+      "오버나이트·스윙 아이디어는 엔진이 절대 매매하지 않습니다. 사람이 운용하는 계좌를 위한 추천으로 텔레그램에 나갈 뿐입니다. 자동매매 레인이 단타 전용인 것은 한계가 아니라 결정입니다. 엔진이 연 것은 같은 세션 안에 닫습니다.",
     aiTitle: "AI가 있는 자리 / 없는 자리",
     aiPresent: "AI 있음",
-    aiPresentDesc: "수집 요약, 종목 후보 분석, 제어 평면의 파라미터 제안",
+    aiPresentDesc:
+      "수집 요약, 종목 후보 분석, 제어 평면의 파라미터 제안. 전부 매매 시계 바깥에서 돕니다.",
     aiAbsent: "AI 없음",
-    aiAbsentDesc: "진입·청산 판단, 주문 집행 — 가격 기반 결정론적 코드만 실행",
+    aiAbsentDesc:
+      "진입·청산·사이징·주문 집행. 가격 기반 결정론적 코드만 — 거래 평면에 네트워크나 모델 호출이 등장하면 아키텍처 테스트가 빌드를 떨어뜨립니다.",
   },
   cost: {
     eyebrow: "Cost Reality",
     title: "비용의 진실",
     description:
-      "전략의 엣지가 왕복 비용보다 크지 않으면, 매매 자체가 순손실의 원인이 됩니다. 국내 개별주 거래의 절반 이상이 세금입니다.",
+      "이 페이지에서 가장 중요한 숫자입니다. 전략의 엣지가 왕복 비용보다 크지 않으면 매매 자체가 손실의 원인이 되고, 이 기록에서는 실제로 그렇습니다.",
     bars: [
       { label: "KR 개별주 (왕복)" },
       { label: "KR ETF (왕복)" },
@@ -463,7 +871,10 @@ const ko: Messages = {
     ],
     taxLabel: (bp) => `세금 ${bp}bp`,
     otherLabel: (bp) => `수수료·슬리피지 ${bp}bp`,
-    feeDragHeadline: (pct) => `총손익의 ${pct.toFixed(0)}%가 수수료·세금으로 사라졌습니다`,
+    feeDragHeadline: "총손익 중 수수료·세금이 가져간 비율",
+    feeDragCaption:
+      "모델링이 아니라 이 기록에서 실측한 값입니다. 여러 전략이 비용 전에는 양수였다가 비용 후에 음수로 뒤집힙니다.",
+    breakdownTitle: "상품별 왕복 비용",
     noteMeasuredTitle: "측정에 반영",
     noteMeasuredBody:
       "체결마다 실제 수수료·세금·슬리피지를 원장에 기록하고, 전략별 기대값(bp)은 항상 비용 차감 후 수치로 표기합니다.",
@@ -519,12 +930,24 @@ const ko: Messages = {
       },
     ],
   },
+  editorsNote: {
+    label: "편집자 노트",
+    title: "지금 공개하는 이유",
+    bullets: [
+      "GitHub 저장소가 비공개라 코드를 직접 보여줄 수 없습니다 — 대신 원리와 실측치를 공개합니다.",
+      "지금은 누적 손실 구간입니다. 곡선을 좋아 보이게 하려고 유리한 구간만 잘라내지 않습니다.",
+      "전략마다 신뢰구간과 표본 경고를 함께 표기해 과신을 막습니다.",
+    ],
+    signoff: "엔진이 도는 바로 그 서버에서 발행합니다.",
+  },
   footer: {
     lastUpdated: "마지막 갱신:",
     kstSuffix: "(KST)",
     notAdvice: "이 페이지의 어떤 내용도 투자 조언이 아닙니다.",
     updatedAgo: (hours) => `${hours}시간 전 갱신`,
+    justNow: "방금 갱신",
     stale: "갱신 지연",
+    freshLabel: "데이터 신선도",
   },
 };
 

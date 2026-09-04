@@ -12,13 +12,13 @@ export default function LocaleToggle() {
     <div
       role="group"
       aria-label="Language / 언어"
-      className="flex h-8 shrink-0 items-center rounded border border-[var(--border)] p-0.5 text-xs font-medium"
+      className="flex h-8 shrink-0 items-center border border-[var(--control)] p-0.5 text-xs font-medium"
     >
       <button
         type="button"
         onClick={() => setLocale("en")}
         aria-pressed={locale === "en"}
-        className={`rounded-sm px-2 py-1 transition-colors ${
+        className={`cursor-pointer px-2 py-1 text-[11px] font-medium transition-colors ${
           locale === "en"
             ? "bg-[var(--accent)] text-[var(--background)]"
             : "text-[var(--muted)] hover:text-[var(--foreground)]"
@@ -30,7 +30,7 @@ export default function LocaleToggle() {
         type="button"
         onClick={() => setLocale("ko")}
         aria-pressed={locale === "ko"}
-        className={`rounded-sm px-2 py-1 transition-colors ${
+        className={`cursor-pointer px-2 py-1 text-[11px] font-medium transition-colors ${
           locale === "ko"
             ? "bg-[var(--accent)] text-[var(--background)]"
             : "text-[var(--muted)] hover:text-[var(--foreground)]"

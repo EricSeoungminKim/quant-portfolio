@@ -1,66 +1,72 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   Palette — light is the default look (2026-09-04 owner direction), with a
+   fully tuned dark theme behind the toggle.
+
+   Neutrals are cool and near-white, in the Coinbase register: #ffffff ground,
+   #f7f8fa bands, #dcdfe4 rules, #0a0b0d ink. The one saturated blue on the
+   page is Coinbase's own #0052FF — and it arrives as the *data* colour for a
+   negative number, because Korean market convention is up = red, down = blue.
+   On a losing record that makes blue the page's dominant colour honestly,
+   rather than as decoration. The accent therefore has to live off the red/blue
+   axis entirely: a brass ochre, used for chrome, eyebrows, ticks and active
+   state, and never for a value. See docs/design-direction.md.
+
+   prefers-color-scheme is deliberately NOT wired to auto-flip: the default
+   look is light for every visitor, and dark is an explicit choice the toggle
+   stores.
+--------------------------------------------------------------------------- */
+
 :root {
-  --background: #f3f4f7;
+  --background: #ffffff;
+  --band: #f7f8fa;
   --surface: #ffffff;
-  --surface-2: #eceef2;
-  --border: #d7dbe3;
-  --foreground: #12151c;
-  --muted: #5b6270;
-  --muted-2: #666f80;
-  --accent: #8a6723;
-  --accent-2: #b78a35;
-  --link: #12151c;
+  --surface-2: #eef0f3;
+  --border: #dcdfe4;
+  --hairline: #dcdfe4;
+  /* 3:1 against both the ground and the bands (WCAG 1.4.11) — used wherever a
+     border is the only boundary of an interactive control. */
+  --control: #8b909a;
+  --foreground: #0a0b0d;
+  --muted: #5b616e;
+  --muted-2: #666b74;
+  --accent: #8a5e0f;
+  --accent-2: #6f4c0c;
+  --accent-wash: rgba(138, 94, 15, 0.08);
 
   /* Korean market convention: up = red, down = blue */
-  --up: #c23b3b;
-  --up-bg: rgba(194, 59, 59, 0.08);
-  --down: #2f5fbf;
-  --down-bg: rgba(47, 95, 191, 0.08);
+  --up: #c0202f;
+  --up-bg: rgba(192, 32, 47, 0.07);
+  --down: #0052ff;
+  --down-bg: rgba(0, 82, 255, 0.06);
 
-  --grid-line: rgba(18, 21, 28, 0.06);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --background: #0b0d12;
-    --surface: #10141b;
-    --surface-2: #161b24;
-    --border: #262c38;
-    --foreground: #e7e9ee;
-    --muted: #969fb0;
-    --muted-2: #778191;
-    --accent: #d7ab5c;
-    --accent-2: #e6c079;
-    --link: #e7e9ee;
-
-    --up: #e0665f;
-    --up-bg: rgba(224, 102, 95, 0.12);
-    --down: #6f9bf0;
-    --down-bg: rgba(111, 155, 240, 0.12);
-
-    --grid-line: rgba(231, 233, 238, 0.07);
-  }
+  --grid-line: rgba(10, 11, 13, 0.035);
+  color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --background: #0b0d12;
-  --surface: #10141b;
-  --surface-2: #161b24;
-  --border: #262c38;
-  --foreground: #e7e9ee;
-  --muted: #969fb0;
-  --muted-2: #778191;
-  --accent: #d7ab5c;
-  --accent-2: #e6c079;
-  --link: #e7e9ee;
+  --background: #0a0b0d;
+  --band: #101216;
+  --surface: #131519;
+  --surface-2: #1b1e23;
+  --border: #2a2e35;
+  --hairline: #343943;
+  --control: #666c78;
+  --foreground: #f7f8fa;
+  --muted: #a5aab4;
+  --muted-2: #8d929c;
+  --accent: #e0b25f;
+  --accent-2: #f0c882;
+  --accent-wash: rgba(224, 178, 95, 0.1);
 
-  --up: #e0665f;
-  --up-bg: rgba(224, 102, 95, 0.12);
-  --down: #6f9bf0;
-  --down-bg: rgba(111, 155, 240, 0.12);
+  --up: #f2685e;
+  --up-bg: rgba(242, 104, 94, 0.12);
+  --down: #6f9bff;
+  --down-bg: rgba(111, 155, 255, 0.12);
 
-  --grid-line: rgba(231, 233, 238, 0.07);
+  --grid-line: rgba(247, 248, 250, 0.05);
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -68,6 +74,9 @@
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-border: var(--border);
+  --color-band: var(--band);
+  --color-hairline: var(--hairline);
+  --color-control: var(--control);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-muted-2: var(--muted-2);
@@ -85,21 +94,23 @@
   border-color: var(--border);
 }
 
-html {
-  color-scheme: light dark;
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-plex-kr), "Pretendard", -apple-system, BlinkMacSystemFont,
     "Malgun Gothic", sans-serif;
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 48px 48px;
-  background-attachment: fixed;
+  /* Korean must break between words, not inside them — without keep-all a
+     CJK line wraps at any syllable and splits 고른 into 고 / 른. Latin is
+     unaffected (it already breaks at spaces); break-word is the escape hatch
+     for a single token longer than its container, such as a bare URL. */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  text-rendering: optimizeLegibility;
 }
+
+/* --- Type roles -----------------------------------------------------------
+   .tnum is the machine voice: every timecode, basis point, trip count and
+   section index. .display is the human voice at headline size. */
 
 .tnum {
   font-family: var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -107,14 +118,81 @@ body {
   font-feature-settings: "tnum" 1;
 }
 
+.mono-label {
+  font-family: var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+}
+
+.display {
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+.tight {
+  letter-spacing: -0.012em;
+}
+
 ::selection {
   background: var(--accent);
   color: var(--background);
 }
 
+/* --- Plate ----------------------------------------------------------------
+   The page's structural unit: a hairline box with a registration tick in the
+   top-left corner, borrowed from printed instrument panels. Replaces the
+   rounded shadow-card, which reads as a component-library default. */
+
+.plate {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.plate::before,
+.plate::after {
+  content: "";
+  position: absolute;
+  background: var(--accent);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.plate::before {
+  top: -1px;
+  left: -1px;
+  width: 9px;
+  height: 1px;
+}
+.plate::after {
+  top: -1px;
+  left: -1px;
+  width: 1px;
+  height: 9px;
+}
+
+/* --- Focus ---------------------------------------------------------------- */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+/* --- Scroll behaviour ----------------------------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+[id] {
+  scroll-margin-top: 5.5rem;
+}
+
 .scroll-x {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
 }
 
 .scroll-x::-webkit-scrollbar {
@@ -126,27 +204,105 @@ body {
   border-radius: 3px;
 }
 
-/* Theme toggle icon — resolved with CSS alone so there is no client-only
-   state to hydrate and no flash of the wrong icon. Icon shown = active theme.
-   Base :root tokens above are the light palette, so the default is "sun". */
+/* --- Motion ---------------------------------------------------------------
+   Four instruments, no decoration: the equity line draws in like a plotter,
+   the freshness dot pulses, the drawer slides. All of it is off under prefers-reduced-motion. */
+
+@keyframes draw-in {
+  from {
+    stroke-dashoffset: var(--draw-length, 2000);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.draw-line {
+  stroke-dasharray: var(--draw-length, 2000);
+  animation: draw-in 1100ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in-late {
+  animation: fade-in 400ms ease-out 900ms both;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.72);
+  }
+}
+
+.pulse-dot {
+  animation: pulse-dot 2.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes drawer-in {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.drawer-in {
+  animation: drawer-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes scrim-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.scrim-in {
+  animation: scrim-in 180ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .draw-line,
+  .fade-in-late,
+  .pulse-dot,
+  .drawer-in,
+  .scrim-in {
+    animation: none !important;
+  }
+  .draw-line {
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+/* --- Theme toggle icon ----------------------------------------------------
+   Resolved with CSS alone so there is nothing to hydrate and no flash of the
+   wrong icon. Icon shown = active theme; light is the default. */
 .icon-sun {
   display: inline-flex;
 }
 .icon-moon {
-  display: none;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) .icon-sun {
-    display: none;
-  }
-  :root:not([data-theme]) .icon-moon {
-    display: inline-flex;
-  }
-}
-:root[data-theme="light"] .icon-sun {
-  display: inline-flex;
-}
-:root[data-theme="light"] .icon-moon {
   display: none;
 }
 :root[data-theme="dark"] .icon-sun {
@@ -154,4 +310,39 @@ body {
 }
 :root[data-theme="dark"] .icon-moon {
   display: inline-flex;
+}
+
+/* --- Full-bleed section bands ---------------------------------------------
+   Section rhythm comes from alternating neutral bands rather than from a card
+   on every block. A band paints edge to edge and carries hairline rules top
+   and bottom; the content inside keeps the same max-width column. */
+.band {
+  background: var(--band);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* --- Scroll reveal --------------------------------------------------------
+   Only armed once the inline head script has marked the document, so a page
+   rendered without JavaScript shows everything immediately instead of a blank
+   column. Reduced motion opts out entirely. */
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-ready [data-reveal][data-revealed] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-ready [data-reveal],
+  .reveal-ready [data-reveal][data-revealed] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }

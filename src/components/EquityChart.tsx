@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { ChartYAxis, EquityPoint, PhaseBoundaryMark } from "@/types/performance";
 import { formatDateLocale, formatPct } from "@/lib/format";
 import { useLocale, useT } from "@/lib/i18n";
@@ -44,13 +44,18 @@ export default function EquityChart({
   // scaled down to a narrow phone shrinks the (fixed user-unit) font size
   // right along with it — a 10px label can render at ~3px on a 320px phone.
   const [W, setW] = useState(DEFAULT_W);
-  useEffect(() => {
+  // Measured in a layout effect (not a plain effect) so the first painted
+  // frame already uses the real container width — with the container's height
+  // reserved below, that means the chart never reflows or squashes on load.
+  useLayoutEffect(() => {
     const el = containerRef.current;
     if (!el) return;
-    const ro = new ResizeObserver((entries) => {
-      const w = entries[0]?.contentRect.width;
-      if (w && w > 0) setW(Math.round(w));
-    });
+    const measure = () => {
+      const w = el.getBoundingClientRect().width;
+      if (w > 0) setW(Math.round(w));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
@@ -99,6 +104,27 @@ export default function EquityChart({
 
   const active = activeIdx !== null ? equity[activeIdx] : null;
 
+  // Plotter draw-in. The dash length has to be the path's real length, which
+  // only the browser can measure — so it is read after layout and written to a
+  // custom property the .draw-line keyframes consume. globals.css turns the
+  // whole thing off under prefers-reduced-motion.
+  const lineRef = useRef<SVGPathElement>(null);
+  const [drawLength, setDrawLength] = useState<number | null>(null);
+  useLayoutEffect(() => {
+    const el = lineRef.current;
+    if (!el) return;
+    try {
+      setDrawLength(Math.ceil(el.getTotalLength()) + 2);
+    } catch {
+      // getTotalLength is unavailable in some non-browser renderers — the
+      // line then paints without the draw-in, which is the correct fallback.
+      setDrawLength(null);
+    }
+  }, [linePath]);
+  const drawStyle = drawLength
+    ? ({ "--draw-length": `${drawLength}` } as React.CSSProperties)
+    : undefined;
+
   // X labels: space them by available pixel width, not just point count, so
   // narrow screens automatically drop to fewer labels. First and last are
   // always shown regardless. English labels ("Aug 11") run noticeably wider
@@ -144,10 +170,15 @@ export default function EquityChart({
           {t.equity.yAxisTitle}
         </div>
 
-        <div ref={containerRef} className="relative min-w-0 flex-1 select-none">
+        <div
+          ref={containerRef}
+          className="relative min-w-0 flex-1 select-none"
+          style={{ height: H }}
+        >
           <svg
             viewBox={`0 0 ${W} ${H}`}
-            className="w-full touch-none"
+            className="h-full w-full touch-none"
+            preserveAspectRatio="none"
             role="img"
             aria-label={t.equity.chartAriaLabel(title)}
             onPointerMove={(e) => handlePointer(e.clientX)}
@@ -223,10 +254,41 @@ export default function EquityChart({
               </clipPath>
             </defs>
 
-            <path d={areaPath} fill="var(--up-bg)" clipPath="url(#clip-positive)" />
-            <path d={areaPath} fill="var(--down-bg)" clipPath="url(#clip-negative)" />
-            <path d={linePath} fill="none" stroke="var(--up)" strokeWidth={1.75} clipPath="url(#clip-positive)" />
-            <path d={linePath} fill="none" stroke="var(--down)" strokeWidth={1.75} clipPath="url(#clip-negative)" />
+            <path
+              d={areaPath}
+              fill="var(--up-bg)"
+              clipPath="url(#clip-positive)"
+              className="fade-in-late"
+            />
+            <path
+              d={areaPath}
+              fill="var(--down-bg)"
+              clipPath="url(#clip-negative)"
+              className="fade-in-late"
+            />
+            <path
+              ref={lineRef}
+              d={linePath}
+              fill="none"
+              stroke="var(--up)"
+              strokeWidth={1.75}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              clipPath="url(#clip-positive)"
+              className={drawLength ? "draw-line" : undefined}
+              style={drawStyle}
+            />
+            <path
+              d={linePath}
+              fill="none"
+              stroke="var(--down)"
+              strokeWidth={1.75}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              clipPath="url(#clip-negative)"
+              className={drawLength ? "draw-line" : undefined}
+              style={drawStyle}
+            />
 
             {/* x labels — the last one is right-anchored so it never gets
                 clipped against the plot's right edge (2026-09-02 fix: it used
@@ -251,6 +313,7 @@ export default function EquityChart({
             {/* points */}
             {equity.map((p, i) => (
               <circle
+                className="fade-in-late"
                 key={p.date}
                 cx={xAt(i)}
                 cy={yAt(p.cum_pct)}
@@ -265,23 +328,57 @@ export default function EquityChart({
               />
             ))}
 
-            {activeIdx !== null && (
-              <line
-                x1={xAt(activeIdx)}
-                x2={xAt(activeIdx)}
-                y1={PAD_T}
-                y2={H - PAD_B}
-                stroke="var(--foreground)"
-                strokeOpacity={0.15}
-                strokeWidth={1}
-              />
+            {/* crosshair — both axes, with the y value pinned to the axis so the
+                reading can be taken without moving to the tooltip */}
+            {active && activeIdx !== null && (
+              <g pointerEvents="none">
+                <line
+                  x1={xAt(activeIdx)}
+                  x2={xAt(activeIdx)}
+                  y1={PAD_T}
+                  y2={H - PAD_B}
+                  stroke="var(--foreground)"
+                  strokeOpacity={0.28}
+                  strokeWidth={1}
+                  strokeDasharray="3 3"
+                />
+                <line
+                  x1={PAD_L}
+                  x2={W - PAD_R}
+                  y1={yAt(active.cum_pct)}
+                  y2={yAt(active.cum_pct)}
+                  stroke="var(--foreground)"
+                  strokeOpacity={0.28}
+                  strokeWidth={1}
+                  strokeDasharray="3 3"
+                />
+                <rect
+                  x={0}
+                  y={yAt(active.cum_pct) - 8}
+                  width={PAD_L - 4}
+                  height={16}
+                  fill={active.cum_pct >= 0 ? "var(--up)" : "var(--down)"}
+                />
+                <text
+                  x={PAD_L - 8}
+                  y={yAt(active.cum_pct)}
+                  textAnchor="end"
+                  dominantBaseline="middle"
+                  className="tnum"
+                  fontSize={9}
+                  fontWeight={600}
+                  fill="var(--surface)"
+                >
+                  {formatPct(active.cum_pct, 1)}
+                </text>
+              </g>
             )}
           </svg>
 
           {active && (
             <div
-              className="pointer-events-none absolute top-2 right-2 min-w-[9.5rem] max-w-[calc(100%-1rem)] rounded border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-xs shadow-sm"
-              style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.12)" }}
+              className="pointer-events-none absolute top-2 right-2 min-w-[9.5rem] max-w-[calc(100%-1rem)] border border-[var(--control)] bg-[var(--surface)] px-3 py-2 text-xs"
+              style={{ boxShadow: "0 6px 22px rgba(0,0,0,0.22)" }}
             >
               <div className="tnum font-medium">{active.date}</div>
               <div className="mt-1 flex justify-between gap-4 text-[var(--muted)]">

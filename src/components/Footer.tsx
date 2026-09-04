@@ -42,7 +42,7 @@ export default function Footer({
   return (
     <footer className="mt-8 border-t border-[var(--border)]">
       <div className="mx-auto max-w-6xl px-5 py-10">
-        <p className="rounded border border-[var(--up)] bg-[var(--up-bg)] p-3.5 text-xs leading-relaxed text-[var(--foreground)]">
+        <p className="border-l-2 border-[var(--up)] bg-[var(--up-bg)] px-4 py-3.5 text-xs leading-relaxed text-[var(--foreground)]">
           {translateDataText(disclaimer, disclaimerEn, locale)}
         </p>
         <div className="mt-5 flex flex-col gap-2 text-xs text-[var(--muted-2)] sm:flex-row sm:items-center sm:justify-between">
@@ -52,13 +52,18 @@ export default function Footer({
             </span>
             {hoursAgo !== null && (
               <span
-                className={`tnum rounded border px-1.5 py-0.5 text-[10px] font-medium ${
+                title={t.footer.freshLabel}
+                className={`tnum flex items-center gap-1.5 border px-1.5 py-0.5 text-[10px] font-medium ${
                   stale
                     ? "border-[var(--up)] text-[var(--up)]"
-                    : "border-[var(--border)] text-[var(--muted-2)]"
+                    : "border-[var(--control)] text-[var(--muted-2)]"
                 }`}
               >
-                {stale ? t.footer.stale : t.footer.updatedAgo(hoursAgo)}
+                <span
+                  className={`inline-block h-1.5 w-1.5 rounded-full ${stale ? "bg-[var(--up)]" : "pulse-dot bg-[var(--accent)]"}`}
+                  aria-hidden
+                />
+                {stale ? t.footer.stale : hoursAgo === 0 ? t.footer.justNow : t.footer.updatedAgo(hoursAgo)}
               </span>
             )}
           </span>

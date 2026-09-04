@@ -2,10 +2,10 @@
 
 import { useT } from "@/lib/i18n";
 
+// Light is the default look, so an unset data-theme means light — the OS
+// scheme is not consulted (2026-09-04 owner direction).
 function currentTheme(): "light" | "dark" {
-  const attr = document.documentElement.getAttribute("data-theme");
-  if (attr === "light" || attr === "dark") return attr;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
 }
 
 // No React state here on purpose: the correct icon is chosen with pure CSS
@@ -17,6 +17,8 @@ export default function ThemeToggle() {
   function toggle() {
     const next = currentTheme() === "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", next);
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", next === "dark" ? "#0a0b0d" : "#ffffff");
     try {
       localStorage.setItem("theme", next);
     } catch {
@@ -29,7 +31,7 @@ export default function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={t.nav.themeToggle}
-      className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-[var(--border)] text-[var(--muted)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+      className="flex h-8 w-8 shrink-0 items-center justify-center border border-[var(--control)] text-[var(--muted)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
     >
       <svg
         className="icon-sun"
