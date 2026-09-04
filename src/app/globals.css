@@ -45,22 +45,43 @@
   /* Categorical series palette for the per-strategy curves chart (section 02).
      Identity colours, not value colours — the red/blue axis stays reserved for
      sign (--up/--down), so these are only ever a series key, never a reading.
-     Eight fixed hues in a fixed order; a 16-strategy record is carried by
-     pairing each hue with a stroke pattern (see src/lib/series.ts).
-     Validated with the dataviz palette validator against this page's own
-     surfaces: light #ffffff → lightness band, chroma floor, CVD separation
-     (worst adjacent ΔE 9.1) and normal-vision floor (19.6) all PASS; aqua,
-     yellow and magenta sit under 3:1 on white, which triggers the relief rule
-     — hence the always-visible ranking list carrying every line's name and
-     latest value, plus the screen-reader table. */
-  --series-1: #2a78d6;
-  --series-2: #eb6834;
-  --series-3: #1baf7a;
-  --series-4: #eda100;
-  --series-5: #e87ba4;
-  --series-6: #008300;
-  --series-7: #4a3aa7;
-  --series-8: #e34948;
+     2026-09-04 owner direction: colour is the ONLY identity channel now (no
+     stroke pattern) — 18 hues, one per strategy id (15 base + 3 catalyst `_cat`
+     arms), generated in OKLCH at a fixed lightness/chroma for this mode
+     (L 0.63, ~94% of each hue's max in-gamut chroma) and picked by a
+     farthest-point search that maximizes the worst ALL-PAIRS separation
+     rather than just neighbours (see src/lib/series.ts — assignment is by a
+     strategy's index in the alphabetically-sorted full id list, mod 18).
+     Validated with the dataviz palette validator's own math against this
+     page's white surface: all 18 clear the lightness band, the chroma floor
+     and >= 3:1 contrast; worst-case ALL-PAIRS normal-vision ΔE is 6.6 (two
+     olive/mustard hues — sRGB has little chroma room in that hue range, so
+     nothing evenly-spaced can clear the usual 8 target at this cardinality),
+     with most pairs well clear of it (8–19+). Colour-blind separation
+     collapses for a handful of pairs at 18 all-pairs hues — an inherent
+     gamut limit at this series count, not a tuning miss — so colour is
+     deliberately not the only channel in the UI: every line keeps an
+     always-visible legend chip and ranking-list row with its name and
+     number, a hover state that isolates one line and fades the rest, and a
+     screen-reader table. */
+  --series-1: #988b1b;
+  --series-2: #ca25f8;
+  --series-3: #1d8de5;
+  --series-4: #f72453;
+  --series-5: #209d92;
+  --series-6: #8e6af8;
+  --series-7: #d7611a;
+  --series-8: #e822ab;
+  --series-9: #20a51c;
+  --series-10: #1f97bd;
+  --series-11: #f03f1a;
+  --series-12: #20a264;
+  --series-13: #617cf8;
+  --series-14: #f12381;
+  --series-15: #ae51f8;
+  --series-16: #b87a1b;
+  --series-17: #db23d2;
+  --series-18: #6f991b;
 
   --grid-line: rgba(10, 11, 13, 0.035);
   color-scheme: light;
@@ -87,17 +108,29 @@
   --down-bg: rgba(111, 155, 255, 0.12);
 
 
-  /* Same eight hues re-stepped for the dark plate (#131519), not flipped:
-     all eight PASS the lightness band, chroma floor, CVD separation (worst
-     adjacent ΔE 8.4) and 3:1 contrast against that surface. */
-  --series-1: #3987e5;
-  --series-2: #d95926;
-  --series-3: #199e70;
-  --series-4: #c98500;
-  --series-5: #d55181;
-  --series-6: #008300;
-  --series-7: #9085e9;
-  --series-8: #e66767;
+  /* Same 18 hues re-stepped for the dark plate (#131519), not flipped (L 0.64,
+     ~98% max chroma — dark tolerates more saturation before clipping). Worst-
+     case ALL-PAIRS normal-vision ΔE 6.7, min contrast 4.65:1 — see the light
+     block above for the method and the honest CVD caveat, which applies
+     identically here. */
+  --series-1: #9c8e0d;
+  --series-2: #ce28fd;
+  --series-3: #0e90ee;
+  --series-4: #fd2154;
+  --series-5: #10a196;
+  --series-6: #916cfd;
+  --series-7: #df610c;
+  --series-8: #f011b0;
+  --series-9: #10aa0d;
+  --series-10: #0f9ac3;
+  --series-11: #f9390b;
+  --series-12: #10a664;
+  --series-13: #647ffd;
+  --series-14: #fa1183;
+  --series-15: #b254fd;
+  --series-16: #be7c0c;
+  --series-17: #e312da;
+  --series-18: #719d0d;
 
   --grid-line: rgba(247, 248, 250, 0.05);
   color-scheme: dark;

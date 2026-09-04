@@ -6,7 +6,10 @@ import type { CurveSeries } from "@/lib/series";
 import { formatDateLocale, formatMoneyCompact, formatMoneySigned } from "@/lib/format";
 import { useLocale, useT } from "@/lib/i18n";
 
-const H = 300;
+/** Default/initial viewBox height, before the ResizeObserver below measures
+ * the real rendered height (which now varies by breakpoint — see the
+ * CHART_HEIGHT_CLASSES Tailwind classes on the container). */
+const DEFAULT_H = 300;
 const PAD_L = 48;
 const PAD_R = 10;
 const PAD_T = 14;
@@ -14,6 +17,10 @@ const PAD_B = 28;
 const DEFAULT_W = 640;
 /** Below this the container scrolls instead of squashing the plot further. */
 const MIN_W = 240;
+/** 2026-09-04 owner direction: the panels read as crowded at a flat 300px —
+ * substantially taller from ≥1024px, scaled down proportionally below that,
+ * with a sane (not overly squashed or elongated) aspect at 320px. */
+const CHART_HEIGHT_CLASSES = "h-[280px] sm:h-[320px] md:h-[380px] lg:h-[460px] xl:h-[500px]";
 /** How close (px) the pointer must be to a line before it counts as hovered. */
 const HIGHLIGHT_RADIUS = 26;
 
@@ -56,19 +63,22 @@ export default function StrategyCurveChart({
   const { locale } = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
   const [W, setW] = useState(DEFAULT_W);
+  const [H, setH] = useState(DEFAULT_H);
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [pointerY, setPointerY] = useState<number | null>(null);
 
-  // Match the viewBox width to the real container width so 1 user unit ≈ 1
-  // CSS px — otherwise a fixed viewBox scaled to a phone shrinks the (fixed
-  // user-unit) label text right along with it. Layout effect, not a plain
-  // effect, so the first painted frame already uses the real width.
+  // Match the viewBox to the real container size so 1 user unit ≈ 1 CSS px —
+  // otherwise a fixed viewBox scaled to a phone (or to the responsive height
+  // in CHART_HEIGHT_CLASSES) shrinks or stretches the (fixed user-unit) label
+  // text right along with it. Layout effect, not a plain effect, so the first
+  // painted frame already uses the real size.
   useLayoutEffect(() => {
     const el = containerRef.current;
     if (!el) return;
     const measure = () => {
-      const w = el.getBoundingClientRect().width;
-      if (w > 0) setW(Math.max(MIN_W, Math.round(w)));
+      const rect = el.getBoundingClientRect();
+      if (rect.width > 0) setW(Math.max(MIN_W, Math.round(rect.width)));
+      if (rect.height > 0) setH(Math.round(rect.height));
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -135,12 +145,12 @@ export default function StrategyCurveChart({
 
   const svgRef = useRef<SVGSVGElement>(null);
 
-  // No plotter draw-in here, unlike section 01. stroke-dasharray is load-bearing
-  // on this chart — it is half of each series' identity (hue + pattern), and the
-  // .draw-line technique works by overwriting stroke-dasharray with the path
-  // length, which would erase the dashed/dotted arms permanently. The lines fade
-  // in together instead (.series-in, off under prefers-reduced-motion), and the
-  // fade runs once per mount rather than replaying on every legend toggle.
+  // No plotter draw-in here, unlike section 01 — the .draw-line technique
+  // draws a path by animating stroke-dasharray/-dashoffset, which would fight
+  // any real dasharray if this chart still used one for series identity (it
+  // no longer does — colour only). The lines fade in together instead
+  // (.series-in, off under prefers-reduced-motion), and the fade runs once
+  // per mount rather than replaying on every legend toggle.
   const animatedRef = useRef(false);
   const [enterAnim, setEnterAnim] = useState(true);
   useLayoutEffect(() => {
@@ -242,8 +252,7 @@ export default function StrategyCurveChart({
   if (n === 0) {
     return (
       <div
-        className="flex items-center justify-center text-xs text-[var(--muted-2)]"
-        style={{ height: H }}
+        className={`flex items-center justify-center text-xs text-[var(--muted-2)] ${CHART_HEIGHT_CLASSES}`}
       >
         {t.curves.emptyMarket}
       </div>
@@ -264,8 +273,8 @@ export default function StrategyCurveChart({
           setActiveIdx(null);
           setPointerY(null);
         }}
-        className="relative min-w-0 select-none"
-        style={{ height: H, minWidth: MIN_W }}
+        className={`relative min-w-0 select-none ${CHART_HEIGHT_CLASSES}`}
+        style={{ minWidth: MIN_W }}
       >
         <svg
           ref={svgRef}
@@ -362,7 +371,6 @@ export default function StrategyCurveChart({
                   fill="none"
                   stroke={s.color}
                   strokeWidth={hot ? 2.75 : 2}
-                  strokeDasharray={s.dash || undefined}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
@@ -400,15 +408,7 @@ export default function StrategyCurveChart({
                   <tr key={s.id} className={highlightIdx !== null && highlightIdx !== si ? "opacity-50" : ""}>
                     <td className="py-px pr-1.5 align-middle">
                       <svg width="14" height="8" aria-hidden className="block">
-                        <line
-                          x1="0"
-                          x2="14"
-                          y1="4"
-                          y2="4"
-                          stroke={s.color}
-                          strokeWidth="2.5"
-                          strokeDasharray={s.dash || undefined}
-                        />
+                        <line x1="0" x2="14" y1="4" y2="4" stroke={s.color} strokeWidth="2.5" />
                       </svg>
                     </td>
                     <td className="max-w-[9rem] truncate py-px pr-2.5 text-[var(--muted)]">{s.name}</td>

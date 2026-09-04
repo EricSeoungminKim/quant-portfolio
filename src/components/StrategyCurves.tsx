@@ -36,10 +36,25 @@ export default function StrategyCurves({
   const t = useT();
   const { locale } = useLocale();
 
-  // Colour/pattern assignment is computed from EVERY strategy in the snapshot,
-  // not from the visible subset — that is what keeps a strategy the same
-  // colour in both panels and across every legend toggle.
+  // Colour assignment is computed from EVERY strategy in the snapshot, not
+  // from the visible subset — that is what keeps a strategy the same colour
+  // in both panels and across every legend toggle.
   const styles = useMemo(() => buildSeriesStyles(strategies.map((s) => s.id)), [strategies]);
+
+  // Ids that are one half of a base/`_cat` A/B pair — surfaced as a chip next
+  // to both names, since the two now carry fully distinct hues rather than a
+  // shared hue + stroke pattern.
+  const abIds = useMemo(() => {
+    const ids = new Set(strategies.map((s) => s.id));
+    const out = new Set<string>();
+    for (const s of strategies) {
+      if (s.id.endsWith("_cat") && ids.has(s.id.slice(0, -4))) {
+        out.add(s.id);
+        out.add(s.id.slice(0, -4));
+      }
+    }
+    return out;
+  }, [strategies]);
 
   const books = useMemo(() => {
     const build = (book: Book): CurveSeries[] =>
@@ -53,7 +68,6 @@ export default function StrategyCurves({
             id: s.id,
             name: translateStrategyName(s.id, s.name_ko, s.name_en, locale),
             color: style.color,
-            dash: style.dash,
             enabled: s.enabled !== false,
             verdict: translateVerdict(s.total.verdict, locale) || s.total.verdict,
             points: [...points].sort((a, b) => a.date.localeCompare(b.date)),
@@ -84,9 +98,9 @@ export default function StrategyCurves({
           </p>
         )}
 
-        <div className="mt-8 space-y-8">
-          <BookPanel title={t.curves.bookAsiaTitle} currency="KRW" series={books.asia} />
-          <BookPanel title={t.curves.bookUsTitle} currency="USD" series={books.us} />
+        <div className="mt-8 space-y-10 md:space-y-14">
+          <BookPanel title={t.curves.bookAsiaTitle} currency="KRW" series={books.asia} abIds={abIds} />
+          <BookPanel title={t.curves.bookUsTitle} currency="USD" series={books.us} abIds={abIds} />
         </div>
       </div>
     </section>
@@ -97,10 +111,12 @@ function BookPanel({
   title,
   currency,
   series,
+  abIds,
 }: {
   title: string;
   currency: "KRW" | "USD";
   series: CurveSeries[];
+  abIds: Set<string>;
 }) {
   const t = useT();
   const { locale } = useLocale();
@@ -145,7 +161,7 @@ function BookPanel({
     <div className="plate p-4 md:p-6" data-reveal>
       <PanelHeader title={title} currency={currency} count={series.length} />
 
-      <div className="mt-4 flex flex-col gap-5 lg:flex-row lg:items-start lg:gap-6">
+      <div className="mt-5 flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-10">
         <div className="min-w-0 flex-1">
           <StrategyCurveChart
             series={visible}
@@ -157,12 +173,14 @@ function BookPanel({
               range.to
             )}
           />
-          <p className="mt-1.5 text-[10px] text-[var(--muted-2)]">{t.curves.xAxisTitle}</p>
+          <p className="mt-2 text-[10px] text-[var(--muted-2)]">{t.curves.xAxisTitle}</p>
 
           {/* Legend as toggle chips. Identity is never colour alone: each chip
-              mirrors the line's hue AND its stroke pattern, and carries the
-              strategy's name and verdict as text. */}
-          <div className="mt-4 flex flex-wrap items-center gap-1.5">
+              mirrors the line's hue and carries the strategy's name and
+              verdict as text; a paired base/`_cat` catalyst arm also gets an
+              "A/B" chip since the two now carry distinct hues rather than a
+              shared hue + stroke pattern. */}
+          <div className="mt-6 flex flex-wrap items-center gap-2">
             <span className="mono-label mr-1 text-[9px] text-[var(--muted-2)]">
               {t.curves.legendLabel}
             </span>
@@ -190,13 +208,17 @@ function BookPanel({
                       y2="4"
                       stroke={on ? s.color : "var(--muted-2)"}
                       strokeWidth="2.5"
-                      strokeDasharray={s.dash || undefined}
                     />
                   </svg>
                   <span className={s.enabled ? "" : "text-[var(--muted-2)]"}>{s.name}</span>
                   {!s.enabled && (
                     <span className="mono-label border border-[var(--control)] px-1 py-px text-[8px] font-normal text-[var(--muted-2)]">
                       {t.strategies.offBadge}
+                    </span>
+                  )}
+                  {abIds.has(s.id) && (
+                    <span className="mono-label border border-[var(--control)] px-1 py-px text-[8px] font-normal text-[var(--muted)]">
+                      A/B
                     </span>
                   )}
                   <span className="mono-label text-[8px] text-[var(--muted-2)]">{s.verdict}</span>
@@ -224,9 +246,9 @@ function BookPanel({
         <Ranking ranked={ranked} currency={currency} />
       </div>
 
-      {/* Non-visual equivalent of the chart — the relief the palette's
-          sub-3:1 light-mode hues require, and the reading path for anyone not
-          using a pointer. */}
+      {/* Non-visual equivalent of the chart — colour is never the only
+          channel at 18 series, so this is the reading path for anyone not
+          using a pointer (or not distinguishing hues at all). */}
       {/* The wrapper carries .sr-only, not the table: a table box treats the
           utility's width:1px as a minimum and lays itself out to its content
           anyway, which pushed the page 167px wide at 320px until this div
@@ -299,13 +321,13 @@ function Ranking({
   return (
     <div className="lg:w-[19rem] lg:shrink-0">
       <h4 className="mono-label text-[9px] text-[var(--muted-2)]">{t.curves.rankingTitle}</h4>
-      <ol className="mt-2 divide-y divide-[var(--border)] border-y border-[var(--border)]">
+      <ol className="mt-3 divide-y divide-[var(--border)] border-y border-[var(--border)]">
         {ranked.map(({ s, last }, i) => {
           const strong = emphasize(i);
           return (
             <li
               key={s.id}
-              className={`flex min-h-[34px] items-center gap-2 py-1.5 ${strong ? "" : "opacity-60"}`}
+              className={`flex min-h-[38px] items-center gap-2 py-2 ${strong ? "" : "opacity-60"}`}
             >
               <span className="tnum w-4 shrink-0 text-right text-[10px] text-[var(--muted-2)]">
                 {i + 1}
@@ -327,7 +349,7 @@ function Ranking({
                   <span className="hidden sm:inline"> · {t.curves.tripsShort(last.cum_trips)}</span>
                 </span>
               </span>
-              <MiniSpark points={s.points} color={s.color} dash={s.dash} />
+              <MiniSpark points={s.points} color={s.color} />
               <span
                 className={`tnum w-[4.25rem] shrink-0 text-right text-[11px] font-medium ${
                   last.cum_net >= 0 ? "text-[var(--up)]" : "text-[var(--down)]"
@@ -349,11 +371,9 @@ const SPARK_H = 16;
 function MiniSpark({
   points,
   color,
-  dash,
 }: {
   points: StrategyCurvePoint[];
   color: string;
-  dash: string;
 }) {
   const values = points.map((p) => p.cum_net);
   // Zero is always in range: the whole reading is the distance from break-even.
@@ -383,7 +403,6 @@ function MiniSpark({
           fill="none"
           stroke={color}
           strokeWidth={1.5}
-          strokeDasharray={dash || undefined}
           strokeLinecap="round"
           strokeLinejoin="round"
         />

@@ -4,6 +4,7 @@ import { useCallback, type ReactNode } from "react";
 import type { Costs } from "@/types/performance";
 import { useLocale, useT } from "@/lib/i18n";
 import { translateDataText } from "@/lib/i18nData";
+import Abbr from "./Abbr";
 import SectionHeading from "./SectionHeading";
 import AnimatedNumber from "./AnimatedNumber";
 
@@ -71,11 +72,14 @@ export default function CostTruth({ costs, index }: { costs: Costs; index: strin
         </div>
 
         <div className="mt-6 space-y-5">
-          {bars.map((b) => (
+          {bars.map((b, i) => (
             <div key={b.label}>
               <div className="mb-1.5 flex items-baseline justify-between gap-3 text-sm">
                 <span className="min-w-0 truncate">{b.label}</span>
-                <span className="tnum shrink-0 font-medium">{b.value}bp</span>
+                <span className="tnum shrink-0 font-medium">
+                  {b.value}
+                  {i === 0 ? <Abbr term="bp" definition={t.glossary.bp} /> : "bp"}
+                </span>
               </div>
               <div className="h-5 w-full overflow-hidden bg-[var(--surface-2)]">
                 {b.breakdown ? (

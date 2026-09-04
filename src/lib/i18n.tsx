@@ -256,7 +256,13 @@ interface Messages {
     eyebrow: string;
     title: string;
     description: string;
-    items: { title: string; detail: string }[];
+    items: { title: string; detail: string; bpAbbr?: boolean }[];
+    glossaryTitle: string;
+    glossary: { term: string; definition: string }[];
+  };
+  glossary: {
+    /** Popover text for the interactive "bp" abbreviation. */
+    bp: string;
   };
   editorsNote: {
     label: string;
@@ -618,6 +624,7 @@ const en: Messages = {
       {
         title: "Expectancy (bp)",
         detail: "Average return per round trip in basis points, net of fees, tax, and slippage — not a gross P&L figure.",
+        bpAbbr: true,
       },
       {
         title: "KR round-trip cost",
@@ -640,6 +647,42 @@ const en: Messages = {
           "The KRW and USD books are shown separately with no FX conversion between them — each curve is normalized only against its own currency's starting seed.",
       },
     ],
+    glossaryTitle: "Glossary",
+    glossary: [
+      { term: "bp", definition: "Basis point, 0.01%. 100bp = 1%." },
+      {
+        term: "Expectancy",
+        definition: "Average net return per round trip, in bp — after fees, tax, and slippage.",
+      },
+      {
+        term: "Wilson CI",
+        definition:
+          "A 95% confidence interval for a win rate that stays accurate at small sample sizes, unlike the normal approximation.",
+      },
+      {
+        term: "Deflated Sharpe",
+        definition:
+          "A Sharpe ratio discounted for how many strategy variants were tried, so multiple-testing luck isn't mistaken for edge.",
+      },
+      {
+        term: "Round trip",
+        definition:
+          "One entry paired with its matching exit — the unit every win rate and expectancy figure on this page counts.",
+      },
+      {
+        term: "EoD flatten",
+        definition:
+          "Closing every open position before the session ends — nothing this engine trades is held overnight.",
+      },
+      {
+        term: "Catalyst arm",
+        definition:
+          "The “_cat” variant of a strategy, restricted to symbols carrying a news or flow catalyst tag — run as an A/B test against the unrestricted base arm.",
+      },
+    ],
+  },
+  glossary: {
+    bp: "bp (basis point) = 0.01%. 100bp = 1%. E.g. net −25bp = −0.25% of turnover.",
   },
   editorsNote: {
     label: "Editor's note",
@@ -1002,6 +1045,7 @@ const ko: Messages = {
       {
         title: "기대값(bp)",
         detail: "왕복 1회당 평균 수익률(bp) — 수수료·세금·슬리피지를 뺀 순수치이며 총손익이 아닙니다.",
+        bpAbbr: true,
       },
       {
         title: "KR 왕복 비용",
@@ -1020,6 +1064,38 @@ const ko: Messages = {
         detail: "KRW·USD 북은 환전 없이 완전히 분리해서 보여줍니다 — 각 곡선은 자기 통화의 시작 시드에만 대비해 정규화됩니다.",
       },
     ],
+    glossaryTitle: "용어 사전",
+    glossary: [
+      { term: "bp", definition: "베이시스 포인트, 0.01%. 100bp = 1%." },
+      {
+        term: "기대값(Expectancy)",
+        definition: "왕복 1회당 평균 순수익률(bp) — 수수료·세금·슬리피지를 뺀 값.",
+      },
+      {
+        term: "Wilson CI",
+        definition: "표본이 작아도 과신하지 않는 승률 95% 신뢰구간.",
+      },
+      {
+        term: "Deflated Sharpe",
+        definition: "몇 번의 변형을 시도했는지를 반영해 할인한 샤프 비율 — 다중검정에 의한 우연을 엣지로 착각하지 않도록.",
+      },
+      {
+        term: "왕복(Round trip)",
+        definition: "진입과 그에 대응하는 청산을 짝지은 한 단위 — 이 페이지의 모든 승률·기대값이 세는 기준.",
+      },
+      {
+        term: "EoD 청산(Flatten)",
+        definition: "장 마감 전 모든 포지션을 정리하는 것 — 이 엔진은 어떤 포지션도 오버나이트로 넘기지 않습니다.",
+      },
+      {
+        term: "촉매 갈래(Catalyst arm)",
+        definition:
+          "id가 “_cat”으로 끝나는 전략 갈래 — 뉴스·수급 촉매 태그가 붙은 종목만 보도록 제한해, 제한 없는 기본 갈래와 A/B로 비교합니다.",
+      },
+    ],
+  },
+  glossary: {
+    bp: "bp(베이시스 포인트) = 0.01%. 100bp = 1%. 예: 순 −25bp = 거래대금의 −0.25%",
   },
   editorsNote: {
     label: "편집자 노트",

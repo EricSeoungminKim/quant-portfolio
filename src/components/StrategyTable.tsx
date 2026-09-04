@@ -5,6 +5,7 @@ import type { Market, MarketStats, Strategy } from "@/types/performance";
 import { formatBp, formatHoldMinutes } from "@/lib/format";
 import { useLocale, useT } from "@/lib/i18n";
 import { translateDataText, translateStrategyName, translateVerdict } from "@/lib/i18nData";
+import Abbr from "./Abbr";
 import SectionHeading from "./SectionHeading";
 import StrategyHelpDrawer from "./StrategyHelpDrawer";
 
@@ -139,7 +140,9 @@ export default function StrategyTable({
               <Th>{t.strategies.headerMarket}</Th>
               <Th>{t.strategies.headerTrips}</Th>
               <Th>{t.strategies.headerWinRate}</Th>
-              <Th>{t.strategies.headerExpectancy}</Th>
+              <Th>
+                {t.strategies.headerExpectancy} (<Abbr term="bp" definition={t.glossary.bp} />)
+              </Th>
               <Th>{t.strategies.headerVerdict}</Th>
               <Th hideSm>{t.strategies.headerTradesPerDay}</Th>
               <Th hideSm>{t.strategies.headerAvgHold}</Th>
