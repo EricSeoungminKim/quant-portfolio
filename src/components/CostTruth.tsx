@@ -13,7 +13,7 @@ import AnimatedNumber from "./AnimatedNumber";
  * type on the page and sits above the per-instrument breakdown rather than
  * under it.
  */
-export default function CostTruth({ costs }: { costs: Costs }) {
+export default function CostTruth({ costs, index }: { costs: Costs; index: string }) {
   const t = useT();
   const { locale } = useLocale();
   const maxBp = Math.max(
@@ -35,7 +35,7 @@ export default function CostTruth({ costs }: { costs: Costs }) {
   return (
     <section id="cost" className="mx-auto max-w-6xl px-5 py-16 md:py-24">
       <SectionHeading
-        index="03"
+        index={index}
         eyebrow={t.cost.eyebrow}
         title={t.cost.title}
         description={t.cost.description}

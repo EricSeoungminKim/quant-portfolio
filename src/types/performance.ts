@@ -119,6 +119,39 @@ export interface StrategyHelp {
   refs?: StrategyHelpRef[];
 }
 
+// ---------------------------------------------------------------------------
+// Per-strategy equity curves ("전략별 곡선 / Strategy curves")
+//
+// One point per trading day on which the strategy closed at least one round
+// trip — NOT one point per calendar day, so two strategies rarely share a
+// date set and the chart has to carry the last cumulative value forward
+// across the union of dates before the lines are comparable.
+//
+// `cum_net` is post-fee cumulative net P&L in the book's own currency (KRW
+// for `asia`, USD for `us`) over the strategy's lifetime — a different scope
+// and unit from the percentage-normalized `equity_asia`/`equity_us` books,
+// which is why the two never share an axis. Every field here is optional at
+// the container level: the generator rolls curves out per strategy, and an
+// older snapshot has none at all.
+// ---------------------------------------------------------------------------
+
+export interface StrategyCurvePoint {
+  date: string;
+  /** Post-fee cumulative net P&L since the strategy's first closed trip. */
+  cum_net: number;
+  /** Cumulative closed round trips up to and including this date. */
+  cum_trips: number;
+  /** That day's own post-fee net P&L. */
+  day_net: number;
+}
+
+/** Per-currency curves. An empty array means "no closed round trips here" —
+ *  distinct from the whole `curve` block being absent (an older snapshot). */
+export interface StrategyCurves {
+  asia?: StrategyCurvePoint[];
+  us?: StrategyCurvePoint[];
+}
+
 export interface Strategy {
   id: string;
   name_ko: string;
@@ -145,6 +178,13 @@ export interface Strategy {
    * at every read site.
    */
   help?: StrategyHelp | null;
+  /**
+   * Per-currency cumulative net P&L curves. Absent on every snapshot
+   * published before the generator started emitting them — null-guard at
+   * every read site (the whole curves section renders nothing when no
+   * strategy carries one).
+   */
+  curve?: StrategyCurves | null;
 }
 
 export interface ExcludedEntry {
@@ -198,6 +238,9 @@ export interface PerformanceData {
   enabled_count?: number;
   strategies_note?: string;
   strategies_note_en?: string;
+  /** Scope/units caveat printed under the per-strategy curves section. */
+  strategy_curves_note?: string;
+  strategy_curves_note_en?: string;
   // Empty ({}) until a real-account transplant event has happened —
   // `quant.control.performance._excluded_summary` returns {} until then.
   excluded: {

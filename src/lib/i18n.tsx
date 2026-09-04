@@ -37,6 +37,7 @@ interface Messages {
     brand: string;
     tagline: string;
     equity: string;
+    curves: string;
     strategies: string;
     cost: string;
     how: string;
@@ -110,6 +111,33 @@ interface Messages {
     tooltipDay: string;
     tooltipFills: string;
     fillsSuffix: string;
+  };
+  curves: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    bookAsiaTitle: string;
+    bookUsTitle: string;
+    seriesCount: (n: number) => string;
+    legendLabel: string;
+    showAll: string;
+    showNone: string;
+    chipTitle: (name: string, trips: number, verdict: string) => string;
+    rankingTitle: string;
+    lastDay: string;
+    tripsShort: (n: number) => string;
+    xAxisTitle: string;
+    breakEven: string;
+    emptyMarket: string;
+    tooltipDayHint: string;
+    chartKeyboardHint: string;
+    chartAriaLabel: (book: string, count: number, from: string, to: string) => string;
+    readoutAria: (date: string, rows: string[]) => string;
+    tableCaption: (book: string) => string;
+    tableStrategy: string;
+    tableCum: string;
+    tableDay: string;
+    tableTrips: string;
   };
   strategies: {
     eyebrow: string;
@@ -252,6 +280,7 @@ const en: Messages = {
     brand: "QUANT TRADING",
     tagline: "Measurement desk",
     equity: "Equity Curve",
+    curves: "Strategy Curves",
     strategies: "Strategies",
     cost: "Cost",
     how: "How It Works",
@@ -331,6 +360,37 @@ const en: Messages = {
     tooltipDay: "Daily",
     tooltipFills: "Fills",
     fillsSuffix: "fills",
+  },
+  curves: {
+    eyebrow: "Strategy Curves",
+    title: "Strategy curves",
+    description:
+      "One line per strategy: cumulative net P&L after fees, in each book's own currency. This is a different unit from the equity curve above — money, not percent of seed — because the question here is which strategies are carrying the book and which are draining it. Hover, tap, or arrow-key the chart to read every line at a date; click a legend chip to hide a line.",
+    bookAsiaTitle: "Asia (KRX)",
+    bookUsTitle: "US (NYSE\u00b7NASDAQ)",
+    seriesCount: (n) => `${n} strateg${n === 1 ? "y" : "ies"}`,
+    legendLabel: "Lines",
+    showAll: "All",
+    showNone: "None",
+    chipTitle: (name, trips, verdict) =>
+      `${name} — ${trips} closed round trip${trips === 1 ? "" : "s"} · ${verdict}`,
+    rankingTitle: "Ranking (latest cumulative)",
+    lastDay: "last day",
+    tripsShort: (n) => `${n} trip${n === 1 ? "" : "s"}`,
+    xAxisTitle: "Trading days with a closed round trip (KST)",
+    breakEven: "0",
+    emptyMarket: "No closed round trips in this book yet.",
+    tooltipDayHint: "Right column: that day's own net, when the strategy traded.",
+    chartKeyboardHint:
+      "Strategy curves chart. Use the left and right arrow keys to move the crosshair, Home and End for the first and last date, Escape to clear.",
+    chartAriaLabel: (book, count, from, to) =>
+      `${book}: cumulative net profit and loss after fees for ${count} strateg${count === 1 ? "y" : "ies"}, ${from} to ${to}. Every value is listed in the table below the chart.`,
+    readoutAria: (date, rows) => `${date}. ${rows.join(", ")}.`,
+    tableCaption: (book) => `${book} — latest cumulative net P&L per strategy`,
+    tableStrategy: "Strategy",
+    tableCum: "Cumulative net",
+    tableDay: "Last day net",
+    tableTrips: "Round trips",
   },
   strategies: {
     eyebrow: "Strategy Scoreboard",
@@ -607,6 +667,7 @@ const ko: Messages = {
     brand: "QUANT TRADING",
     tagline: "측정 데스크",
     equity: "수익 곡선",
+    curves: "전략별 곡선",
     strategies: "전략별 성적",
     cost: "비용",
     how: "작동 원리",
@@ -685,6 +746,36 @@ const ko: Messages = {
     tooltipDay: "당일",
     tooltipFills: "체결",
     fillsSuffix: "건",
+  },
+  curves: {
+    eyebrow: "전략별 곡선",
+    title: "전략별 곡선",
+    description:
+      "전략 하나가 선 하나다. 수수료를 뺀 누적 순손익을, 각 장부의 통화 그대로 그렸다. 위의 수익 곡선과 단위가 다르다 — 시드 대비 퍼센트가 아니라 금액이다. 여기서 묻는 것이 \u201c어느 전략이 버티고 어느 전략이 갉아먹는가\u201d이기 때문이다. 차트에 커서를 올리거나 터치하거나 방향키를 누르면 그 날짜의 모든 선을 한 번에 읽을 수 있고, 범례 칩을 누르면 선을 숨긴다.",
+    bookAsiaTitle: "아시아 (KRX)",
+    bookUsTitle: "미국 (NYSE\u00b7NASDAQ)",
+    seriesCount: (n) => `전략 ${n}개`,
+    legendLabel: "선",
+    showAll: "전부",
+    showNone: "없음",
+    chipTitle: (name, trips, verdict) => `${name} — 종결 왕복 ${trips}회 · ${verdict}`,
+    rankingTitle: "순위 (최신 누적)",
+    lastDay: "당일",
+    tripsShort: (n) => `왕복 ${n}회`,
+    xAxisTitle: "종결 왕복이 있었던 거래일 (KST)",
+    breakEven: "0",
+    emptyMarket: "이 장부에는 아직 종결된 왕복이 없다.",
+    tooltipDayHint: "오른쪽 값은 그날 거래가 있었던 전략의 당일 순손익이다.",
+    chartKeyboardHint:
+      "전략별 곡선 차트. 좌우 방향키로 십자선을 옮기고, Home·End로 처음·마지막 날짜로, Esc로 해제한다.",
+    chartAriaLabel: (book, count, from, to) =>
+      `${book}: 전략 ${count}개의 수수료 차감 누적 순손익, ${from}부터 ${to}까지. 모든 값은 차트 아래 표에 있다.`,
+    readoutAria: (date, rows) => `${date}. ${rows.join(", ")}.`,
+    tableCaption: (book) => `${book} — 전략별 최신 누적 순손익`,
+    tableStrategy: "전략",
+    tableCum: "누적 순손익",
+    tableDay: "당일 순손익",
+    tableTrips: "종결 왕복",
   },
   strategies: {
     eyebrow: "Strategy Scoreboard",

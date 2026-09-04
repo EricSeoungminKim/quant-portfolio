@@ -7,14 +7,14 @@ import { useLocale, useT } from "@/lib/i18n";
 import { translateDataText, translatePhaseLabel, translateSeedBasis } from "@/lib/i18nData";
 import { formatDateOnly, formatMoney, formatPct } from "@/lib/format";
 
-export default function EquitySection({ data }: { data: PerformanceData }) {
+export default function EquitySection({ data, index }: { data: PerformanceData; index: string }) {
   const t = useT();
   const { locale } = useLocale();
 
   return (
     <section id="equity" className="mx-auto max-w-6xl px-5 py-16 md:py-24">
       <SectionHeading
-        index="01"
+        index={index}
         eyebrow={t.equity.eyebrow}
         title={t.equity.title}
         description={t.equity.description}

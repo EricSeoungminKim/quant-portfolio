@@ -59,3 +59,47 @@ export function formatMoney(value: number, currency: "KRW" | "USD", locale: Loca
   }
   return `$${value.toLocaleString(localeTag, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
+
+// Compact money for chart axis ticks and ranking rows: "₩1.2M", "-$1.2k".
+// Deliberately locale-invariant — these are mono machine labels, and the
+// design keeps mono strings Latin-only (see docs/design-direction.md §10),
+// so the Korean page does not switch to 만/억 units mid-axis.
+//
+// Precision follows magnitude rather than a fixed decimal count: an axis tick
+// has ~38px of gutter, so "-$300.00" would render clipped, while a $0.26
+// cumulative total printed as "$0" would be a plain lie about a strategy that
+// is up. Above 100 the cents stop carrying information; below 1 they are the
+// whole reading.
+export function formatMoneyCompact(
+  value: number,
+  currency: "KRW" | "USD",
+  signed = false
+): string {
+  const symbol = currency === "KRW" ? "₩" : "$";
+  const sign = value < 0 ? "-" : signed && value > 0 ? "+" : "";
+  const abs = Math.abs(value);
+  if (abs === 0) return `${symbol}0`;
+  for (const [scale, suffix] of [
+    [1e9, "B"],
+    [1e6, "M"],
+    [1e3, "k"],
+  ] as const) {
+    if (abs >= scale) {
+      const v = abs / scale;
+      return `${sign}${symbol}${v >= 100 ? v.toFixed(0) : v.toFixed(1)}${suffix}`;
+    }
+  }
+  if (currency === "KRW") return `${sign}${symbol}${Math.round(abs)}`;
+  return `${sign}${symbol}${abs >= 100 ? abs.toFixed(0) : abs.toFixed(2)}`;
+}
+
+// Full-precision, sign-carrying money for tooltips and ranking values, where
+// the reader is taking an exact reading rather than scanning an axis.
+export function formatMoneySigned(
+  value: number,
+  currency: "KRW" | "USD",
+  locale: Locale
+): string {
+  const sign = value > 0 ? "+" : value < 0 ? "-" : "";
+  return `${sign}${formatMoney(Math.abs(value), currency, locale)}`;
+}

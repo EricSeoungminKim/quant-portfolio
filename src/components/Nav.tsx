@@ -4,18 +4,9 @@ import { useEffect, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import LocaleToggle from "./LocaleToggle";
 import { useT } from "@/lib/i18n";
+import type { SectionEntry } from "@/lib/sections";
 
-/** Section order is the page order — the index doubles as the read sequence. */
-export const SECTIONS = [
-  { id: "equity", index: "01", key: "equity" },
-  { id: "strategies", index: "02", key: "strategies" },
-  { id: "cost", index: "03", key: "cost" },
-  { id: "how", index: "04", key: "how" },
-  { id: "methodology", index: "05", key: "methodology" },
-  { id: "safety", index: "06", key: "safety" },
-] as const;
-
-export default function Nav() {
+export default function Nav({ sections }: { sections: SectionEntry[] }) {
   const t = useT();
   const [progress, setProgress] = useState(0);
   const [active, setActive] = useState<string>("equity");
@@ -46,7 +37,7 @@ export default function Nav() {
   // Active section: the topmost section whose heading has passed under the
   // sticky header. rootMargin pins the trigger line just below the bar.
   useEffect(() => {
-    const els = SECTIONS.map((s) => document.getElementById(s.id)).filter(
+    const els = sections.map((s) => document.getElementById(s.id)).filter(
       (el): el is HTMLElement => el !== null
     );
     if (els.length === 0) return;
@@ -61,10 +52,11 @@ export default function Nav() {
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, []);
+  }, [sections]);
 
   const labels: Record<string, string> = {
     equity: t.nav.equity,
+    curves: t.nav.curves,
     strategies: t.nav.strategies,
     cost: t.nav.cost,
     how: t.nav.how,
@@ -90,7 +82,7 @@ export default function Nav() {
 
         <nav aria-label={t.nav.sectionsLabel} className="hidden lg:block">
           <ol className="flex items-center gap-5">
-            {SECTIONS.map((s) => {
+            {sections.map((s) => {
               const isActive = active === s.id;
               return (
                 <li key={s.id}>

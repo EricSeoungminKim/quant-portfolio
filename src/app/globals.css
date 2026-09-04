@@ -41,6 +41,27 @@
   --down: #0052ff;
   --down-bg: rgba(0, 82, 255, 0.06);
 
+
+  /* Categorical series palette for the per-strategy curves chart (section 02).
+     Identity colours, not value colours — the red/blue axis stays reserved for
+     sign (--up/--down), so these are only ever a series key, never a reading.
+     Eight fixed hues in a fixed order; a 16-strategy record is carried by
+     pairing each hue with a stroke pattern (see src/lib/series.ts).
+     Validated with the dataviz palette validator against this page's own
+     surfaces: light #ffffff → lightness band, chroma floor, CVD separation
+     (worst adjacent ΔE 9.1) and normal-vision floor (19.6) all PASS; aqua,
+     yellow and magenta sit under 3:1 on white, which triggers the relief rule
+     — hence the always-visible ranking list carrying every line's name and
+     latest value, plus the screen-reader table. */
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --series-6: #008300;
+  --series-7: #4a3aa7;
+  --series-8: #e34948;
+
   --grid-line: rgba(10, 11, 13, 0.035);
   color-scheme: light;
 }
@@ -64,6 +85,19 @@
   --up-bg: rgba(242, 104, 94, 0.12);
   --down: #6f9bff;
   --down-bg: rgba(111, 155, 255, 0.12);
+
+
+  /* Same eight hues re-stepped for the dark plate (#131519), not flipped:
+     all eight PASS the lightness band, chroma floor, CVD separation (worst
+     adjacent ΔE 8.4) and 3:1 contrast against that surface. */
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
 
   --grid-line: rgba(247, 248, 250, 0.05);
   color-scheme: dark;
@@ -344,5 +378,26 @@ html {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+}
+
+/* --- Series enter ---------------------------------------------------------
+   Section 02's per-strategy lines fade in together rather than drawing in like
+   section 01's single line: stroke-dasharray is load-bearing there (hue +
+   pattern is what tells two series apart once the eight hues run out), and the
+   plotter technique works by overwriting it. Once per mount, never on toggle. */
+@keyframes series-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.series-in {
+  animation: series-in 420ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .series-in {
+    animation: none !important;
   }
 }

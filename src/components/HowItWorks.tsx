@@ -3,14 +3,14 @@
 import { useT, type PlaneCopy, type TimelineEntry } from "@/lib/i18n";
 import SectionHeading from "./SectionHeading";
 
-export default function HowItWorks() {
+export default function HowItWorks({ index }: { index: string }) {
   const t = useT();
 
   return (
     <section id="how" className="band">
       <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
       <SectionHeading
-        index="04"
+        index={index}
         eyebrow={t.how.eyebrow}
         title={t.how.title}
         description={t.how.description}

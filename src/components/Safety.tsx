@@ -11,7 +11,7 @@ const ICONS = [
   <IconLock key="lock" />,
 ];
 
-export default function Safety() {
+export default function Safety({ index }: { index: string }) {
   const t = useT();
 
   // Trust band: the safeguards read as one continuous guarantee rather than
@@ -21,7 +21,7 @@ export default function Safety() {
     <section id="safety" className="band">
       <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
         <SectionHeading
-          index="06"
+          index={index}
           eyebrow={t.safety.eyebrow}
           title={t.safety.title}
           description={t.safety.description}

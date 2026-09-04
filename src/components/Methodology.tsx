@@ -3,13 +3,13 @@
 import { useT } from "@/lib/i18n";
 import SectionHeading from "./SectionHeading";
 
-export default function Methodology() {
+export default function Methodology({ index }: { index: string }) {
   const t = useT();
 
   return (
     <section id="methodology" className="mx-auto max-w-6xl px-5 py-16 md:py-24">
       <SectionHeading
-        index="05"
+        index={index}
         eyebrow={t.methodology.eyebrow}
         title={t.methodology.title}
         description={t.methodology.description}

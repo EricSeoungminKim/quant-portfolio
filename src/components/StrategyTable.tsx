@@ -24,10 +24,12 @@ export default function StrategyTable({
   strategies,
   note,
   noteEn,
+  index,
 }: {
   strategies: Strategy[];
   note?: string;
   noteEn?: string;
+  index: string;
 }) {
   const t = useT();
   const { locale } = useLocale();
@@ -76,7 +78,7 @@ export default function StrategyTable({
     <section id="strategies" className="band">
       <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
       <SectionHeading
-        index="02"
+        index={index}
         eyebrow={t.strategies.eyebrow}
         title={t.strategies.title}
         description={t.strategies.description}
