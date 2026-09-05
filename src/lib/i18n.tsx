@@ -64,6 +64,11 @@ interface Messages {
     statStrategies: string;
     liveCount: (enabledCount: number, totalCount: number) => string;
     scrollCue: string;
+    /** Eyebrow on the account-model banner below the hero (2026-09-06
+     *  paper_epoch decision) — shown regardless of whether the snapshot
+     *  yet carries `paper_epoch.account_model`, since it states a fact
+     *  about the site itself rather than a measured number. */
+    epochBadge: string;
   };
   researchLog: {
     label: string;
@@ -107,10 +112,16 @@ interface Messages {
     emptyBook: string;
     chartAriaLabel: (bookTitle: string) => string;
     pointAriaLabel: (date: string, cum: string, day: string, fills: number) => string;
+    /** Same reading, for a curve that doesn't track a fill count (the
+     *  paper_epoch "sum of accounts" panel) — no fills clause, rather than
+     *  printing a false "0 fills" on a day that clearly moved money. */
+    pointAriaLabelNoFills: (date: string, cum: string, day: string) => string;
     tooltipCum: string;
     tooltipDay: string;
     tooltipFills: string;
     fillsSuffix: string;
+    /** Title for the paper_epoch sum-of-accounts panel ("계좌 합계"). */
+    overallBookTitle: string;
   };
   curves: {
     eyebrow: string;
@@ -157,6 +168,12 @@ interface Messages {
     headerTradesPerDay: string;
     headerAvgHold: string;
     headerHelp: string;
+    /** Column for `paper_epoch.strategies[].curve` cumulative %, per market —
+     *  only rendered once the snapshot carries `paper_epoch`. */
+    headerSinceEpoch: string;
+    /** Title attribute on a since-epoch badge: name + native P&L, since the
+     *  badge itself only has room for the percentage. */
+    sinceEpochTitle: (marketLabel: string, pct: string, native: string) => string;
     sampleWarning: string;
     offBadge: string;
     liveBadge: string;
@@ -259,6 +276,12 @@ interface Messages {
     items: { title: string; detail: string; bpAbbr?: boolean }[];
     glossaryTitle: string;
     glossary: { term: string; definition: string }[];
+    /** Title for the dynamically-appended paper_epoch account-model item —
+     *  only rendered when the snapshot carries `paper_epoch.account_model`. */
+    epochItemTitle: string;
+    /** Glossary term label for the FX rate note on the sum-of-accounts
+     *  curve — only rendered when `paper_epoch.overall.fx_source_note` exists. */
+    epochFxTerm: string;
   };
   glossary: {
     /** Popover text for the interactive "bp" abbreviation. */
@@ -314,6 +337,7 @@ const en: Messages = {
     liveCount: (enabledCount, totalCount) =>
       `${enabledCount} live now · ${totalCount} with recorded round trips`,
     scrollCue: "Read the record",
+    epochBadge: "Account model",
   },
   researchLog: {
     label: "Research log",
@@ -362,10 +386,12 @@ const en: Messages = {
       `${bookTitle} cumulative return curve against its starting seed`,
     pointAriaLabel: (date, cum, day, fills) =>
       `${date}, cumulative ${cum}, daily ${day}, ${fills} fills`,
+    pointAriaLabelNoFills: (date, cum, day) => `${date}, cumulative ${cum}, daily ${day}`,
     tooltipCum: "Cumulative",
     tooltipDay: "Daily",
     tooltipFills: "Fills",
     fillsSuffix: "fills",
+    overallBookTitle: "Sum of accounts",
   },
   curves: {
     eyebrow: "Strategy Curves",
@@ -417,6 +443,8 @@ const en: Messages = {
     headerTradesPerDay: "Trades/day",
     headerAvgHold: "Avg hold",
     headerHelp: "Detail",
+    headerSinceEpoch: "Since epoch (2026-09-07)",
+    sinceEpochTitle: (marketLabel, pct, native) => `${marketLabel}: ${pct} (${native} net)`,
     sampleWarning: "Small sample",
     offBadge: "off",
     liveBadge: "live",
@@ -680,6 +708,8 @@ const en: Messages = {
           "The “_cat” variant of a strategy, restricted to symbols carrying a news or flow catalyst tag — run as an A/B test against the unrestricted base arm.",
       },
     ],
+    epochItemTitle: "Paper-epoch account model",
+    epochFxTerm: "Sum-of-accounts FX rate",
   },
   glossary: {
     bp: "bp (basis point) = 0.01%. 100bp = 1%. E.g. net −25bp = −0.25% of turnover.",
@@ -738,6 +768,7 @@ const ko: Messages = {
     liveCount: (enabledCount, totalCount) =>
       `지금 가동 ${enabledCount}개 · 왕복 기록 ${totalCount}개`,
     scrollCue: "기록 보기",
+    epochBadge: "계좌 모델",
   },
   researchLog: {
     label: "연구 로그",
@@ -785,10 +816,12 @@ const ko: Messages = {
     chartAriaLabel: (bookTitle) => `${bookTitle} 시작 시드 대비 누적 수익률 곡선`,
     pointAriaLabel: (date, cum, day, fills) =>
       `${date}, 누적 ${cum}, 당일 ${day}, 체결 ${fills}건`,
+    pointAriaLabelNoFills: (date, cum, day) => `${date}, 누적 ${cum}, 당일 ${day}`,
     tooltipCum: "누적",
     tooltipDay: "당일",
     tooltipFills: "체결",
     fillsSuffix: "건",
+    overallBookTitle: "계좌 합계",
   },
   curves: {
     eyebrow: "전략별 곡선",
@@ -839,6 +872,8 @@ const ko: Messages = {
     headerTradesPerDay: "일평균 거래",
     headerAvgHold: "평균 보유",
     headerHelp: "설명",
+    headerSinceEpoch: "에폭 이후 (2026-09-07~)",
+    sinceEpochTitle: (marketLabel, pct, native) => `${marketLabel}: ${pct} (순손익 ${native})`,
     sampleWarning: "표본 부족",
     offBadge: "비활성",
     liveBadge: "가동",
@@ -1093,6 +1128,8 @@ const ko: Messages = {
           "id가 “_cat”으로 끝나는 전략 갈래 — 뉴스·수급 촉매 태그가 붙은 종목만 보도록 제한해, 제한 없는 기본 갈래와 A/B로 비교합니다.",
       },
     ],
+    epochItemTitle: "모의계좌 에폭 계좌 모델",
+    epochFxTerm: "계좌 합계 환산환율",
   },
   glossary: {
     bp: "bp(베이시스 포인트) = 0.01%. 100bp = 1%. 예: 순 −25bp = 거래대금의 −0.25%",

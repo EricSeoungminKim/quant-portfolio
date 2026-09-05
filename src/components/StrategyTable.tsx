@@ -1,10 +1,18 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { Market, MarketStats, Strategy } from "@/types/performance";
-import { formatBp, formatHoldMinutes } from "@/lib/format";
+import type {
+  Market,
+  MarketStats,
+  PaperEpoch,
+  PaperEpochCurvePoint,
+  PaperEpochStrategy,
+  Strategy,
+} from "@/types/performance";
+import { formatBp, formatHoldMinutes, formatMoneySigned, formatPct } from "@/lib/format";
 import { useLocale, useT } from "@/lib/i18n";
 import { translateDataText, translateStrategyName, translateVerdict } from "@/lib/i18nData";
+import { findEpochStrategy } from "@/lib/paperEpoch";
 import Abbr from "./Abbr";
 import SectionHeading from "./SectionHeading";
 import StrategyHelpDrawer from "./StrategyHelpDrawer";
@@ -26,11 +34,15 @@ export default function StrategyTable({
   note,
   noteEn,
   index,
+  paperEpoch,
 }: {
   strategies: Strategy[];
   note?: string;
   noteEn?: string;
   index: string;
+  /** 2026-09-06 paper_epoch account model — `null`/absent hides the "Since
+   *  epoch" column entirely rather than rendering it all-"—". */
+  paperEpoch?: PaperEpoch | null;
 }) {
   const t = useT();
   const { locale } = useLocale();
@@ -146,6 +158,7 @@ export default function StrategyTable({
               <Th>{t.strategies.headerVerdict}</Th>
               <Th hideSm>{t.strategies.headerTradesPerDay}</Th>
               <Th hideSm>{t.strategies.headerAvgHold}</Th>
+              {paperEpoch && <Th hideSm>{t.strategies.headerSinceEpoch}</Th>}
             </tr>
           </thead>
           <tbody>
@@ -156,6 +169,7 @@ export default function StrategyTable({
               const stats = statsForMarket(s, market);
               const sampleWarning = stats ? stats.sample_warning : true;
               const name = translateStrategyName(s.id, s.name_ko, s.name_en, locale);
+              const epochAccount = paperEpoch ? findEpochStrategy(paperEpoch, s.id) : null;
               return (
                 <tr
                   key={s.id}
@@ -225,6 +239,11 @@ export default function StrategyTable({
                   <td className="tnum hidden px-4 py-3.5 text-xs text-[var(--muted)] sm:table-cell">
                     {s.avg_hold_minutes != null ? formatHoldMinutes(s.avg_hold_minutes) : "—"}
                   </td>
+                  {paperEpoch && (
+                    <td className="hidden px-4 py-3.5 sm:table-cell">
+                      <SinceEpochBadges account={epochAccount} />
+                    </td>
+                  )}
                 </tr>
               );
             })}
@@ -375,6 +394,47 @@ function MarketBadges({ asia, us }: { asia: MarketStats | null; us: MarketStats 
       )}
     </div>
   );
+}
+
+// 2026-09-06 paper_epoch column — one badge per currency this strategy has
+// an account in, reading its latest cumulative % (native P&L on hover). An
+// account with no epoch trades yet still gets a badge at a flat 0% (its
+// `curve` array is empty, not absent) — `null` only means the strategy has
+// no account for that currency at all, which is why the badge lookup keys
+// off `start_capital` rather than curve length.
+function SinceEpochBadges({ account }: { account: PaperEpochStrategy | null }) {
+  const t = useT();
+  const { locale } = useLocale();
+
+  if (!account) return <span className="tnum text-xs text-[var(--muted-2)]">—</span>;
+
+  function badge(marketLabel: "KR" | "US", currency: "KRW" | "USD", points: PaperEpochCurvePoint[]) {
+    const last = points[points.length - 1] as PaperEpochCurvePoint | undefined;
+    const pct = last ? last.cum_pct : 0;
+    const native = last ? last.cum_native : 0;
+    if (pct === null) return null;
+    const pctText = formatPct(pct, 2);
+    return (
+      <span
+        key={marketLabel}
+        title={t.strategies.sinceEpochTitle(marketLabel, pctText, formatMoneySigned(native, currency, locale))}
+        className={`tnum border px-1.5 py-0.5 text-[10px] font-medium ${
+          pct >= 0 ? "border-[var(--up)] text-[var(--up)]" : "border-[var(--down)] text-[var(--down)]"
+        }`}
+      >
+        {marketLabel} {pctText}
+      </span>
+    );
+  }
+
+  const badges = [
+    account.start_capital.KRW !== undefined ? badge("KR", "KRW", account.curve.asia) : null,
+    account.start_capital.USD !== undefined ? badge("US", "USD", account.curve.us) : null,
+  ].filter((b): b is React.ReactElement => b !== null);
+
+  if (badges.length === 0) return <span className="tnum text-xs text-[var(--muted-2)]">—</span>;
+
+  return <div className="flex flex-wrap items-center gap-1.5">{badges}</div>;
 }
 
 function WinRateBar({
