@@ -1,7 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
-import type { ChartYAxis, EquityPoint, PhaseBoundaryMark } from "@/types/performance";
+import type { ChartYAxis, EquityCurvePoint, PhaseBoundaryMark } from "@/types/performance";
 import { formatDateLocale, formatPct } from "@/lib/format";
 import { useLocale, useT } from "@/lib/i18n";
 
@@ -18,7 +18,7 @@ export default function EquityChart({
   phaseBoundaries,
   title,
 }: {
-  rows: EquityPoint[];
+  rows: EquityCurvePoint[];
   yAxis: ChartYAxis;
   phaseBoundaries: PhaseBoundaryMark[];
   title: string;
@@ -33,7 +33,7 @@ export default function EquityChart({
   // divide by). This is a defensive filter: in practice a book's seed is a
   // single value for its whole visible range, so it's all-or-nothing.
   const equity = useMemo(
-    () => rows.filter((r): r is EquityPoint & { cum_pct: number; day_pct: number } =>
+    () => rows.filter((r): r is EquityCurvePoint & { cum_pct: number; day_pct: number } =>
       r.cum_pct !== null && r.day_pct !== null
     ),
     [rows]
@@ -323,7 +323,11 @@ export default function EquityChart({
                 strokeWidth={1}
                 tabIndex={0}
                 role="img"
-                aria-label={t.equity.pointAriaLabel(p.date, formatPct(p.cum_pct), formatPct(p.day_pct), p.fills)}
+                aria-label={
+                  p.fills !== undefined
+                    ? t.equity.pointAriaLabel(p.date, formatPct(p.cum_pct), formatPct(p.day_pct), p.fills)
+                    : t.equity.pointAriaLabelNoFills(p.date, formatPct(p.cum_pct), formatPct(p.day_pct))
+                }
                 onFocus={() => setActiveIdx(i)}
               />
             ))}
@@ -393,12 +397,14 @@ export default function EquityChart({
                   {formatPct(active.day_pct)}
                 </span>
               </div>
-              <div className="flex justify-between gap-4 text-[var(--muted)]">
-                <span>{t.equity.tooltipFills}</span>
-                <span className="tnum">
-                  {active.fills} {t.equity.fillsSuffix}
-                </span>
-              </div>
+              {active.fills !== undefined && (
+                <div className="flex justify-between gap-4 text-[var(--muted)]">
+                  <span>{t.equity.tooltipFills}</span>
+                  <span className="tnum">
+                    {active.fills} {t.equity.fillsSuffix}
+                  </span>
+                </div>
+              )}
             </div>
           )}
         </div>

@@ -1,10 +1,11 @@
 "use client";
 
-import type { EquityBook, PerformanceData } from "@/types/performance";
+import type { EquityBook, PaperEpochOverall, PerformanceData } from "@/types/performance";
 import EquityChart from "./EquityChart";
 import SectionHeading from "./SectionHeading";
 import { useLocale, useT } from "@/lib/i18n";
 import { translateDataText, translatePhaseLabel, translateSeedBasis } from "@/lib/i18nData";
+import { hasPaperEpoch, toEquityCurvePoints } from "@/lib/paperEpoch";
 import { formatDateOnly, formatMoney, formatPct } from "@/lib/format";
 
 export default function EquitySection({ data, index }: { data: PerformanceData; index: string }) {
@@ -39,6 +40,16 @@ export default function EquitySection({ data, index }: { data: PerformanceData; 
           {t.equity.legendPhaseBoundary}
         </span>
       </div>
+
+      {/* 2026-09-06 paper_epoch — every strategy's own account summed into
+          one KRW curve ("계좌 합계"), placed ahead of the per-currency books
+          below since it is now the headline read on this record. Absent
+          until the generator's ledger-side dependency lands. */}
+      {hasPaperEpoch(data) && (
+        <div className="mt-6" data-reveal>
+          <OverallPanel overall={data.paper_epoch.overall} />
+        </div>
+      )}
 
       {/* Two currency-separate books (no FX conversion between them, per the
           2026-09-02 owner directive) — stacked on narrow screens, side by
@@ -124,6 +135,45 @@ function BookPanel({ title, book }: { title: string; book: EquityBook }) {
         <div className="mt-2 text-[10px] text-[var(--muted-2)]">
           {t.equity.seedBasisLabel}
           {seedBasisText ? `: ${seedBasisText}` : ""} · {t.equity.seedLabel} {formatMoney(book.seed, book.currency, locale)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// 2026-09-06 paper_epoch "계좌 합계" (sum of accounts) panel — every
+// strategy's own KR/US paper account converted to KRW (fixed reference
+// rate, see the methodology glossary note) and summed into one curve.
+// Structurally close to `BookPanel` above but built from `PaperEpochOverall`
+// rather than `EquityBook` (no `seed_basis`/`phase_boundaries` to show —
+// there's only ever been one seed and one phase since a fresh epoch).
+function OverallPanel({ overall }: { overall: PaperEpochOverall }) {
+  const t = useT();
+  const { locale } = useLocale();
+  const hasDrawdown = overall.max_drawdown_pct !== undefined;
+  const drawdownText =
+    overall.max_drawdown_pct != null
+      ? formatPct(-Math.abs(overall.max_drawdown_pct), 2)
+      : t.equity.maxDrawdownNA;
+  const rows = toEquityCurvePoints(overall.rows, overall.seed_krw);
+
+  return (
+    <div className="plate p-4 md:p-6">
+      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-2 gap-y-1">
+        <h3 className="text-sm font-semibold">{t.equity.overallBookTitle}</h3>
+        <div className="flex items-baseline gap-2.5">
+          {hasDrawdown && (
+            <span className="tnum text-[10px] text-[var(--muted-2)]">
+              {t.equity.maxDrawdownLabel} {drawdownText}
+            </span>
+          )}
+          <span className="text-[10px] text-[var(--muted-2)]">{overall.currency}</span>
+        </div>
+      </div>
+      <EquityChart rows={rows} yAxis={overall.chart.y_axis} phaseBoundaries={[]} title={t.equity.overallBookTitle} />
+      {overall.seed_krw != null && (
+        <div className="mt-2 text-[10px] text-[var(--muted-2)]">
+          {t.equity.seedLabel} {formatMoney(overall.seed_krw, overall.currency, locale)}
         </div>
       )}
     </div>

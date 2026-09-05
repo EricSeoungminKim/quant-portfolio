@@ -67,6 +67,13 @@ const SEED_BASIS_EN: Record<string, string> = {
 const DATA_TEXT_EN: Record<string, string> = {
   "모의투자(paper) 기록입니다. 실제 자금이 투입되지 않았습니다.":
     "This is a paper-trading record. No real funds were used.",
+  // Fallback for the account-model banner (2026-09-06 paper_epoch decision)
+  // when `paper_epoch.account_model` hasn't landed in the snapshot yet — the
+  // banner still states this fact about the site, using this exact Korean
+  // sentence as the lookup key so it's replaced automatically once the
+  // generator starts emitting `note_ko`/`note_en` (see EpochNote.tsx).
+  "각 전략은 독립 모의계좌 — KR 1,000만원 / US $10,000 시작, 2026-09-07 에폭, 체결·수수료는 토스 기준":
+    "Each strategy runs its own independent paper account — starting at 10,000,000 KRW (KR) / $10,000 (US), epoch 2026-09-07, fills and fees per Toss.",
 };
 
 // A/B catalyst-arm ids (`<id>_cat`, 2026-09-03) share the base strategy's

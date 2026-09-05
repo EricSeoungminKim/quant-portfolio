@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import type { Strategy, StrategyCurvePoint } from "@/types/performance";
 import { buildSeriesStyles, type CurveSeries } from "@/lib/series";
-import { formatMoneyCompact, formatMoneySigned } from "@/lib/format";
+import { formatMoneyCompact, formatMoneySigned, formatPct } from "@/lib/format";
 import { useLocale, useT } from "@/lib/i18n";
 import { translateDataText, translateStrategyName, translateVerdict } from "@/lib/i18nData";
 import SectionHeading from "./SectionHeading";
@@ -269,7 +269,10 @@ function BookPanel({
           {ranked.map(({ s, last }) => (
             <tr key={s.id}>
               <th scope="row">{s.name}</th>
-              <td>{formatMoneySigned(last.cum_net, currency, locale)}</td>
+              <td>
+                {formatMoneySigned(last.cum_net, currency, locale)}
+                {last.cum_pct != null ? ` (${formatPct(last.cum_pct, 2)})` : ""}
+              </td>
               <td>{formatMoneySigned(last.day_net, currency, locale)}</td>
               <td>{last.cum_trips}</td>
               <td>{s.verdict}</td>
@@ -350,12 +353,21 @@ function Ranking({
                 </span>
               </span>
               <MiniSpark points={s.points} color={s.color} />
-              <span
-                className={`tnum w-[4.25rem] shrink-0 text-right text-[11px] font-medium ${
-                  last.cum_net >= 0 ? "text-[var(--up)]" : "text-[var(--down)]"
-                }`}
-              >
-                {formatMoneyCompact(last.cum_net, currency)}
+              <span className="flex w-[4.25rem] shrink-0 flex-col items-end">
+                <span
+                  className={`tnum text-[11px] font-medium ${
+                    last.cum_net >= 0 ? "text-[var(--up)]" : "text-[var(--down)]"
+                  }`}
+                >
+                  {formatMoneyCompact(last.cum_net, currency)}
+                </span>
+                {/* Percent of the strategy's own start capital — only present
+                    once this point came from `paper_epoch.strategies` (see
+                    `withEpochCurves` in lib/paperEpoch.ts); the lifetime curve
+                    has no single seed to divide by. */}
+                {last.cum_pct != null && (
+                  <span className="tnum text-[9px] text-[var(--muted-2)]">{formatPct(last.cum_pct, 2)}</span>
+                )}
               </span>
             </li>
           );

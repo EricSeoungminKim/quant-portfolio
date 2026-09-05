@@ -1,11 +1,34 @@
 "use client";
 
-import { useT } from "@/lib/i18n";
+import type { PerformanceData } from "@/types/performance";
+import { hasPaperEpoch } from "@/lib/paperEpoch";
+import { useLocale, useT } from "@/lib/i18n";
+import { translateDataText } from "@/lib/i18nData";
 import Abbr from "./Abbr";
 import SectionHeading from "./SectionHeading";
 
-export default function Methodology({ index }: { index: string }) {
+export default function Methodology({ index, data }: { index: string; data?: PerformanceData }) {
   const t = useT();
+  const { locale } = useLocale();
+
+  // 2026-09-06 paper_epoch — only rendered once the snapshot actually
+  // carries account_model/fx_source_note; there's no honest fallback text
+  // for either (unlike EpochNote's banner, this content IS the data).
+  const paperEpoch = data && hasPaperEpoch(data) ? data.paper_epoch : null;
+  const epochItemDetail = paperEpoch
+    ? translateDataText(paperEpoch.account_model.note_ko, paperEpoch.account_model.note_en, locale)
+    : null;
+  const epochFxDetail = paperEpoch
+    ? translateDataText(
+        paperEpoch.overall.fx_source_note,
+        paperEpoch.overall.fx_source_note_en,
+        locale
+      )
+    : null;
+
+  const items = epochItemDetail
+    ? [...t.methodology.items, { title: t.methodology.epochItemTitle, detail: epochItemDetail }]
+    : t.methodology.items;
 
   return (
     <section id="methodology" className="mx-auto max-w-6xl px-5 py-16 md:py-24">
@@ -17,14 +40,14 @@ export default function Methodology({ index }: { index: string }) {
       />
 
       <dl className="mt-10 grid gap-px bg-[var(--border)] sm:grid-cols-2" data-reveal>
-        {t.methodology.items.map((item, i) => (
+        {items.map((item, i) => (
           <div key={item.title} className="bg-[var(--surface)] p-4 sm:p-5">
             <div className="flex items-baseline gap-2.5">
               <span className="tnum text-[10px] text-[var(--accent)]">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <dt className="text-sm font-medium">
-                {item.bpAbbr ? <TitleWithBpAbbr title={item.title} /> : item.title}
+                {"bpAbbr" in item && item.bpAbbr ? <TitleWithBpAbbr title={item.title} /> : item.title}
               </dt>
             </div>
             <dd className="mt-2 text-xs leading-relaxed text-[var(--muted)]">{item.detail}</dd>
@@ -32,7 +55,7 @@ export default function Methodology({ index }: { index: string }) {
         ))}
         {/* An odd item count would otherwise leave the grid's last cell as a
             bare border-coloured block. */}
-        {t.methodology.items.length % 2 === 1 && (
+        {items.length % 2 === 1 && (
           <div className="hidden bg-[var(--surface)] sm:block" aria-hidden />
         )}
       </dl>
@@ -48,6 +71,12 @@ export default function Methodology({ index }: { index: string }) {
               <dd className="text-[var(--muted)]">— {g.definition}</dd>
             </div>
           ))}
+          {epochFxDetail && (
+            <div className="flex max-w-full gap-1.5">
+              <dt className="shrink-0 font-medium text-[var(--foreground)]">{t.methodology.epochFxTerm}</dt>
+              <dd className="text-[var(--muted)]">— {epochFxDetail}</dd>
+            </div>
+          )}
         </dl>
       </div>
     </section>
