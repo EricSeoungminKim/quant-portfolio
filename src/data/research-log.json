@@ -158,5 +158,21 @@
     "reason": "이 13개월 창에서는 외국인 연속 순매수를 따라 사는 쪽이 오히려 역신호에 가깝다 — frgn_accumulate가 겨냥한 가설과 반대 방향이 관측됐다. 표본이 짧고 소수의 극단값에 민감해 \"영구히 반대\"라고 단정할 근거는 아니다.",
     "reason_en": "In this 13-month window, following a foreign-buying streak reads as a mild reverse signal — the opposite of the hypothesis frgn_accumulate targets. The sample is short and sensitive to a few extreme moves, so this isn't proof the relationship is permanently inverted.",
     "source": "kr_flow/SUMMARY.md"
+  },
+  {
+    "id": "asia-us-session-link",
+    "date": "2026-09-06",
+    "idea": "아시아 세션(KOSPI200·KOSDAQ150 수익, 오버나이트 갭) → 같은 날 미국 세션 방향(QQQ/SOXX)을 TQQQ/SQQQ·SOXL/SOXS 로 매매",
+    "idea_en": "Asia session (KOSPI200/KOSDAQ150 return, overnight gap) → same-day US session direction, traded via TQQQ/SQQQ and SOXL/SOXS",
+    "data": "KR 일봉 2014→2026 + US 1분봉 10년(2016→2026-08)",
+    "data_en": "KR daily 2014→2026 + US 1-minute bars, 10 years (2016→2026-08)",
+    "method": "사전 등록 108셀(신호 3 × 대상 2 × 청산 3 × 방향 2 × 필터 3), 무작위 방향 순열 귀무, 108 trials 반영 deflated Sharpe, 블록 부트스트랩, 비용×2",
+    "method_en": "Pre-registered 108 cells (3 signals × 2 targets × 3 exits × 2 directions × 3 filters), random-direction permutation null, deflated Sharpe with 108 trials, block bootstrap, cost×2",
+    "headline": "순수 아시아 수익 신호는 순 양수 셀 0(최선 총 +12.7bp < 왕복 25.2bp). 갭 역행 최선 셀 +51.7bp(p=0.0065)도 DSR 0.15, CI 0 포함, 11년 중 3년 음수",
+    "headline_en": "Pure Asia-return signals: zero net-positive cells (best gross +12.7bp < 25.2bp round trip). Best gap-contrarian cell +51.7bp (p=0.0065) still DSR 0.15, CI crosses 0, 3 of 11 years negative",
+    "verdict": "NO_GO",
+    "reason": "역방향(미국 종가 → 한국 시가 갭)은 알려진 대로 강하게 재현됐지만(IC 0.40), 반대 방향은 비용을 못 넘는다.",
+    "reason_en": "The reverse, known link (US close → next KR open gap) reproduces strongly (IC 0.40); the forward direction does not clear cost.",
+    "source": "results/asia_us_link/SUMMARY.md"
   }
 ]
