@@ -1,5 +1,6 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
+import AboutProject from "@/components/AboutProject";
 import EpochNote from "@/components/EpochNote";
 import ResearchLog from "@/components/ResearchLog";
 import EquitySection from "@/components/EquitySection";
@@ -9,6 +10,7 @@ import CostTruth from "@/components/CostTruth";
 import HowItWorks from "@/components/HowItWorks";
 import Methodology from "@/components/Methodology";
 import Safety from "@/components/Safety";
+import ResearchVerdicts from "@/components/ResearchVerdicts";
 import EditorsNote from "@/components/EditorsNote";
 import Footer from "@/components/Footer";
 import RevealOnScroll from "@/components/RevealOnScroll";
@@ -51,6 +53,7 @@ export default function Home() {
       <Nav sections={sections} />
       <main className="flex-1">
         <Hero data={performance} />
+        <AboutProject />
         <EpochNote data={performance} />
         <ResearchLog data={performance} />
         <EquitySection data={performance} index={idx.equity} />
@@ -72,6 +75,7 @@ export default function Home() {
         <CostTruth costs={performance.costs} index={idx.cost} />
         <HowItWorks index={idx.how} />
         <Methodology index={idx.methodology} data={performance} />
+        <ResearchVerdicts index={idx["research-verdicts"]} />
         <Safety index={idx.safety} />
         <EditorsNote />
       </main>

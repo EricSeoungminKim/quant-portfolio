@@ -2,8 +2,9 @@
 //
 // Section indices are not decoration — the page IS a sequence (the record,
 // the per-strategy curves that decompose it, the per-strategy statistics, the
-// cost that explains their sign, the mechanism, the method, the safeguards),
-// and the same numbers key the sticky rail in Nav. Keeping the list here (a
+// cost that explains their sign, the mechanism, the method, the research
+// verdicts behind the method, the safeguards), and the same numbers key the
+// sticky rail in Nav. Keeping the list here (a
 // plain module, importable from both the server page and the client nav)
 // means the rail and the headings can never disagree.
 //
@@ -18,6 +19,7 @@ const ALL_SECTIONS = [
   { id: "cost", key: "cost" },
   { id: "how", key: "how" },
   { id: "methodology", key: "methodology" },
+  { id: "research-verdicts", key: "researchVerdicts" },
   { id: "safety", key: "safety" },
 ] as const;
 

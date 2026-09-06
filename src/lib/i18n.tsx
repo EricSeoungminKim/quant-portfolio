@@ -42,6 +42,7 @@ interface Messages {
     cost: string;
     how: string;
     methodology: string;
+    researchVerdicts: string;
     safety: string;
     themeToggle: string;
     localeToggle: string;
@@ -283,6 +284,38 @@ interface Messages {
      *  curve — only rendered when `paper_epoch.overall.fx_source_note` exists. */
     epochFxTerm: string;
   };
+  /** "What this project is" explainer near the hero (2026-09-06) — plain-language
+   *  orientation for a reader who has never seen the repo, kept short on purpose. */
+  aboutProject: {
+    eyebrow: string;
+    body: string;
+  };
+  /** Research verdicts log (2026-09-06) — curated backtest/research findings from
+   *  the trading repo's own research cycle, most of them rejections. Static,
+   *  hand-curated data (`src/data/research-log.json`), not part of the
+   *  generator's `performance.json` contract. */
+  researchVerdicts: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    /** States plainly that every rejected idea is listed on purpose — not a
+     *  cherry-picked highlight reel. */
+    intentSentence: string;
+    countLabel: (n: number) => string;
+    colDate: string;
+    colIdea: string;
+    colHeadline: string;
+    colVerdict: string;
+    verdictGo: string;
+    verdictNoGo: string;
+    verdictInsufficient: string;
+    dataLabel: string;
+    methodLabel: string;
+    reasonLabel: string;
+    sourceLabel: string;
+    expandFor: (idea: string) => string;
+    collapseFor: (idea: string) => string;
+  };
   glossary: {
     /** Popover text for the interactive "bp" abbreviation. */
     bp: string;
@@ -314,6 +347,7 @@ const en: Messages = {
     cost: "Cost",
     how: "How It Works",
     methodology: "Methodology",
+    researchVerdicts: "Research Log",
     safety: "Safeguards",
     themeToggle: "Toggle theme",
     localeToggle: "한국어",
@@ -711,6 +745,32 @@ const en: Messages = {
     epochItemTitle: "Paper-epoch account model",
     epochFxTerm: "Sum-of-accounts FX rate",
   },
+  aboutProject: {
+    eyebrow: "What this project is",
+    body: "This is a personal automated-trading lab, not a fund or a product. One engine runs a dozen or so intraday strategies, each against its own separate paper account, so no strategy's numbers get blended into a flattering portfolio average. Every fill and every outcome is written to a ledger and measured the same way regardless of what it says — the research log further down this page lists every idea that was tested and rejected, on purpose. Publishing it is about keeping the measurement honest, not about selling a strategy.",
+  },
+  researchVerdicts: {
+    eyebrow: "Research Log",
+    title: "Research verdicts",
+    description:
+      "Backtest and research findings from the trading repo's own research cycle — the evidence behind which strategies are (and mostly aren't) allowed near real capital.",
+    intentSentence:
+      "Every rejected idea below is listed on purpose — this is not a highlight reel of what worked.",
+    countLabel: (n) => `${n} ideas logged`,
+    colDate: "Date",
+    colIdea: "Idea",
+    colHeadline: "Headline numbers",
+    colVerdict: "Verdict",
+    verdictGo: "Adopted",
+    verdictNoGo: "Rejected",
+    verdictInsufficient: "Insufficient sample",
+    dataLabel: "Data",
+    methodLabel: "Method",
+    reasonLabel: "Why",
+    sourceLabel: "Source",
+    expandFor: (idea) => `Show method and reasoning for ${idea}`,
+    collapseFor: (idea) => `Hide method and reasoning for ${idea}`,
+  },
   glossary: {
     bp: "bp (basis point) = 0.01%. 100bp = 1%. E.g. net −25bp = −0.25% of turnover.",
   },
@@ -745,6 +805,7 @@ const ko: Messages = {
     cost: "비용",
     how: "작동 원리",
     methodology: "산출 방식",
+    researchVerdicts: "검증 로그",
     safety: "안전장치",
     themeToggle: "테마 전환",
     localeToggle: "EN",
@@ -1130,6 +1191,31 @@ const ko: Messages = {
     ],
     epochItemTitle: "모의계좌 에폭 계좌 모델",
     epochFxTerm: "계좌 합계 환산환율",
+  },
+  aboutProject: {
+    eyebrow: "이 프로젝트는 무엇인가",
+    body: "이 사이트는 펀드나 상품이 아니라 개인의 자동매매 연구실입니다. 엔진 하나가 열두 개 남짓의 단타 전략을 각각 독립된 모의계좌로 돌려서, 어느 전략의 성적도 포트폴리오 평균에 섞여 가려지지 않게 합니다. 모든 체결과 승패는 결과와 상관없이 같은 방식으로 원장에 기록해 측정하고, 아래 연구 로그에는 시도했다가 기각한 아이디어까지 전부 일부러 남겨 둡니다. 이를 공개하는 목적은 전략을 팔기 위해서가 아니라 측정을 정직하게 유지하기 위해서입니다.",
+  },
+  researchVerdicts: {
+    eyebrow: "Research Log",
+    title: "검증 로그",
+    description:
+      "트레이딩 저장소 자체의 연구 사이클에서 나온 백테스트·연구 결과입니다 — 어느 전략이 실자본 근처에 갈 수 있는지(대부분은 못 간다는) 판단의 근거입니다.",
+    intentSentence: "아래 기각된 아이디어는 전부 일부러 실었습니다 — 잘된 것만 고른 하이라이트가 아닙니다.",
+    countLabel: (n) => `${n}건 기록`,
+    colDate: "날짜",
+    colIdea: "아이디어",
+    colHeadline: "핵심 수치",
+    colVerdict: "판정",
+    verdictGo: "채택",
+    verdictNoGo: "기각",
+    verdictInsufficient: "판단 보류",
+    dataLabel: "데이터",
+    methodLabel: "방법",
+    reasonLabel: "이유",
+    sourceLabel: "출처",
+    expandFor: (idea) => `${idea}의 방법·근거 펼치기`,
+    collapseFor: (idea) => `${idea}의 방법·근거 접기`,
   },
   glossary: {
     bp: "bp(베이시스 포인트) = 0.01%. 100bp = 1%. 예: 순 −25bp = 거래대금의 −0.25%",

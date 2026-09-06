@@ -61,6 +61,7 @@ export default function Nav({ sections }: { sections: SectionEntry[] }) {
     cost: t.nav.cost,
     how: t.nav.how,
     methodology: t.nav.methodology,
+    researchVerdicts: t.nav.researchVerdicts,
     safety: t.nav.safety,
   };
 
