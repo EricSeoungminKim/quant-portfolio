@@ -286,5 +286,21 @@
     "reason": "이 항목은 전략이 아니라 왜 이전 항목들의 숫자가 바뀌었는지에 대한 기록이다. 미국 레이크는 별도 앵커·리더라 영향 없음.",
     "reason_en": "Not a strategy — the record of why earlier entries' numbers changed. The US lake uses a separate anchor and readers and was unaffected.",
     "source": "results/close_bet/SUMMARY.md §10 · quant-backtest 6ccd9b0"
+  },
+  {
+    "id": "kr-swing-signals-rerun",
+    "date": "2026-09-06",
+    "idea": "(정정) 9월 3일 KR 스윙 신호 — 단기반전(5일 하위 십분위 매수)·거래량충격(20일 중앙값 2.5배 + 상승마감)",
+    "idea_en": "(Correction) The Sept 3 KR swing signals — 5-day short-term reversal and volume-shock premium",
+    "data": "KR 일봉 3,348종목 2016→2026, 날짜 밀림 결함 수리 후 재실행",
+    "data_en": "3,348 KR names, daily 2016→2026, re-run after the date-shift repair",
+    "method": "같은 notebook·같은 파라미터 walk-forward, 수리 전/후 비교",
+    "method_en": "Same notebook and parameters, walk-forward, before vs after the repair",
+    "headline": "단기반전 t 3.22 → 1.13 (DSR 0.58 → 0.03), 거래량충격 t 2.95 → 0.86 (DSR 0.67 → 0.04) — 'OOS 양수' 주장 소멸",
+    "headline_en": "Short-term reversal t 3.22 → 1.13 (DSR 0.58 → 0.03), volume shock t 2.95 → 0.86 (DSR 0.67 → 0.04) — the 'OOS-positive' claim no longer holds",
+    "verdict": "NO_GO",
+    "reason": "텔레그램 추천 레인의 근거 문구를 사실대로 정정했다(주문 없는 참고용). 9월 3일 이후 'OOS 양수'로 보고된 KR 일봉 결과는 전부 결함의 산물로 확인됐다.",
+    "reason_en": "The Telegram recommendation lane's evidence text now states this (recommendations only, no orders). Every KR daily result reported as 'OOS-positive' since Sept 3 has been traced to the data defect.",
+    "source": "results/swing_signals/RERUN_2026-09-06.md"
   }
 ]
