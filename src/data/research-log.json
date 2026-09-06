@@ -238,5 +238,21 @@
     "reason": "통계 절차는 건전했지만(PBO 0.07, SPA p≈0) 선택된 구성이 주장과 달랐다. 개별주 효과는 2년·헤어컷 후 ≈+65bp라 표본이 부족하고, ETF 효과는 별도 가설(H5)로 분리해 검증한다.",
     "reason_en": "The selection statistics were sound (PBO 0.07, SPA p≈0) but what got selected was not what the story claimed. The stock-only effect is two years and ≈+65bp after the haircut — not enough; the ETF effect is being tested separately (H5).",
     "source": "results/reversal/SUMMARY.md · VERIFY.md"
+  },
+  {
+    "id": "kr-letf-overnight-reversal-h5",
+    "date": "2026-09-06",
+    "idea": "KR 지수 레버리지·인버스 ETF 7종 — 약한 마감·하락일·고RVOL 이면 종가에 사서 익일 시가에 판다(오버나이트 반전)",
+    "idea_en": "7 KR index leveraged/inverse ETFs — buy at the close after a weak-close, high-volume down day, sell at next open (overnight reversal)",
+    "data": "FDR 일봉 2014/2015→2026-09, 종목별 독립 검정",
+    "data_en": "FDR daily 2014/2015→2026-09, each ETF tested independently",
+    "method": "사전 등록 36조합 walk-forward 36/12/12, 왕복 8bp, 무작위 일 순열, 블록 부트스트랩, 비용×2, DSR, 10M 계좌 MDD, 15:19 헤어컷 진단",
+    "method_en": "Pre-registered 36-combo walk-forward 36/12/12, 8bp round trip, random-day permutation, block bootstrap, cost×2, DSR, 10M KRW book MDD, 15:19 haircut diagnostic",
+    "headline": "7종 중 6종 양수(예: KODEX 레버리지 +77bp n=186, 코스닥150 레버리지 +123bp n=149), 순열 p≤0.0005, 비용×2 양수 — 그러나 종목당 n≤186, DSR 최고 0.947로 기준(n≥300, DSR≥0.95) 미달",
+    "headline_en": "6 of 7 positive (e.g. KODEX Leverage +77bp n=186, KOSDAQ150 Leverage +123bp n=149), permutation p≤0.0005, positive at 2× cost — but n≤186 per ETF and best DSR 0.947 miss the gate (n≥300, DSR≥0.95)",
+    "verdict": "판단불가",
+    "reason": "방향은 일관되지만 종목 단위로는 검정력이 부족하다. 단일 고정 규칙으로 7종을 풀링하고 미국 페어 8종에서 같은 규칙을 재현하는 후속 검정(H5b)이 진행 중이다.",
+    "reason_en": "Directionally consistent but underpowered per ETF. A follow-up pools all 7 under one fixed rule and replicates the same rule on 8 US pairs (H5b).",
+    "source": "results/letf_overnight/SUMMARY.md"
   }
 ]
