@@ -254,5 +254,21 @@
     "reason": "방향은 일관되지만 종목 단위로는 검정력이 부족하다. 단일 고정 규칙으로 7종을 풀링하고 미국 페어 8종에서 같은 규칙을 재현하는 후속 검정(H5b)이 진행 중이다. [주의: KR 일봉 레이크의 월요일 결손이 발견돼 수리 후 재실행 예정]",
     "reason_en": "Directionally consistent but underpowered per ETF. A follow-up pools all 7 under one fixed rule and replicates the same rule on 8 US pairs (H5b). [Note: a Monday data gap was found in the KR daily lake; results will be re-run after the repair]",
     "source": "results/letf_overnight/SUMMARY.md"
+  },
+  {
+    "id": "kr-letf-overnight-pooled-h5b",
+    "date": "2026-09-06",
+    "idea": "H5b — 단일 고정 규칙(약한 마감·하락·RVOL≥1.5, 종가 매수→익일 시가)을 KR 지수 ETF 7종에 풀링 + 미국 페어 8종에서 같은 규칙 재현",
+    "idea_en": "H5b — one fixed rule (weak close, down day, RVOL ≥ 1.5, buy at close → sell at next open) pooled across 7 KR index ETFs, replicated with the same rule on 8 US pairs",
+    "data": "KR ETF 일봉 2014/15→2026-09 · US 레버리지 페어 일봉 10년",
+    "data_en": "KR ETF daily 2014/15→2026-09 · US leveraged pairs daily, 10 years",
+    "method": "사전 등록(규칙 2개, n_trials 38), walk-forward 36/12/12, 날짜 군집 t, 무작위 일 순열, 블록 부트스트랩, 비용×2, DSR; 신뢰 기준 '미국에서 부호 일치'를 사전에 선언",
+    "method_en": "Pre-registered (2 rules, n_trials 38), walk-forward 36/12/12, date-clustered t, random-day permutation, block bootstrap, cost×2, DSR; credibility criterion 'same sign in the US' declared up front",
+    "headline": "KR 풀링: n=403, +89bp(8bp 비용 포함), DSR 1.00, p=0.0000, t=6.5, 비용×2 +81bp, 5/5년 양수 — 6개 기준 전부 통과. 미국: n=526, −8.5bp, 반대 부호",
+    "headline_en": "KR pooled: n=403, +89bp (8bp cost included), DSR 1.00, p=0.0000, t=6.5, cost×2 +81bp, 5/5 years positive — all six gates pass. US: n=526, −8.5bp, opposite sign",
+    "verdict": "판단불가",
+    "reason": "사전에 선언한 신뢰 기준(미국 재현)을 못 넘겨 채택하지 않는다. KR 고유 현상일 수 있지만 기준을 결과 뒤에 바꾸지 않는다. KR 일봉 레이크의 월요일 결손(금→월 갭 표본 누락) 수리 후 재실행이 먼저다.",
+    "reason_en": "Fails the pre-declared credibility criterion (US replication), so not adopted. It may be a KR-specific effect, but the criterion is not changed after seeing the result. The KR daily lake's Monday gap (missing Friday→Monday samples) must be repaired and the test re-run first.",
+    "source": "results/letf_overnight/SUMMARY_pooled.md"
   }
 ]
