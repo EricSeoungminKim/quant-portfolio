@@ -174,5 +174,21 @@
     "reason": "역방향(미국 종가 → 한국 시가 갭)은 알려진 대로 강하게 재현됐지만(IC 0.40), 반대 방향은 비용을 못 넘는다.",
     "reason_en": "The reverse, known link (US close → next KR open gap) reproduces strongly (IC 0.40); the forward direction does not clear cost.",
     "source": "results/asia_us_link/SUMMARY.md"
+  },
+  {
+    "id": "kr-foreign-flow-accumulation-5y",
+    "date": "2026-09-06",
+    "idea": "외국인 순매수 추종 적립(frgn_accumulate) — 프록시 규칙 12조합 + 실제 운영 태그 규칙(classify) 그대로",
+    "idea_en": "Foreign-investor flow accumulation (frgn_accumulate) — 12 proxy rules plus the exact production tag rule",
+    "data": "KR 대형주 342종목, 키움 ka10059 일별 수급 5.3년(2021-05→2026-09) + FDR 일봉 2019→",
+    "data_en": "342 KR large caps, Kiwoom ka10059 daily investor flows 5.3 years (2021-05→2026-09) + FDR daily bars 2019→",
+    "method": "전략 미러 시뮬레이터(매일 적립·50%→전량 청산·15% 최대손실 레일), walk-forward, 무작위 종목·동일 보유기간 순열 귀무, DSR, 비용×2(왕복 28bp)",
+    "method_en": "Strategy-mirroring simulator (daily accumulation, 50%→full exit, 15% max-loss rail), walk-forward, random-symbol same-holding permutation null, DSR, cost×2 (28bp round trip)",
+    "headline": "12개 프록시 조합·실제 규칙 모두 중앙값이 6개 연도 전부 음수, 승률 50% 넘긴 해 0, 순열 p≈0.5, DSR≈0. 실제 규칙은 심볼-일의 27.5%에 태그를 붙여 선별력이 없음",
+    "headline_en": "All 12 proxy rules and the exact production rule: negative median in every year, no year above 50% win rate, permutation p≈0.5, DSR≈0. The production rule tags 27.5% of symbol-days, i.e. no selectivity",
+    "verdict": "NO_GO",
+    "reason": "2025~26년 평균이 양전환한 것은 소수 대박 종목의 우측 꼬리이고, 전형적 거래는 6년 내내 손실이다.",
+    "reason_en": "The 2025–26 positive mean is a right-tail artifact of a few big winners; the typical trade lost money in every year.",
+    "source": "results/kr_flow/SUMMARY_frgn_accumulate.md · SUMMARY_frgn_exact.md"
   }
 ]
