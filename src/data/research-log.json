@@ -190,5 +190,37 @@
     "reason": "2025~26년 평균이 양전환한 것은 소수 대박 종목의 우측 꼬리이고, 전형적 거래는 6년 내내 손실이다.",
     "reason_en": "The 2025–26 positive mean is a right-tail artifact of a few big winners; the typical trade lost money in every year.",
     "source": "results/kr_flow/SUMMARY_frgn_accumulate.md · SUMMARY_frgn_exact.md"
+  },
+  {
+    "id": "kr-close-bet-gap-7y",
+    "date": "2026-09-06",
+    "idea": "종가배팅 — 강한 마감(마감강도≥0.6~0.8)·고RVOL 양봉을 종가에 사서 익일 시가에 판다",
+    "idea_en": "Close bet — buy strong-close (close strength ≥0.6–0.8), high-RVOL up-days at the close, sell at next open",
+    "data": "KR 대형주 342종목 일봉 2019→2026-09",
+    "data_en": "342 KR large caps, daily bars 2019→2026-09",
+    "method": "사전 등록 18조합 × walk-forward 4폴드(72 trials), 왕복 28bp, 무작위 동일일 종목 순열 귀무, '아무 양봉' 기준선, DSR",
+    "method_en": "Pre-registered 18 combos × 4 walk-forward folds (72 trials), 28bp round trip, random-symbol-same-day permutation null, 'any up-day' baseline, DSR",
+    "headline": "OOS n=384 평균 −96.7bp, 승률 35%, 기준선(−55.9bp)보다 −41bp, 무작위 종목보다 100% 나쁨(p=1.0)",
+    "headline_en": "OOS n=384 mean −96.7bp, 35% win rate, −41bp worse than the any-up-day baseline (−55.9bp), worse than random symbols in 100% of draws (p=1.0)",
+    "verdict": "NO_GO",
+    "reason": "확장된 급등주는 다음 시가에 되돌린다 — 지속이 아니라 단기 평균회귀가 지배한다.",
+    "reason_en": "Extended, high-volume up-days give back at the next open — short-term mean reversion dominates, not continuation.",
+    "source": "results/close_bet/SUMMARY.md"
+  },
+  {
+    "id": "vix-regime-day-filter",
+    "date": "2026-09-06",
+    "idea": "VIX 국면(레벨·20일선 대비·기간구조·5일 변화)을 레버리지 페어 추세 규칙의 일 필터·메타라벨 특징으로",
+    "idea_en": "VIX regime (level, vs SMA20, term structure, 5-day change) as a day filter and meta-label feature for the leveraged-pair trend rule",
+    "data": "QQQ·SOX 페어 15/30분봉 10년 + yfinance ^VIX/^VIX3M/^VVIX 일봉",
+    "data_en": "QQQ and SOX pairs, 15/30-minute bars, 10 years + yfinance ^VIX/^VIX3M/^VVIX daily",
+    "method": "사전 등록 18셀 일 필터 + purged 6-fold 메타라벨(엠바고 3일), n_trials 23, 비용×2, DSR",
+    "method_en": "Pre-registered 18-cell day filter + purged 6-fold meta-labeling (3-day embargo), n_trials 23, cost×2, DSR",
+    "headline": "P>0.55 부분집합 순 +20.3bp(최근 5년 중 4년 양수)이나 비용×2 −5.0bp, DSR 0.12. VIX 레벨·20일선 대비는 특징 중요도 3·5위",
+    "headline_en": "P>0.55 subset net +20.3bp (4 of last 5 years positive) but cost×2 −5.0bp, DSR 0.12; VIX level and vs-SMA20 rank 3rd and 5th by feature importance",
+    "verdict": "NO_GO",
+    "reason": "거래 필터로는 기준 미달. 다만 엔진의 기존 변동성 플래그가 놓치는 고VIX 일의 72%를 잡아, 방어 전용 국면 지표로는 채택.",
+    "reason_en": "Fails the trading gate, but catches 72% of high-VIX days the engine's existing volatility flag misses — adopted as a defensive-only regime indicator.",
+    "source": "results/letf/SUMMARY_vix_regime.md"
   }
 ]
