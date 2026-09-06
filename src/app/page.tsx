@@ -1,7 +1,9 @@
 import Nav from "@/components/Nav";
+import SkipLink from "@/components/SkipLink";
 import Hero from "@/components/Hero";
 import AboutProject from "@/components/AboutProject";
 import EpochNote from "@/components/EpochNote";
+import HowToRead from "@/components/HowToRead";
 import ResearchLog from "@/components/ResearchLog";
 import EquitySection from "@/components/EquitySection";
 import StrategyCurves from "@/components/StrategyCurves";
@@ -50,11 +52,13 @@ export default function Home() {
   return (
     <>
       <RevealOnScroll />
+      <SkipLink />
       <Nav sections={sections} />
-      <main className="flex-1">
+      <main id="main-content" className="flex-1 focus:outline-none" tabIndex={-1}>
         <Hero data={performance} />
         <AboutProject />
         <EpochNote data={performance} />
+        <HowToRead />
         <ResearchLog data={performance} />
         <EquitySection data={performance} index={idx.equity} />
         {hasCurves && (

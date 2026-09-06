@@ -33,6 +33,10 @@ export interface PlaneCopy {
 }
 
 interface Messages {
+  /** Visually-hidden until focused — the first tab stop on the page, so a
+   *  keyboard/screen-reader user can jump past the nav and locale/theme
+   *  toggles straight to the record (2026-09-06 Phase 5 a11y pass). */
+  skipToContent: string;
   nav: {
     brand: string;
     tagline: string;
@@ -290,6 +294,20 @@ interface Messages {
     eyebrow: string;
     body: string;
   };
+  /** Short "how to read this page" primer (2026-09-06 Phase 5 live-readiness) —
+   *  placed near the top so a first-time reader has the vocabulary before the
+   *  numbers start. Full definitions still live in Methodology's glossary;
+   *  this is deliberately shorter and states data provenance + what the site
+   *  explicitly is not (not live money, not advice). */
+  howToRead: {
+    eyebrow: string;
+    title: string;
+    items: { term: string; detail: string }[];
+    sourceLabel: string;
+    sourceDetail: string;
+    notLabel: string;
+    notDetail: string;
+  };
   /** Research verdicts log (2026-09-06) — curated backtest/research findings from
    *  the trading repo's own research cycle, most of them rejections. Static,
    *  hand-curated data (`src/data/research-log.json`), not part of the
@@ -338,6 +356,7 @@ interface Messages {
 }
 
 const en: Messages = {
+  skipToContent: "Skip to main content",
   nav: {
     brand: "QUANT TRADING",
     tagline: "Measurement desk",
@@ -749,6 +768,42 @@ const en: Messages = {
     eyebrow: "What this project is",
     body: "This is a personal automated-trading lab, not a fund or a product. One engine runs a dozen or so intraday strategies, each against its own separate paper account, so no strategy's numbers get blended into a flattering portfolio average. Every fill and every outcome is written to a ledger and measured the same way regardless of what it says — the research log further down this page lists every idea that was tested and rejected, on purpose. Publishing it is about keeping the measurement honest, not about selling a strategy.",
   },
+  howToRead: {
+    eyebrow: "Before the numbers",
+    title: "How to read this page",
+    items: [
+      {
+        term: "Epoch",
+        detail:
+          "The moment each strategy's paper account was last reset to its starting capital (KR ₩10,000,000 / US $10,000). The curves below only count trades placed after that reset.",
+      },
+      {
+        term: "Account model",
+        detail:
+          "Every strategy trades its own independent paper account — capital is never pooled or borrowed across strategies.",
+      },
+      {
+        term: "bp (basis point)",
+        detail: '1/100th of a percent. A figure of "20bp" means 0.20%.',
+      },
+      {
+        term: "Wilson CI",
+        detail:
+          "A 95% confidence interval for win rate that stays honest at small sample sizes, instead of overstating confidence near 0% or 100% the way a naive normal approximation would.",
+      },
+      {
+        term: "Verdict (research log)",
+        detail:
+          "Adopted / Rejected / Insufficient sample — a statement about the evidence gathered so far, not a prediction of future results.",
+      },
+    ],
+    sourceLabel: "Where this comes from",
+    sourceDetail:
+      "Every number on this page is generated from one paper-trading ledger running on a personal server, published to this site twice a day (after the Korean close and after the US close). There is no manual editing between the ledger and this page.",
+    notLabel: "What this is not",
+    notDetail:
+      "This is not live money — no real capital is deployed. It is not investment advice, and nothing on this page is a recommendation to buy or sell anything.",
+  },
   researchVerdicts: {
     eyebrow: "Research Log",
     title: "Research verdicts",
@@ -796,6 +851,7 @@ const en: Messages = {
 };
 
 const ko: Messages = {
+  skipToContent: "본문으로 바로가기",
   nav: {
     brand: "QUANT TRADING",
     tagline: "측정 데스크",
@@ -1195,6 +1251,40 @@ const ko: Messages = {
   aboutProject: {
     eyebrow: "이 프로젝트는 무엇인가",
     body: "이 사이트는 펀드나 상품이 아니라 개인의 자동매매 연구실입니다. 엔진 하나가 열두 개 남짓의 단타 전략을 각각 독립된 모의계좌로 돌려서, 어느 전략의 성적도 포트폴리오 평균에 섞여 가려지지 않게 합니다. 모든 체결과 승패는 결과와 상관없이 같은 방식으로 원장에 기록해 측정하고, 아래 연구 로그에는 시도했다가 기각한 아이디어까지 전부 일부러 남겨 둡니다. 이를 공개하는 목적은 전략을 팔기 위해서가 아니라 측정을 정직하게 유지하기 위해서입니다.",
+  },
+  howToRead: {
+    eyebrow: "숫자를 보기 전에",
+    title: "이 페이지 읽는 법",
+    items: [
+      {
+        term: "에폭",
+        detail:
+          "전략별 모의계좌를 시작자본(KR 1,000만원 / US $10,000)으로 마지막으로 리셋한 시각. 아래 곡선은 이 에폭 이후 체결만 센다.",
+      },
+      {
+        term: "계좌 모델",
+        detail: "전략마다 독립된 모의계좌로 매매한다 — 전략 간 자본을 섞거나 빌려 쓰지 않는다.",
+      },
+      {
+        term: "bp(베이시스포인트)",
+        detail: "1%의 1/100. \"20bp\"는 0.20%를 뜻한다.",
+      },
+      {
+        term: "Wilson CI",
+        detail:
+          "승률의 95% 신뢰구간. 표본이 작을 때 단순 정규근사가 0%·100% 근처에서 과신하는 것과 달리 정직하게 넓게 잡는다.",
+      },
+      {
+        term: "판정(검증 로그)",
+        detail: "채택 / 기각 / 판단 보류 — 예측이 아니라 지금까지 모인 근거에 대한 진술이다.",
+      },
+    ],
+    sourceLabel: "데이터 출처",
+    sourceDetail:
+      "이 페이지의 모든 숫자는 개인 서버에서 상시 가동 중인 모의투자(paper) 원장 하나에서 생성돼, 하루 두 번(한국 장 마감 후·미국 장 마감 후) 이 사이트로 발행된다. 원장과 이 페이지 사이에 사람이 손으로 고치는 단계는 없다.",
+    notLabel: "이 페이지가 아닌 것",
+    notDetail:
+      "실제 돈이 아니다 — 실 자금이 투입되지 않는다. 투자 조언이 아니며, 이 페이지의 어떤 내용도 매수·매도 추천이 아니다.",
   },
   researchVerdicts: {
     eyebrow: "Research Log",
