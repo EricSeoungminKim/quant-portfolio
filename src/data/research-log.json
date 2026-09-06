@@ -222,5 +222,21 @@
     "reason": "거래 필터로는 기준 미달. 다만 엔진의 기존 변동성 플래그가 놓치는 고VIX 일의 72%를 잡아, 방어 전용 국면 지표로는 채택.",
     "reason_en": "Fails the trading gate, but catches 72% of high-VIX days the engine's existing volatility flag misses — adopted as a defensive-only regime indicator.",
     "source": "results/letf/SUMMARY_vix_regime.md"
+  },
+  {
+    "id": "kr-weak-close-reversal-h4",
+    "date": "2026-09-06",
+    "idea": "단기 반전 — 하락일에 약하게 마감(레인지 하위 30%)·고RVOL 대형주를 종가에 사서 익일 시가에 판다",
+    "idea_en": "Short-term reversal — buy large caps that close weak (bottom 30% of range) on a high-volume down day at the close, sell at next open",
+    "data": "KR 일봉 2019→2026-09 (342종목 → 시점별 시총 상위 300 재구성, 결측 412종목 FDR 보강)",
+    "data_en": "KR daily 2019→2026-09 (342 names → rebuilt as point-in-time top-300 by market cap, 412 missing names refetched via FDR)",
+    "method": "사전 등록 90 trials walk-forward → 적대적 검증: 생존편향(point-in-time 유니버스), 15:19 신호 vs 종가 헤어컷(분봉), CPCV/PBO·SPA·고원·부트스트랩",
+    "method_en": "Pre-registered 90-trial walk-forward → adversarial verification: survivorship (point-in-time universe), 15:19-signal-vs-close haircut (minute bars), CPCV/PBO, SPA, plateau, bootstrap",
+    "headline": "1차 +90bp(n=956, 4년 양수)였으나 검증에서 거래의 51.7%가 유니버스에 샌 레버리지·인버스 ETF. 시점별 유니버스는 n=417 +117bp(2024~25만), 종가 헤어컷 +39~65bp",
+    "headline_en": "First pass +90bp (n=956, 4 positive years), but verification found 51.7% of trades were leveraged/inverse ETFs that leaked into the stock universe. Point-in-time universe: n=417, +117bp in 2024–25 only; close-print haircut +39–65bp",
+    "verdict": "판단불가",
+    "reason": "통계 절차는 건전했지만(PBO 0.07, SPA p≈0) 선택된 구성이 주장과 달랐다. 개별주 효과는 2년·헤어컷 후 ≈+65bp라 표본이 부족하고, ETF 효과는 별도 가설(H5)로 분리해 검증한다.",
+    "reason_en": "The selection statistics were sound (PBO 0.07, SPA p≈0) but what got selected was not what the story claimed. The stock-only effect is two years and ≈+65bp after the haircut — not enough; the ETF effect is being tested separately (H5).",
+    "source": "results/reversal/SUMMARY.md · VERIFY.md"
   }
 ]
