@@ -91,8 +91,8 @@
     "headline": "기준행 \"항상 2x 롱\"부터 음수(코스피200 −9.1bp/일, 코스닥150 −12.9bp/일) — R1·R3 전부 8개 조합 NO_GO. 유일한 단서: 코스닥150 R2 갭 지속 n=1,025 평균 +16.2bp(순열 p=0.0035, 비용×2 +8.2bp)이나 DSR 0.43·부트스트랩 CI 하한 −1.0",
     "headline_en": "Even the \"always 2x long\" baseline is negative (KOSPI200 −9.1bp/day, KOSDAQ150 −12.9bp/day) — R1 and R3 fail across all 8 rule×pair combos. The one lead: KOSDAQ150 R2 gap-continuation, n=1,025, mean +16.2bp (permutation p=0.0035, cost×2 +8.2bp) but DSR 0.43, bootstrap CI lower bound −1.0",
     "verdict": "NO_GO",
-    "reason": "이 구간 레버리지 ETF 수익은 오버나이트 갭에서 났고 일중 드리프트는 음수라, 당일 청산 원칙 아래서는 지수 방향 베팅 자체가 역풍이다. 코스닥150 갭 지속만 표본이 늘면 재검사할 후보로 남긴다. [주의: KR 일봉 레이크의 월요일 결손이 발견돼 수리 후 재실행 예정]",
-    "reason_en": "In this window, leveraged-ETF returns came from overnight gaps while intraday drift was negative, so betting on index direction is a headwind once every position is flattened same-day. KOSDAQ150 gap-continuation is the one candidate worth re-testing as the sample grows. [Note: a Monday data gap was found in the KR daily lake; results will be re-run after the repair]",
+    "reason": "이 구간 레버리지 ETF 수익은 오버나이트 갭에서 났고 일중 드리프트는 음수라, 당일 청산 원칙 아래서는 지수 방향 베팅 자체가 역풍이다. 코스닥150 갭 지속만 표본이 늘면 재검사할 후보로 남긴다. 날짜 밀림 수리 후 재실행에서도 결론 유지.",
+    "reason_en": "In this window, leveraged-ETF returns came from overnight gaps while intraday drift was negative, so betting on index direction is a headwind once every position is flattened same-day. KOSDAQ150 gap-continuation is the one candidate worth re-testing as the sample grows. Conclusion unchanged after the date-shift repair.",
     "source": "SUMMARY_kr_daily.md"
   },
   {
@@ -139,8 +139,8 @@
     "headline": "S1: 종가→종가 Rank IC 평균 0.070(t=4.31, n=488, 3개 연도 전부 양수). S3 트레이더블 top1: n=375 평균 −9.4bp(비용×2 −37.4bp, DSR 0.073, 순열 p=0.0075) — 5개 변형 전부 순액 음수",
     "headline_en": "S1: close→close Rank IC mean 0.070 (t=4.31, n=488, positive in all 3 years). S3 tradeable top1: n=375, mean −9.4bp (cost×2 −37.4bp, DSR 0.073, permutation p=0.0075) — all 5 variants net-negative",
     "verdict": "NO_GO",
-    "reason": "연결 자체는 통계적으로 실재하고 순열검정으로도 \"어느 섹터를 골랐는가\"에 정보가 있다는 것까지 확인됐지만, KR 개별주 왕복비용(28bp)이 그 정보량을 그대로 삼킨다 — 엣지가 있어도 이 비용 구조에서는 못 판다. [주의: KR 일봉 레이크의 월요일 결손이 발견돼 수리 후 재실행 예정]",
-    "reason_en": "The link is statistically real, and the permutation test confirms even the choice of \"which sector\" carries information — but the 28bp KR round-trip cost swallows that information whole. The edge exists but this cost structure can't monetize it. [Note: a Monday data gap was found in the KR daily lake; results will be re-run after the repair]",
+    "reason": "연결 자체는 통계적으로 실재하고 순열검정으로도 \"어느 섹터를 골랐는가\"에 정보가 있다는 것까지 확인됐지만, KR 개별주 왕복비용(28bp)이 그 정보량을 그대로 삼킨다 — 엣지가 있어도 이 비용 구조에서는 못 판다. 날짜 밀림 수리 후 재실행에서도 결론 유지.",
+    "reason_en": "The link is statistically real, and the permutation test confirms even the choice of \"which sector\" carries information — but the 28bp KR round-trip cost swallows that information whole. The edge exists but this cost structure can't monetize it. Conclusion unchanged after the date-shift repair.",
     "source": "sector_link/SUMMARY.md"
   },
   {
@@ -187,8 +187,8 @@
     "headline": "12개 프록시 조합·실제 규칙 모두 중앙값이 6개 연도 전부 음수, 승률 50% 넘긴 해 0, 순열 p≈0.5, DSR≈0. 실제 규칙은 심볼-일의 27.5%에 태그를 붙여 선별력이 없음",
     "headline_en": "All 12 proxy rules and the exact production rule: negative median in every year, no year above 50% win rate, permutation p≈0.5, DSR≈0. The production rule tags 27.5% of symbol-days, i.e. no selectivity",
     "verdict": "NO_GO",
-    "reason": "2025~26년 평균이 양전환한 것은 소수 대박 종목의 우측 꼬리이고, 전형적 거래는 6년 내내 손실이다. [주의: KR 일봉 레이크의 월요일 결손이 발견돼 수리 후 재실행 예정]",
-    "reason_en": "The 2025–26 positive mean is a right-tail artifact of a few big winners; the typical trade lost money in every year. [Note: a Monday data gap was found in the KR daily lake; results will be re-run after the repair]",
+    "reason": "2025~26년 평균이 양전환한 것은 소수 대박 종목의 우측 꼬리이고, 전형적 거래는 6년 내내 손실이다. 날짜 밀림 수리 후 재실행에서도 결론 유지.",
+    "reason_en": "The 2025–26 positive mean is a right-tail artifact of a few big winners; the typical trade lost money in every year. Conclusion unchanged after the date-shift repair.",
     "source": "results/kr_flow/SUMMARY_frgn_accumulate.md · SUMMARY_frgn_exact.md"
   },
   {
@@ -200,11 +200,11 @@
     "data_en": "342 KR large caps, daily bars 2019→2026-09",
     "method": "사전 등록 18조합 × walk-forward 4폴드(72 trials), 왕복 28bp, 무작위 동일일 종목 순열 귀무, '아무 양봉' 기준선, DSR",
     "method_en": "Pre-registered 18 combos × 4 walk-forward folds (72 trials), 28bp round trip, random-symbol-same-day permutation null, 'any up-day' baseline, DSR",
-    "headline": "OOS n=384 평균 −96.7bp, 승률 35%, 기준선(−55.9bp)보다 −41bp, 무작위 종목보다 100% 나쁨(p=1.0) · 유니버스 수리 후 재실행: n=924 −100bp, 기각 유지",
-    "headline_en": "OOS n=384 mean −96.7bp, 35% win rate, −41bp worse than the any-up-day baseline (−55.9bp), worse than random symbols in 100% of draws (p=1.0) · Re-run after the universe fix: n=924, −100bp, rejection stands",
+    "headline": "OOS n=384 평균 −96.7bp, 승률 35%, 기준선(−55.9bp)보다 −41bp, 무작위 종목보다 100% 나쁨(p=1.0) · 유니버스 수리 후 재실행: n=924 −100bp, 기각 유지 · 날짜 밀림 수리 후: 기각 유지(기준선 대비 +3bp, 절대 수익 여전히 음수)",
+    "headline_en": "OOS n=384 mean −96.7bp, 35% win rate, −41bp worse than the any-up-day baseline (−55.9bp), worse than random symbols in 100% of draws (p=1.0) · Re-run after the universe fix: n=924, −100bp, rejection stands · After the date-shift repair: rejection stands (+3bp vs baseline, absolute return still negative)",
     "verdict": "NO_GO",
-    "reason": "확장된 급등주는 다음 시가에 되돌린다 — 지속이 아니라 단기 평균회귀가 지배한다. [주의: KR 일봉 레이크의 월요일 결손이 발견돼 수리 후 재실행 예정]",
-    "reason_en": "Extended, high-volume up-days give back at the next open — short-term mean reversion dominates, not continuation. [Note: a Monday data gap was found in the KR daily lake; results will be re-run after the repair]",
+    "reason": "확장된 급등주는 다음 시가에 되돌린다 — 지속이 아니라 단기 평균회귀가 지배한다.",
+    "reason_en": "Extended, high-volume up-days give back at the next open — short-term mean reversion dominates, not continuation.",
     "source": "results/close_bet/SUMMARY.md"
   },
   {
@@ -232,11 +232,11 @@
     "data_en": "KR daily 2019→2026-09 (342 names → rebuilt as point-in-time top-300 by market cap, 412 missing names refetched via FDR)",
     "method": "사전 등록 90 trials walk-forward → 적대적 검증: 생존편향(point-in-time 유니버스), 15:19 신호 vs 종가 헤어컷(분봉), CPCV/PBO·SPA·고원·부트스트랩",
     "method_en": "Pre-registered 90-trial walk-forward → adversarial verification: survivorship (point-in-time universe), 15:19-signal-vs-close haircut (minute bars), CPCV/PBO, SPA, plateau, bootstrap",
-    "headline": "1차 +90bp(n=956, 4년 양수)였으나 검증에서 거래의 51.7%가 유니버스에 샌 레버리지·인버스 ETF. 시점별 유니버스는 n=417 +117bp(2024~25만), 종가 헤어컷 +39~65bp · 유니버스 수리 후 재실행: n=2,808 +75bp(2024~25만, 2022~23 신호 0)",
-    "headline_en": "First pass +90bp (n=956, 4 positive years), but verification found 51.7% of trades were leveraged/inverse ETFs that leaked into the stock universe. Point-in-time universe: n=417, +117bp in 2024–25 only; close-print haircut +39–65bp · Re-run after the universe fix: n=2,808, +75bp (2024–25 only; zero signals in 2022–23)",
-    "verdict": "판단불가",
-    "reason": "통계 절차는 건전했지만(PBO 0.07, SPA p≈0) 선택된 구성이 주장과 달랐다. 개별주 효과는 2년·헤어컷 후 ≈+65bp라 표본이 부족하고, ETF 효과는 별도 가설(H5)로 분리해 검증한다. [주의: KR 일봉 레이크의 월요일 결손이 발견돼 수리 후 재실행 예정]",
-    "reason_en": "The selection statistics were sound (PBO 0.07, SPA p≈0) but what got selected was not what the story claimed. The stock-only effect is two years and ≈+65bp after the haircut — not enough; the ETF effect is being tested separately (H5). [Note: a Monday data gap was found in the KR daily lake; results will be re-run after the repair]",
+    "headline": "1차 +90bp(n=956, 4년 양수)였으나 검증에서 거래의 51.7%가 유니버스에 샌 레버리지·인버스 ETF. 시점별 유니버스는 n=417 +117bp(2024~25만), 종가 헤어컷 +39~65bp · 유니버스 수리 후 재실행: n=2,808 +75bp(2024~25만, 2022~23 신호 0) · 날짜 밀림 결함 수리 후 재실행: +90bp → −0.15bp, DSR 1.0 → 0.03 — 통과는 결함의 산물",
+    "headline_en": "First pass +90bp (n=956, 4 positive years), but verification found 51.7% of trades were leveraged/inverse ETFs that leaked into the stock universe. Point-in-time universe: n=417, +117bp in 2024–25 only; close-print haircut +39–65bp · Re-run after the universe fix: n=2,808, +75bp (2024–25 only; zero signals in 2022–23) · Re-run after the date-shift repair: +90bp → −0.15bp, DSR 1.0 → 0.03 — the pass was an artifact of the bug",
+    "verdict": "NO_GO",
+    "reason": "통계 절차는 건전했지만(PBO 0.07, SPA p≈0) 선택된 구성이 주장과 달랐다. 개별주 효과는 2년·헤어컷 후 ≈+65bp라 표본이 부족하고, ETF 효과는 별도 가설(H5)로 분리해 검증한다.",
+    "reason_en": "The selection statistics were sound (PBO 0.07, SPA p≈0) but what got selected was not what the story claimed. The stock-only effect is two years and ≈+65bp after the haircut — not enough; the ETF effect is being tested separately (H5).",
     "source": "results/reversal/SUMMARY.md · VERIFY.md"
   },
   {
@@ -248,11 +248,11 @@
     "data_en": "FDR daily 2014/2015→2026-09, each ETF tested independently",
     "method": "사전 등록 36조합 walk-forward 36/12/12, 왕복 8bp, 무작위 일 순열, 블록 부트스트랩, 비용×2, DSR, 10M 계좌 MDD, 15:19 헤어컷 진단",
     "method_en": "Pre-registered 36-combo walk-forward 36/12/12, 8bp round trip, random-day permutation, block bootstrap, cost×2, DSR, 10M KRW book MDD, 15:19 haircut diagnostic",
-    "headline": "7종 중 6종 양수(예: KODEX 레버리지 +77bp n=186, 코스닥150 레버리지 +123bp n=149), 순열 p≤0.0005, 비용×2 양수 — 그러나 종목당 n≤186, DSR 최고 0.947로 기준(n≥300, DSR≥0.95) 미달",
-    "headline_en": "6 of 7 positive (e.g. KODEX Leverage +77bp n=186, KOSDAQ150 Leverage +123bp n=149), permutation p≤0.0005, positive at 2× cost — but n≤186 per ETF and best DSR 0.947 miss the gate (n≥300, DSR≥0.95)",
-    "verdict": "판단불가",
-    "reason": "방향은 일관되지만 종목 단위로는 검정력이 부족하다. 단일 고정 규칙으로 7종을 풀링하고 미국 페어 8종에서 같은 규칙을 재현하는 후속 검정(H5b)이 진행 중이다. [주의: KR 일봉 레이크의 월요일 결손이 발견돼 수리 후 재실행 예정]",
-    "reason_en": "Directionally consistent but underpowered per ETF. A follow-up pools all 7 under one fixed rule and replicates the same rule on 8 US pairs (H5b). [Note: a Monday data gap was found in the KR daily lake; results will be re-run after the repair]",
+    "headline": "7종 중 6종 양수(예: KODEX 레버리지 +77bp n=186, 코스닥150 레버리지 +123bp n=149), 순열 p≤0.0005, 비용×2 양수 — 그러나 종목당 n≤186, DSR 최고 0.947로 기준(n≥300, DSR≥0.95) 미달 · 날짜 밀림 수리 후: 근접 통과 2종목 붕괴(DSR 0.95→0.07, 0.94→0.38), 2종목 부호 반전",
+    "headline_en": "6 of 7 positive (e.g. KODEX Leverage +77bp n=186, KOSDAQ150 Leverage +123bp n=149), permutation p≤0.0005, positive at 2× cost — but n≤186 per ETF and best DSR 0.947 miss the gate (n≥300, DSR≥0.95) · After the date-shift repair: the two near-passes collapsed (DSR 0.95→0.07, 0.94→0.38), two ETFs flipped sign",
+    "verdict": "NO_GO",
+    "reason": "방향은 일관되지만 종목 단위로는 검정력이 부족하다. 단일 고정 규칙으로 7종을 풀링하고 미국 페어 8종에서 같은 규칙을 재현하는 후속 검정(H5b)이 진행 중이다.",
+    "reason_en": "Directionally consistent but underpowered per ETF. A follow-up pools all 7 under one fixed rule and replicates the same rule on 8 US pairs (H5b).",
     "source": "results/letf_overnight/SUMMARY.md"
   },
   {
@@ -270,5 +270,21 @@
     "reason": "사전에 선언한 신뢰 기준(미국 재현)을 못 넘겨 채택하지 않는다. KR 고유 현상일 수 있지만 기준을 결과 뒤에 바꾸지 않는다. KR 일봉 레이크의 월요일 결손(금→월 갭 표본 누락) 수리 후 재실행이 먼저다.",
     "reason_en": "Fails the pre-declared credibility criterion (US replication), so not adopted. It may be a KR-specific effect, but the criterion is not changed after seeing the result. The KR daily lake's Monday gap (missing Friday→Monday samples) must be repaired and the test re-run first.",
     "source": "results/letf_overnight/SUMMARY_pooled.md"
+  },
+  {
+    "id": "kr-daily-lake-date-shift-bug",
+    "date": "2026-09-06",
+    "idea": "(데이터 결함) KR 일봉 레이크의 타임스탬프 앵커 불일치 — 리더가 대부분의 행에 +1일을 더해 월요일 칸이 비어 있었다",
+    "idea_en": "(Data defect) Mixed timestamp anchors in the KR daily lake — readers added +1 day to most rows, leaving Monday slots empty",
+    "data": "350종목 60,182행 재라벨(FDR 원본과 바이트 대조), 월요일 커버리지 중앙값 11 → 323",
+    "data_en": "60,182 rows across 350 symbols relabeled (byte-verified against FDR), Monday coverage median 11 → 323",
+    "method": "원인: FDR 경로는 D 15:00 UTC, pykrx 경로는 D−1 15:00 UTC 로 저장; 리더 3곳이 소수 앵커만 가정. writer·reader 수리 + 원자적 재구축 + 회귀 테스트",
+    "method_en": "Cause: the FDR path stored D at 15:00 UTC while the pykrx path stored D−1 15:00 UTC; three readers assumed only the minority anchor. Fixed writer and readers, atomic rebuild, regression tests",
+    "headline": "수리 전 '통과'였던 단기 반전(H4) +90bp가 −0.15bp로, 레버리지 ETF 반전(H5) 근접 통과가 붕괴 — 좋은 결과일수록 데이터부터 의심한다",
+    "headline_en": "The pre-repair 'pass' of the reversal study (H4) went from +90bp to −0.15bp and the near-passes in H5 collapsed — the better a result looks, the harder the data gets checked",
+    "verdict": "NO_GO",
+    "reason": "이 항목은 전략이 아니라 왜 이전 항목들의 숫자가 바뀌었는지에 대한 기록이다. 미국 레이크는 별도 앵커·리더라 영향 없음.",
+    "reason_en": "Not a strategy — the record of why earlier entries' numbers changed. The US lake uses a separate anchor and readers and was unaffected.",
+    "source": "results/close_bet/SUMMARY.md §10 · quant-backtest 6ccd9b0"
   }
 ]
