@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-09-05T06:20:02+09:00",
+  "generated_at": "2026-09-07T16:20:02+09:00",
   "disclaimer": "모의투자(paper) 기록입니다. 실제 자금이 투입되지 않았습니다.",
   "disclaimer_en": "Paper trading record. No real capital was deployed.",
   "period": {
     "start": "2026-09-01",
-    "end": "2026-09-04",
-    "sessions": 4,
-    "total_fills": 237,
+    "end": "2026-09-07",
+    "sessions": 6,
+    "total_fills": 271,
     "scope": "real_seeded",
     "note": "실계좌 이식 이후",
     "note_en": "Since real-account transplant"
@@ -61,19 +61,26 @@
         "day_pct": -1.5326,
         "fills": 40,
         "phase": "real_seeded"
+      },
+      {
+        "date": "2026-09-07",
+        "cum_pct": -6.6533,
+        "day_pct": -4.4458,
+        "fills": 32,
+        "phase": "real_seeded"
       }
     ],
-    "max_drawdown_pct": 1.8376,
+    "max_drawdown_pct": 6.3001,
     "chart": {
       "y_axis": {
-        "min": -2.605,
-        "max": 0.3974,
+        "min": -7.8509,
+        "max": 1.1976,
         "ticks": [
-          0.3974,
-          0.1987,
+          1.1976,
+          0.5988,
           0.0,
-          -1.3025,
-          -2.605
+          -3.9254,
+          -7.8509
         ],
         "zero": 0.0
       },
@@ -113,6 +120,13 @@
         "day_pct": -0.1786,
         "fills": 54,
         "phase": "real_seeded"
+      },
+      {
+        "date": "2026-09-06",
+        "cum_pct": -0.9577,
+        "day_pct": 0.0,
+        "fills": 2,
+        "phase": "real_seeded"
       }
     ],
     "max_drawdown_pct": 0.6913,
@@ -134,7 +148,7 @@
   },
   "prior_paper": {
     "sessions": 17,
-    "fills": 549,
+    "fills": 550,
     "net_krw": -3486245,
     "note": "가상 자본 1천만원 시대 — 실계좌 이식 전 기록이라 현재 곡선에 포함하지 않는다",
     "note_en": "From the virtual-capital (10,000,000 KRW) era — predates the real-account transition, so it is excluded from the current curve"
@@ -346,12 +360,12 @@
       "name_ko": "외국인 수급 적립매수",
       "name_en": "Foreign Flow Accumulation",
       "total": {
-        "trips": 2,
-        "wins": 2,
+        "trips": 1,
+        "wins": 1,
         "win_rate": 1.0,
-        "ci_low": 0.3424,
+        "ci_low": 0.2065,
         "ci_high": 1.0,
-        "expectancy_bp": 370.5,
+        "expectancy_bp": 642.75,
         "verdict": "판단 불가",
         "sample_warning": true,
         "markets": [
@@ -359,8 +373,8 @@
         ]
       },
       "trades_per_day": 1.0,
-      "avg_hold_minutes": 2107.0,
-      "enabled": false,
+      "avg_hold_minutes": 1387.0,
+      "enabled": true,
       "help": {
         "category": "swing",
         "theory_ko": "외국인 순매수가 여러 날 이어지는(FRGN 태그) 종목을 매일 조금씩 사서 추세를 따라가고, 이탈(FRGN_EXIT) 시 나눠 파는 외국인 수급 추세추종 가설.",
@@ -377,12 +391,12 @@
       },
       "by_market": {
         "asia": {
-          "trips": 2,
-          "wins": 2,
+          "trips": 1,
+          "wins": 1,
           "win_rate": 1.0,
-          "ci_low": 0.3424,
+          "ci_low": 0.2065,
           "ci_high": 1.0,
-          "expectancy_bp": 370.5,
+          "expectancy_bp": 642.75,
           "verdict": "판단 불가",
           "sample_warning": true
         },
@@ -392,9 +406,9 @@
         "asia": [
           {
             "date": "2026-09-04",
-            "day_net": 14953.54,
-            "cum_net": 14953.54,
-            "cum_trips": 2
+            "day_net": 10993.69,
+            "cum_net": 10993.69,
+            "cum_trips": 1
           }
         ],
         "us": []
@@ -405,20 +419,20 @@
       "name_ko": "갭 페이드",
       "name_en": "Gap Fade",
       "total": {
-        "trips": 9,
-        "wins": 1,
-        "win_rate": 0.1111,
-        "ci_low": 0.0199,
-        "ci_high": 0.435,
-        "expectancy_bp": -35.13,
+        "trips": 8,
+        "wins": 0,
+        "win_rate": 0.0,
+        "ci_low": 0.0,
+        "ci_high": 0.3244,
+        "expectancy_bp": -60.02,
         "verdict": "유의(음)",
         "sample_warning": true,
         "markets": [
           "US"
         ]
       },
-      "trades_per_day": 4.5,
-      "avg_hold_minutes": 50.1,
+      "trades_per_day": 4.0,
+      "avg_hold_minutes": 43.8,
       "enabled": true,
       "help": {
         "category": "intraday",
@@ -436,18 +450,18 @@
             "url": "https://arxiv.org/abs/2605.04004"
           }
         ],
-        "sizing_ko": "US 자본배분 6% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-        "sizing_en": "US capital allocation 6%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+        "sizing_ko": "US 자본배분 3% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
+        "sizing_en": "US capital allocation 3%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
       },
       "by_market": {
         "asia": null,
         "us": {
-          "trips": 9,
-          "wins": 1,
-          "win_rate": 0.1111,
-          "ci_low": 0.0199,
-          "ci_high": 0.435,
-          "expectancy_bp": -35.13,
+          "trips": 8,
+          "wins": 0,
+          "win_rate": 0.0,
+          "ci_low": 0.0,
+          "ci_high": 0.3244,
+          "expectancy_bp": -60.02,
           "verdict": "유의(음)",
           "sample_warning": true
         }
@@ -463,9 +477,9 @@
           },
           {
             "date": "2026-09-01",
-            "day_net": -9.6,
-            "cum_net": -15.89,
-            "cum_trips": 9
+            "day_net": -10.73,
+            "cum_net": -17.03,
+            "cum_trips": 8
           }
         ]
       }
@@ -753,20 +767,20 @@
       "name_ko": "AI 트레이더",
       "name_en": "AI Trader",
       "total": {
-        "trips": 17,
+        "trips": 20,
         "wins": 5,
-        "win_rate": 0.2941,
-        "ci_low": 0.1328,
-        "ci_high": 0.5313,
-        "expectancy_bp": -54.54,
-        "verdict": "판단 불가",
+        "win_rate": 0.25,
+        "ci_low": 0.1119,
+        "ci_high": 0.4687,
+        "expectancy_bp": -56.95,
+        "verdict": "유의(음)",
         "sample_warning": true,
         "markets": [
           "KR"
         ]
       },
-      "trades_per_day": 4.25,
-      "avg_hold_minutes": 120.8,
+      "trades_per_day": 4.0,
+      "avg_hold_minutes": 106.5,
       "enabled": true,
       "help": {
         "category": "experimental",
@@ -784,13 +798,13 @@
       },
       "by_market": {
         "asia": {
-          "trips": 17,
+          "trips": 20,
           "wins": 5,
-          "win_rate": 0.2941,
-          "ci_low": 0.1328,
-          "ci_high": 0.5313,
-          "expectancy_bp": -54.54,
-          "verdict": "판단 불가",
+          "win_rate": 0.25,
+          "ci_low": 0.1119,
+          "ci_high": 0.4687,
+          "expectancy_bp": -56.95,
+          "verdict": "유의(음)",
           "sample_warning": true
         },
         "us": null
@@ -820,6 +834,12 @@
             "day_net": 2138.13,
             "cum_net": -60080.86,
             "cum_trips": 17
+          },
+          {
+            "date": "2026-09-07",
+            "day_net": -58398.84,
+            "cum_net": -118479.7,
+            "cum_trips": 20
           }
         ],
         "us": []
@@ -1181,8 +1201,8 @@
         "evidence_ko": "burn_in — 백테스트 표본 0(Toss 5분봉 롤링 히스토리 한계). 리서치 스크리닝(US 1분봉 10.7년 OOS)에서 gross +0.9bp로 유일하게 양수였지만 실측 왕복비용 10.5bp를 못 이겨 순손실 — 게이트 통과 0건. paper 번인이 유일한 검증 경로.",
         "evidence_en": "burn_in — zero backtest samples (limited by Toss's rolling 5-min history). A 10.7-year US OOS screen found the only positive gross edge among the three tested (+0.9bp), but it still lost net after the measured 10.5bp round-trip cost — zero strategies passed the gate.",
         "refs": [],
-        "sizing_ko": "US 자본배분 7.5% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-        "sizing_en": "US capital allocation 7.5%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+        "sizing_ko": "US 자본배분 3% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
+        "sizing_en": "US capital allocation 3%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
       },
       "by_market": {
         "asia": null,
@@ -1303,12 +1323,12 @@
       "name_ko": "1분봉 스캘핑",
       "name_en": "1-Minute Scalping",
       "total": {
-        "trips": 149,
+        "trips": 151,
         "wins": 34,
-        "win_rate": 0.2282,
-        "ci_low": 0.1681,
-        "ci_high": 0.3019,
-        "expectancy_bp": -48.4,
+        "win_rate": 0.2252,
+        "ci_low": 0.1658,
+        "ci_high": 0.2981,
+        "expectancy_bp": -48.93,
         "verdict": "유의(음)",
         "sample_warning": false,
         "markets": [
@@ -1316,8 +1336,8 @@
           "US"
         ]
       },
-      "trades_per_day": 10.64,
-      "avg_hold_minutes": 20.9,
+      "trades_per_day": 10.07,
+      "avg_hold_minutes": 20.8,
       "enabled": true,
       "help": {
         "category": "intraday",
@@ -1335,17 +1355,17 @@
             "url": "https://arxiv.org/abs/1005.3535"
           }
         ],
-        "sizing_ko": "KR 자본배분 7.5% · US 자본배분 9% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-        "sizing_en": "KR capital allocation 7.5%; US capital allocation 9%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+        "sizing_ko": "KR 자본배분 3% · US 자본배분 3% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "KR capital allocation 3%; US capital allocation 3%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
       },
       "by_market": {
         "asia": {
-          "trips": 84,
+          "trips": 86,
           "wins": 23,
-          "win_rate": 0.2738,
-          "ci_low": 0.1899,
-          "ci_high": 0.3775,
-          "expectancy_bp": -59.29,
+          "win_rate": 0.2674,
+          "ci_low": 0.1853,
+          "ci_high": 0.3695,
+          "expectancy_bp": -59.98,
           "verdict": "유의(음)",
           "sample_warning": false
         },
@@ -1433,6 +1453,12 @@
             "day_net": -12517.91,
             "cum_net": -1695376.77,
             "cum_trips": 84
+          },
+          {
+            "date": "2026-09-07",
+            "day_net": -175816.77,
+            "cum_net": -1871193.54,
+            "cum_trips": 86
           }
         ],
         "us": [
@@ -1510,12 +1536,12 @@
       "name_ko": "1분봉 스캘핑(촉매 갈래)",
       "name_en": "1-Minute Scalping (catalyst arm)",
       "total": {
-        "trips": 16,
-        "wins": 5,
-        "win_rate": 0.3125,
-        "ci_low": 0.1416,
-        "ci_high": 0.556,
-        "expectancy_bp": -28.28,
+        "trips": 21,
+        "wins": 7,
+        "win_rate": 0.3333,
+        "ci_low": 0.1719,
+        "ci_high": 0.5463,
+        "expectancy_bp": -26.81,
         "verdict": "판단 불가",
         "sample_warning": true,
         "markets": [
@@ -1523,8 +1549,8 @@
           "US"
         ]
       },
-      "trades_per_day": 8.0,
-      "avg_hold_minutes": 35.9,
+      "trades_per_day": 7.0,
+      "avg_hold_minutes": 34.1,
       "enabled": true,
       "help": {
         "category": "intraday",
@@ -1542,17 +1568,17 @@
             "url": "https://arxiv.org/abs/1005.3535"
           }
         ],
-        "sizing_ko": "KR 자본배분 7.5% · US 자본배분 9% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-        "sizing_en": "KR capital allocation 7.5%; US capital allocation 9%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+        "sizing_ko": "KR 자본배분 3% · US 자본배분 3% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "KR capital allocation 3%; US capital allocation 3%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
       },
       "by_market": {
         "asia": {
-          "trips": 4,
-          "wins": 1,
-          "win_rate": 0.25,
-          "ci_low": 0.0456,
-          "ci_high": 0.6994,
-          "expectancy_bp": -27.25,
+          "trips": 9,
+          "wins": 3,
+          "win_rate": 0.3333,
+          "ci_low": 0.1206,
+          "ci_high": 0.6458,
+          "expectancy_bp": -24.4,
           "verdict": "판단 불가",
           "sample_warning": true
         },
@@ -1574,6 +1600,12 @@
             "day_net": -4504.23,
             "cum_net": -4504.23,
             "cum_trips": 4
+          },
+          {
+            "date": "2026-09-07",
+            "day_net": -67346.97,
+            "cum_net": -71851.21,
+            "cum_trips": 9
           }
         ],
         "us": [
@@ -1597,12 +1629,12 @@
       "name_ko": "변동성 돌파",
       "name_en": "Volatility Breakout",
       "total": {
-        "trips": 4,
-        "wins": 2,
-        "win_rate": 0.5,
-        "ci_low": 0.15,
-        "ci_high": 0.85,
-        "expectancy_bp": -31.8,
+        "trips": 6,
+        "wins": 4,
+        "win_rate": 0.6667,
+        "ci_low": 0.3,
+        "ci_high": 0.9032,
+        "expectancy_bp": -8.0,
         "verdict": "판단 불가",
         "sample_warning": true,
         "markets": [
@@ -1610,8 +1642,8 @@
           "US"
         ]
       },
-      "trades_per_day": 1.33,
-      "avg_hold_minutes": 45.4,
+      "trades_per_day": 1.5,
+      "avg_hold_minutes": 65.3,
       "enabled": true,
       "help": {
         "category": "intraday",
@@ -1629,13 +1661,13 @@
       },
       "by_market": {
         "asia": {
-          "trips": 2,
-          "wins": 2,
+          "trips": 4,
+          "wins": 4,
           "win_rate": 1.0,
-          "ci_low": 0.3424,
+          "ci_low": 0.5101,
           "ci_high": 1.0,
-          "expectancy_bp": 19.12,
-          "verdict": "판단 불가",
+          "expectancy_bp": 29.36,
+          "verdict": "유의(양)",
           "sample_warning": true
         },
         "us": {
@@ -1656,6 +1688,12 @@
             "day_net": 11946.71,
             "cum_net": 11946.71,
             "cum_trips": 2
+          },
+          {
+            "date": "2026-09-07",
+            "day_net": 44047.43,
+            "cum_net": 55994.14,
+            "cum_trips": 4
           }
         ],
         "us": [
@@ -1679,12 +1717,12 @@
       "name_ko": "변동성 돌파(촉매 갈래)",
       "name_en": "Volatility Breakout (catalyst arm)",
       "total": {
-        "trips": 11,
-        "wins": 4,
-        "win_rate": 0.3636,
-        "ci_low": 0.1517,
-        "ci_high": 0.6462,
-        "expectancy_bp": -60.12,
+        "trips": 13,
+        "wins": 6,
+        "win_rate": 0.4615,
+        "ci_low": 0.2321,
+        "ci_high": 0.7086,
+        "expectancy_bp": -43.09,
         "verdict": "판단 불가",
         "sample_warning": true,
         "markets": [
@@ -1692,8 +1730,8 @@
           "US"
         ]
       },
-      "trades_per_day": 5.5,
-      "avg_hold_minutes": 112.8,
+      "trades_per_day": 4.33,
+      "avg_hold_minutes": 112.4,
       "enabled": true,
       "help": {
         "category": "intraday",
@@ -1711,13 +1749,13 @@
       },
       "by_market": {
         "asia": {
-          "trips": 6,
-          "wins": 0,
-          "win_rate": 0.0,
-          "ci_low": 0.0,
-          "ci_high": 0.3903,
-          "expectancy_bp": -99.87,
-          "verdict": "유의(음)",
+          "trips": 8,
+          "wins": 2,
+          "win_rate": 0.25,
+          "ci_low": 0.0715,
+          "ci_high": 0.5907,
+          "expectancy_bp": -62.26,
+          "verdict": "판단 불가",
           "sample_warning": true
         },
         "us": {
@@ -1738,6 +1776,12 @@
             "day_net": -14398.52,
             "cum_net": -14398.52,
             "cum_trips": 6
+          },
+          {
+            "date": "2026-09-07",
+            "day_net": 55071.14,
+            "cum_net": 40672.62,
+            "cum_trips": 8
           }
         ],
         "us": [
@@ -1758,9 +1802,9 @@
     }
   ],
   "strategies_scope": "lifetime",
-  "enabled_count": 12,
-  "strategies_note": "전략 통계는 모의 시대 포함 누적 347왕복",
-  "strategies_note_en": "Strategy stats are lifetime incl. paper era, 347 round trips",
+  "enabled_count": 18,
+  "strategies_note": "전략 통계는 모의 시대 포함 누적 359왕복",
+  "strategies_note_en": "Strategy stats are lifetime incl. paper era, 359 round trips",
   "strategy_curves_note": "전략별 곡선은 종결 왕복 기준 누적 순손익(수수료 차감), 통화별 · 평가손익 미포함",
   "strategy_curves_note_en": "Per-strategy curves are cumulative net P&L (after fees) from closed round trips, by currency — unrealized (mark-to-market) P&L is not included",
   "excluded": {
@@ -1776,9 +1820,274 @@
     "kr_stock_roundtrip_bp": 23.0,
     "kr_etf_roundtrip_bp": 3.0,
     "us_roundtrip_bp": 20.0,
-    "fee_drag_pct_of_gross": 69.25,
+    "fee_drag_pct_of_gross": 157.43,
     "kr_tax_bp": 20.0,
     "note": "KR 개별주 왕복 23bp 중 20bp가 증권거래세+농특세 (US SEC Fee/TAF 등 소액 항목은 미포함)",
     "note_en": "Of the 23bp KR individual-stock round-trip cost, 20bp is securities transaction tax + rural development surtax (small items like US SEC Fee/TAF not included)"
-  }
+  },
+  "paper_epoch": {
+    "epoch": "2026-09-07T00:00:00+09:00",
+    "account_model": {
+      "kr_start_krw": 10000000,
+      "us_start_usd": 10000,
+      "note_ko": "전략마다 독립된 모의계좌 — KR 1,000만원 / US $10,000로 각각 2026-09-07 00:00 KST에 시작한다. 토스는 체결·수수료 산정용 거래소일 뿐, 계좌 간 자금은 섞이지 않는다.",
+      "note_en": "Each strategy runs its own independent paper account, starting at 10,000,000 KRW (KR) / $10,000 (US) from 2026-09-07 00:00 KST. Toss is used only as the execution venue for fills and fees — capital is not pooled across accounts."
+    },
+    "overall": {
+      "currency": "KRW",
+      "seed_krw": 261437000.0,
+      "fx_source_note": "USD 계좌를 KRW로 합산할 때 이 모듈의 고정 참고환율 FX_KRW_PER_USD=1376.7(2026-09-01 스냅샷)을 그대로 쓴다 — 이 저장소엔 일별 실제 환율을 공급하는 데이터 소스가 없어, 날짜별 실제 환율이 아니라 고정값이라는 뜻이다.",
+      "fx_source_note_en": "USD accounts are converted to KRW using this module's fixed reference rate FX_KRW_PER_USD=1376.7 (2026-09-01 snapshot) — this repo has no data source for actual daily FX rates, so this is a fixed value, not the day-specific rate.",
+      "rows": [
+        {
+          "date": "2026-09-07",
+          "day_krw": -202444.02,
+          "cum_krw": -202444.02,
+          "cum_pct": -0.0774
+        }
+      ],
+      "max_drawdown_pct": null,
+      "chart": {
+        "y_axis": {
+          "min": -0.2574,
+          "max": 0.18,
+          "ticks": [
+            0.18,
+            0.09,
+            0.0,
+            -0.1287,
+            -0.2574
+          ],
+          "zero": 0.0
+        }
+      }
+    },
+    "strategies": [
+      {
+        "id": "close_bet",
+        "start_capital": {
+          "KRW": 10000000.0
+        },
+        "curve": {
+          "asia": [],
+          "us": []
+        }
+      },
+      {
+        "id": "frgn_accumulate",
+        "start_capital": {
+          "KRW": 10000000.0
+        },
+        "curve": {
+          "asia": [],
+          "us": []
+        }
+      },
+      {
+        "id": "gap_fade",
+        "start_capital": {
+          "USD": 10000.0
+        },
+        "curve": {
+          "asia": [],
+          "us": []
+        }
+      },
+      {
+        "id": "intraday_momentum",
+        "start_capital": {
+          "USD": 10000.0
+        },
+        "curve": {
+          "asia": [],
+          "us": []
+        }
+      },
+      {
+        "id": "letf_pair_qqq",
+        "start_capital": {
+          "USD": 10000.0
+        },
+        "curve": {
+          "asia": [],
+          "us": []
+        }
+      },
+      {
+        "id": "letf_pair_sox",
+        "start_capital": {
+          "USD": 10000.0
+        },
+        "curve": {
+          "asia": [],
+          "us": []
+        }
+      },
+      {
+        "id": "llm_trader",
+        "start_capital": {
+          "KRW": 10000000.0
+        },
+        "curve": {
+          "asia": [
+            {
+              "date": "2026-09-07",
+              "day_native": -58398.84,
+              "cum_native": -58398.84,
+              "cum_pct": -0.584,
+              "trips": 3
+            }
+          ],
+          "us": []
+        }
+      },
+      {
+        "id": "mr_vwap_quiet",
+        "start_capital": {
+          "USD": 10000.0
+        },
+        "curve": {
+          "asia": [],
+          "us": []
+        }
+      },
+      {
+        "id": "news_accumulate",
+        "start_capital": {
+          "KRW": 10000000.0
+        },
+        "curve": {
+          "asia": [],
+          "us": []
+        }
+      },
+      {
+        "id": "news_momentum",
+        "start_capital": {
+          "KRW": 10000000.0
+        },
+        "curve": {
+          "asia": [],
+          "us": []
+        }
+      },
+      {
+        "id": "news_momentum_cat",
+        "start_capital": {
+          "KRW": 10000000.0
+        },
+        "curve": {
+          "asia": [],
+          "us": []
+        }
+      },
+      {
+        "id": "news_scalp",
+        "start_capital": {
+          "KRW": 10000000.0
+        },
+        "curve": {
+          "asia": [],
+          "us": []
+        }
+      },
+      {
+        "id": "pullback_impulse",
+        "start_capital": {
+          "USD": 10000.0
+        },
+        "curve": {
+          "asia": [],
+          "us": []
+        }
+      },
+      {
+        "id": "pullback_impulse_cat",
+        "start_capital": {
+          "USD": 10000.0
+        },
+        "curve": {
+          "asia": [],
+          "us": []
+        }
+      },
+      {
+        "id": "scalp_1m",
+        "start_capital": {
+          "KRW": 10000000.0,
+          "USD": 10000.0
+        },
+        "curve": {
+          "asia": [
+            {
+              "date": "2026-09-07",
+              "day_native": -175816.77,
+              "cum_native": -175816.77,
+              "cum_pct": -1.7582,
+              "trips": 2
+            }
+          ],
+          "us": []
+        }
+      },
+      {
+        "id": "scalp_1m_cat",
+        "start_capital": {
+          "KRW": 10000000.0,
+          "USD": 10000.0
+        },
+        "curve": {
+          "asia": [
+            {
+              "date": "2026-09-07",
+              "day_native": -67346.97,
+              "cum_native": -67346.97,
+              "cum_pct": -0.6735,
+              "trips": 5
+            }
+          ],
+          "us": []
+        }
+      },
+      {
+        "id": "vol_breakout",
+        "start_capital": {
+          "KRW": 10000000.0,
+          "USD": 10000.0
+        },
+        "curve": {
+          "asia": [
+            {
+              "date": "2026-09-07",
+              "day_native": 44047.43,
+              "cum_native": 44047.43,
+              "cum_pct": 0.4405,
+              "trips": 2
+            }
+          ],
+          "us": []
+        }
+      },
+      {
+        "id": "vol_breakout_cat",
+        "start_capital": {
+          "KRW": 10000000.0,
+          "USD": 10000.0
+        },
+        "curve": {
+          "asia": [
+            {
+              "date": "2026-09-07",
+              "day_native": 55071.14,
+              "cum_native": 55071.14,
+              "cum_pct": 0.5507,
+              "trips": 2
+            }
+          ],
+          "us": []
+        }
+      }
+    ]
+  },
+  "report_accuracy": {}
 }
