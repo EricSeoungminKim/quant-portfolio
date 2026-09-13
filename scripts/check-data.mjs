@@ -217,7 +217,11 @@ function checkPaperEpoch(pe) {
 
 // A strategy's since-epoch curve (`paper_epoch.strategies[].curve.{asia,us}`)
 // is a running total: each row's `cum_native` should be the previous row's
-// `cum_native` plus this row's `day_native`. That invariant is what "no gaps,
+// `cum_native` plus this row's `day_native`, within one cent because the
+// producer rounds each daily amount and the raw cumulative amount separately.
+// Do not sum rounded daily amounts across the whole series: their rounding
+// errors can accumulate even when every published cumulative value is correct.
+// That invariant is what "no gaps,
 // no dropped/duplicated days" actually cashes out to for a cumulative
 // series — checking date order alone would miss a row whose `day_native` got
 // zeroed out or double-counted while the date sequence stayed intact.
@@ -230,7 +234,7 @@ function checkEpochCurveContinuity(where, points) {
     return;
   }
   let prevDate = null;
-  let runningSum = 0;
+  let previousCum = 0;
   points.forEach((p, i) => {
     const ppath = `${where}[${i}]`;
     if (typeof p !== "object" || p === null) {
@@ -248,16 +252,20 @@ function checkEpochCurveContinuity(where, points) {
     checkNumber(`${ppath}.trips`, p.trips, { min: 0 });
 
     if (isFiniteNumber(p.day_native) && isFiniteNumber(p.cum_native)) {
-      runningSum += p.day_native;
-      if (Math.abs(runningSum - p.cum_native) > CONTINUITY_EPSILON) {
+      const expected = previousCum + p.day_native;
+      // Decimal cents are not exact binary floats (e.g. -51.3 - -51.31 > 0.01).
+      // Cover representation/addition/subtraction noise, not another currency cent.
+      const floatEpsilon = 4 * Number.EPSILON * Math.max(
+        1, Math.abs(previousCum), Math.abs(p.day_native), Math.abs(p.cum_native)
+      );
+      if (Math.abs(expected - p.cum_native) > CONTINUITY_EPSILON + floatEpsilon) {
         fail(
           `${ppath}.cum_native`,
-          `누적값이 day_native 합과 어긋남(끊긴 날짜 의심): 누적합계=${runningSum}, cum_native=${p.cum_native}`
+          `누적값이 이전 누적값 + day_native와 어긋남(끊긴 날짜 의심): 예상=${expected}, cum_native=${p.cum_native}`
         );
-        // Resync so one bad row doesn't cascade into a false positive on
-        // every row after it.
-        runningSum = p.cum_native;
       }
+      // Every comparison starts at the producer's independently rounded cumulative value.
+      previousCum = p.cum_native;
     }
   });
 }
