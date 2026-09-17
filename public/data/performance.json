@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-09-17T06:20:02+09:00",
+  "generated_at": "2026-09-17T16:15:01+09:00",
   "disclaimer": "모의투자(paper) 기록입니다. 실제 자금이 투입되지 않았습니다.",
   "disclaimer_en": "Paper trading record. No real capital was deployed.",
   "period": {
     "start": "2026-09-01",
-    "end": "2026-09-16",
-    "sessions": 13,
-    "total_fills": 966,
+    "end": "2026-09-17",
+    "sessions": 14,
+    "total_fills": 990,
     "scope": "real_seeded",
     "note": "실계좌 이식 이후",
     "note_en": "Since real-account transplant"
@@ -117,19 +117,26 @@
         "day_pct": -11.1547,
         "fills": 53,
         "phase": "real_seeded"
+      },
+      {
+        "date": "2026-09-17",
+        "cum_pct": -84.3109,
+        "day_pct": -11.2609,
+        "fills": 24,
+        "phase": "real_seeded"
       }
     ],
-    "max_drawdown_pct": 72.948,
+    "max_drawdown_pct": 84.2515,
     "chart": {
       "y_axis": {
-        "min": -86.199,
-        "max": 13.149,
+        "min": -99.4869,
+        "max": 15.176,
         "ticks": [
-          13.149,
-          6.5745,
+          15.176,
+          7.588,
           0.0,
-          -43.0995,
-          -86.199
+          -49.7434,
+          -99.4869
         ],
         "zero": 0.0
       },
@@ -1298,20 +1305,20 @@
       "name_ko": "긍정뉴스 적립매수",
       "name_en": "Positive-News Accumulation",
       "total": {
-        "trips": 6,
+        "trips": 8,
         "wins": 2,
-        "win_rate": 0.3333,
-        "ci_low": 0.0968,
-        "ci_high": 0.7,
-        "expectancy_bp": -116.14,
+        "win_rate": 0.25,
+        "ci_low": 0.0715,
+        "ci_high": 0.5907,
+        "expectancy_bp": -175.81,
         "verdict": "판단 불가",
         "sample_warning": true,
         "markets": [
           "KR"
         ]
       },
-      "trades_per_day": 3.0,
-      "avg_hold_minutes": 6959.9,
+      "trades_per_day": 2.67,
+      "avg_hold_minutes": 6299.9,
       "enabled": true,
       "help": {
         "category": "experimental",
@@ -1329,12 +1336,12 @@
       },
       "by_market": {
         "asia": {
-          "trips": 6,
+          "trips": 8,
           "wins": 2,
-          "win_rate": 0.3333,
-          "ci_low": 0.0968,
-          "ci_high": 0.7,
-          "expectancy_bp": -116.14,
+          "win_rate": 0.25,
+          "ci_low": 0.0715,
+          "ci_high": 0.5907,
+          "expectancy_bp": -175.81,
           "verdict": "판단 불가",
           "sample_warning": true
         },
@@ -1353,6 +1360,12 @@
             "day_net": -205734.84,
             "cum_net": -195567.86,
             "cum_trips": 6
+          },
+          {
+            "date": "2026-09-17",
+            "day_net": -8177.03,
+            "cum_net": -203744.89,
+            "cum_trips": 8
           }
         ],
         "us": []
@@ -1849,12 +1862,12 @@
       "name_ko": "1분봉 스캘핑",
       "name_en": "1-Minute Scalping",
       "total": {
-        "trips": 251,
-        "wins": 53,
-        "win_rate": 0.2112,
-        "ci_low": 0.1652,
-        "ci_high": 0.2658,
-        "expectancy_bp": -45.23,
+        "trips": 255,
+        "wins": 54,
+        "win_rate": 0.2118,
+        "ci_low": 0.1661,
+        "ci_high": 0.266,
+        "expectancy_bp": -44.38,
         "verdict": "유의(음)",
         "sample_warning": false,
         "markets": [
@@ -1862,8 +1875,8 @@
           "US"
         ]
       },
-      "trades_per_day": 11.41,
-      "avg_hold_minutes": 20.5,
+      "trades_per_day": 11.09,
+      "avg_hold_minutes": 20.6,
       "enabled": true,
       "help": {
         "category": "intraday",
@@ -1886,12 +1899,12 @@
       },
       "by_market": {
         "asia": {
-          "trips": 125,
-          "wins": 33,
-          "win_rate": 0.264,
-          "ci_low": 0.1946,
-          "ci_high": 0.3475,
-          "expectancy_bp": -53.27,
+          "trips": 129,
+          "wins": 34,
+          "win_rate": 0.2636,
+          "ci_low": 0.1952,
+          "ci_high": 0.3456,
+          "expectancy_bp": -51.34,
           "verdict": "유의(음)",
           "sample_warning": false
         },
@@ -2027,6 +2040,12 @@
             "day_net": -268676.15,
             "cum_net": -2714277.24,
             "cum_trips": 125
+          },
+          {
+            "date": "2026-09-17",
+            "day_net": -65927.88,
+            "cum_net": -2780205.12,
+            "cum_trips": 129
           }
         ],
         "us": [
@@ -2146,12 +2165,12 @@
       "name_ko": "1분봉 스캘핑(촉매 갈래)",
       "name_en": "1-Minute Scalping (catalyst arm)",
       "total": {
-        "trips": 86,
-        "wins": 17,
-        "win_rate": 0.1977,
-        "ci_low": 0.1272,
-        "ci_high": 0.294,
-        "expectancy_bp": -29.46,
+        "trips": 88,
+        "wins": 18,
+        "win_rate": 0.2045,
+        "ci_low": 0.1335,
+        "ci_high": 0.3003,
+        "expectancy_bp": -28.76,
         "verdict": "유의(음)",
         "sample_warning": false,
         "markets": [
@@ -2159,8 +2178,8 @@
           "US"
         ]
       },
-      "trades_per_day": 8.6,
-      "avg_hold_minutes": 24.0,
+      "trades_per_day": 8.0,
+      "avg_hold_minutes": 24.1,
       "enabled": true,
       "help": {
         "category": "intraday",
@@ -2183,12 +2202,12 @@
       },
       "by_market": {
         "asia": {
-          "trips": 47,
-          "wins": 11,
-          "win_rate": 0.234,
-          "ci_low": 0.136,
-          "ci_high": 0.3722,
-          "expectancy_bp": -25.59,
+          "trips": 49,
+          "wins": 12,
+          "win_rate": 0.2449,
+          "ci_low": 0.146,
+          "ci_high": 0.3809,
+          "expectancy_bp": -24.49,
           "verdict": "유의(음)",
           "sample_warning": false
         },
@@ -2258,6 +2277,12 @@
             "day_net": -128597.37,
             "cum_net": -704653.9,
             "cum_trips": 47
+          },
+          {
+            "date": "2026-09-17",
+            "day_net": 2592.67,
+            "cum_net": -702061.23,
+            "cum_trips": 49
           }
         ],
         "us": [
@@ -2471,12 +2496,12 @@
       "name_ko": "변동성 돌파(촉매 갈래)",
       "name_en": "Volatility Breakout (catalyst arm)",
       "total": {
-        "trips": 57,
+        "trips": 60,
         "wins": 11,
-        "win_rate": 0.193,
-        "ci_low": 0.1113,
-        "ci_high": 0.3134,
-        "expectancy_bp": -63.6,
+        "win_rate": 0.1833,
+        "ci_low": 0.1056,
+        "ci_high": 0.2992,
+        "expectancy_bp": -68.38,
         "verdict": "유의(음)",
         "sample_warning": false,
         "markets": [
@@ -2484,8 +2509,8 @@
           "US"
         ]
       },
-      "trades_per_day": 5.7,
-      "avg_hold_minutes": 138.5,
+      "trades_per_day": 5.45,
+      "avg_hold_minutes": 134.2,
       "enabled": true,
       "help": {
         "category": "intraday",
@@ -2503,14 +2528,14 @@
       },
       "by_market": {
         "asia": {
-          "trips": 27,
+          "trips": 30,
           "wins": 5,
-          "win_rate": 0.1852,
-          "ci_low": 0.0818,
-          "ci_high": 0.367,
-          "expectancy_bp": -65.24,
+          "win_rate": 0.1667,
+          "ci_low": 0.0734,
+          "ci_high": 0.3356,
+          "expectancy_bp": -74.65,
           "verdict": "유의(음)",
-          "sample_warning": true
+          "sample_warning": false
         },
         "us": {
           "trips": 30,
@@ -2578,6 +2603,12 @@
             "day_net": 60384.42,
             "cum_net": -526141.12,
             "cum_trips": 27
+          },
+          {
+            "date": "2026-09-17",
+            "day_net": -441935.64,
+            "cum_net": -968076.76,
+            "cum_trips": 30
           }
         ],
         "us": [
@@ -2641,8 +2672,8 @@
   ],
   "strategies_scope": "lifetime",
   "enabled_count": 18,
-  "strategies_note": "전략 통계는 모의 시대 포함 누적 685왕복",
-  "strategies_note_en": "Strategy stats are lifetime incl. paper era, 685 round trips",
+  "strategies_note": "전략 통계는 모의 시대 포함 누적 696왕복",
+  "strategies_note_en": "Strategy stats are lifetime incl. paper era, 696 round trips",
   "strategy_curves_note": "전략별 곡선은 종결 왕복 기준 누적 순손익(수수료 차감), 통화별 · 평가손익 미포함",
   "strategy_curves_note_en": "Per-strategy curves are cumulative net P&L (after fees) from closed round trips, by currency — unrealized (mark-to-market) P&L is not included",
   "excluded": {
@@ -2658,7 +2689,7 @@
     "kr_stock_roundtrip_bp": 23.0,
     "kr_etf_roundtrip_bp": 3.0,
     "us_roundtrip_bp": 20.0,
-    "fee_drag_pct_of_gross": 86.75,
+    "fee_drag_pct_of_gross": 84.01,
     "kr_tax_bp": 20.0,
     "note": "KR 개별주 왕복 23bp 중 20bp가 증권거래세+농특세 (US SEC Fee/TAF 등 소액 항목은 미포함)",
     "note_en": "Of the 23bp KR individual-stock round-trip cost, 20bp is securities transaction tax + rural development surtax (small items like US SEC Fee/TAF not included)"
@@ -2724,19 +2755,25 @@
           "day_krw": -1497808.43,
           "cum_krw": -8089771.95,
           "cum_pct": -3.0943
+        },
+        {
+          "date": "2026-09-17",
+          "day_krw": -513447.88,
+          "cum_krw": -8603219.83,
+          "cum_pct": -3.2907
         }
       ],
-      "max_drawdown_pct": 3.0192,
+      "max_drawdown_pct": 3.2158,
       "chart": {
         "y_axis": {
-          "min": -3.6513,
-          "max": 0.557,
+          "min": -3.883,
+          "max": 0.5923,
           "ticks": [
-            0.557,
-            0.2785,
+            0.5923,
+            0.2962,
             0.0,
-            -1.8256,
-            -3.6513
+            -1.9415,
+            -3.883
           ],
           "zero": 0.0
         }
@@ -3010,6 +3047,13 @@
               "cum_native": -195567.86,
               "cum_pct": -1.9557,
               "trips": 2
+            },
+            {
+              "date": "2026-09-17",
+              "day_native": -8177.03,
+              "cum_native": -203744.89,
+              "cum_pct": -2.0374,
+              "trips": 2
             }
           ],
           "us": []
@@ -3214,6 +3258,13 @@
               "cum_native": -1018900.47,
               "cum_pct": -10.189,
               "trips": 8
+            },
+            {
+              "date": "2026-09-17",
+              "day_native": -65927.88,
+              "cum_native": -1084828.35,
+              "cum_pct": -10.8483,
+              "trips": 4
             }
           ],
           "us": [
@@ -3332,6 +3383,13 @@
               "cum_native": -700149.67,
               "cum_pct": -7.0015,
               "trips": 9
+            },
+            {
+              "date": "2026-09-17",
+              "day_native": 2592.67,
+              "cum_native": -697557.0,
+              "cum_pct": -6.9756,
+              "trips": 2
             }
           ],
           "us": [
@@ -3540,6 +3598,13 @@
               "cum_native": -511742.6,
               "cum_pct": -5.1174,
               "trips": 3
+            },
+            {
+              "date": "2026-09-17",
+              "day_native": -441935.64,
+              "cum_native": -953678.24,
+              "cum_pct": -9.5368,
+              "trips": 3
             }
           ],
           "us": [
@@ -3598,49 +3663,49 @@
     ]
   },
   "report_accuracy": {
-    "as_of": "2026-09-16",
-    "since": "2026-08-17",
-    "until": "2026-09-16",
-    "n_claims": 20,
+    "as_of": "2026-09-17",
+    "since": "2026-08-18",
+    "until": "2026-09-17",
+    "n_claims": 23,
     "min_n": 20,
     "direction": {
       "1": {
-        "n": 10,
+        "n": 12,
         "hits": 8,
-        "rate": 0.8,
-        "ci_lo": 0.49015684672072346,
-        "ci_hi": 0.9433190520193067
+        "rate": 0.6666666666666666,
+        "ci_lo": 0.3906175873976139,
+        "ci_hi": 0.8618821601026386
       },
       "3": {
-        "n": 7,
-        "hits": 6,
-        "rate": 0.8571428571428571,
-        "ci_lo": 0.4868654966809702,
-        "ci_hi": 0.9743210440510253
+        "n": 8,
+        "hits": 7,
+        "rate": 0.875,
+        "ci_lo": 0.5291051942301385,
+        "ci_hi": 0.9775830911367039
       },
       "5": {
-        "n": 4,
-        "hits": 2,
-        "rate": 0.5,
-        "ci_lo": 0.15003570882017145,
-        "ci_hi": 0.8499642911798285
+        "n": 6,
+        "hits": 4,
+        "rate": 0.6666666666666666,
+        "ci_lo": 0.2999883213415286,
+        "ci_hi": 0.903230667440783
       }
     },
     "candidate_horizons": {
       "1": {
-        "n": 1357,
-        "mean_bps": 13.50129739305614,
-        "hitrate": 0.40825350036845987
+        "n": 1540,
+        "mean_bps": 18.309208715283585,
+        "hitrate": 0.412987012987013
       },
       "3": {
-        "n": 930,
-        "mean_bps": -49.15202014551223,
-        "hitrate": 0.3655913978494624
+        "n": 1161,
+        "mean_bps": -50.090008689054095,
+        "hitrate": 0.363479758828596
       },
       "5": {
-        "n": 441,
-        "mean_bps": -134.34900416565682,
-        "hitrate": 0.31519274376417233
+        "n": 686,
+        "mean_bps": -153.64979784956395,
+        "hitrate": 0.3236151603498542
       }
     }
   }
