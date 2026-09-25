@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-09-25T16:15:02+09:00",
+  "generated_at": "2026-09-26T06:20:02+09:00",
   "disclaimer": "모의투자(paper) 기록입니다. 실제 자금이 투입되지 않았습니다.",
   "disclaimer_en": "Paper trading record. No real capital was deployed.",
   "period": {
     "start": "2026-09-01",
-    "end": "2026-09-24",
-    "sessions": 19,
-    "total_fills": 1539,
+    "end": "2026-09-25",
+    "sessions": 20,
+    "total_fills": 1602,
     "scope": "real_seeded",
     "note": "실계좌 이식 이후",
     "note_en": "Since real-account transplant"
@@ -301,6 +301,13 @@
         "cum_pct": -49.8657,
         "day_pct": 0.8856,
         "fills": 80,
+        "phase": "real_seeded"
+      },
+      {
+        "date": "2026-09-25",
+        "cum_pct": -55.6748,
+        "day_pct": -5.8092,
+        "fills": 63,
         "phase": "real_seeded"
       }
     ],
@@ -1174,20 +1181,20 @@
       "name_ko": "SOXX 레버리지 페어 전환",
       "name_en": "SOXX Leveraged Pair Switching",
       "total": {
-        "trips": 16,
+        "trips": 17,
         "wins": 5,
-        "win_rate": 0.3125,
-        "ci_low": 0.1416,
-        "ci_high": 0.556,
-        "expectancy_bp": -36.74,
+        "win_rate": 0.2941,
+        "ci_low": 0.1328,
+        "ci_high": 0.5313,
+        "expectancy_bp": -37.99,
         "verdict": "판단 불가",
         "sample_warning": true,
         "markets": [
           "US"
         ]
       },
-      "trades_per_day": 1.23,
-      "avg_hold_minutes": 227.6,
+      "trades_per_day": 1.21,
+      "avg_hold_minutes": 235.0,
       "enabled": true,
       "help": {
         "category": "intraday",
@@ -1206,12 +1213,12 @@
       "by_market": {
         "asia": null,
         "us": {
-          "trips": 16,
+          "trips": 17,
           "wins": 5,
-          "win_rate": 0.3125,
-          "ci_low": 0.1416,
-          "ci_high": 0.556,
-          "expectancy_bp": -36.74,
+          "win_rate": 0.2941,
+          "ci_low": 0.1328,
+          "ci_high": 0.5313,
+          "expectancy_bp": -37.99,
           "verdict": "판단 불가",
           "sample_warning": true
         }
@@ -1296,6 +1303,12 @@
             "day_net": 13.56,
             "cum_net": -98.1,
             "cum_trips": 16
+          },
+          {
+            "date": "2026-09-25",
+            "day_net": -8.85,
+            "cum_net": -106.94,
+            "cum_trips": 17
           }
         ]
       }
@@ -1820,20 +1833,20 @@
       "name_ko": "눌림목 임펄스",
       "name_en": "Pullback Impulse",
       "total": {
-        "trips": 118,
-        "wins": 36,
-        "win_rate": 0.3051,
-        "ci_low": 0.2292,
-        "ci_high": 0.3932,
-        "expectancy_bp": -23.79,
+        "trips": 125,
+        "wins": 38,
+        "win_rate": 0.304,
+        "ci_low": 0.2302,
+        "ci_high": 0.3895,
+        "expectancy_bp": -24.97,
         "verdict": "유의(음)",
         "sample_warning": false,
         "markets": [
           "US"
         ]
       },
-      "trades_per_day": 6.21,
-      "avg_hold_minutes": 47.0,
+      "trades_per_day": 6.25,
+      "avg_hold_minutes": 46.6,
       "enabled": true,
       "help": {
         "category": "intraday",
@@ -1852,12 +1865,12 @@
       "by_market": {
         "asia": null,
         "us": {
-          "trips": 118,
-          "wins": 36,
-          "win_rate": 0.3051,
-          "ci_low": 0.2292,
-          "ci_high": 0.3932,
-          "expectancy_bp": -23.79,
+          "trips": 125,
+          "wins": 38,
+          "win_rate": 0.304,
+          "ci_low": 0.2302,
+          "ci_high": 0.3895,
+          "expectancy_bp": -24.97,
           "verdict": "유의(음)",
           "sample_warning": false
         }
@@ -1978,6 +1991,12 @@
             "day_net": -28.03,
             "cum_net": -584.17,
             "cum_trips": 118
+          },
+          {
+            "date": "2026-09-25",
+            "day_net": -128.35,
+            "cum_net": -712.52,
+            "cum_trips": 125
           }
         ]
       }
@@ -1987,20 +2006,20 @@
       "name_ko": "눌림목 임펄스(촉매 갈래)",
       "name_en": "Pullback Impulse (catalyst arm)",
       "total": {
-        "trips": 45,
+        "trips": 48,
         "wins": 6,
-        "win_rate": 0.1333,
-        "ci_low": 0.0626,
-        "ci_high": 0.2618,
-        "expectancy_bp": -31.23,
+        "win_rate": 0.125,
+        "ci_low": 0.0586,
+        "ci_high": 0.247,
+        "expectancy_bp": -31.8,
         "verdict": "유의(음)",
         "sample_warning": false,
         "markets": [
           "US"
         ]
       },
-      "trades_per_day": 3.75,
-      "avg_hold_minutes": 36.1,
+      "trades_per_day": 3.69,
+      "avg_hold_minutes": 35.3,
       "enabled": true,
       "help": {
         "category": "intraday",
@@ -2019,12 +2038,12 @@
       "by_market": {
         "asia": null,
         "us": {
-          "trips": 45,
+          "trips": 48,
           "wins": 6,
-          "win_rate": 0.1333,
-          "ci_low": 0.0626,
-          "ci_high": 0.2618,
-          "expectancy_bp": -31.23,
+          "win_rate": 0.125,
+          "ci_low": 0.0586,
+          "ci_high": 0.247,
+          "expectancy_bp": -31.8,
           "verdict": "유의(음)",
           "sample_warning": false
         }
@@ -2103,6 +2122,12 @@
             "day_net": -17.93,
             "cum_net": -593.46,
             "cum_trips": 45
+          },
+          {
+            "date": "2026-09-25",
+            "day_net": -41.18,
+            "cum_net": -634.64,
+            "cum_trips": 48
           }
         ]
       }
@@ -2112,12 +2137,12 @@
       "name_ko": "1분봉 스캘핑",
       "name_en": "1-Minute Scalping",
       "total": {
-        "trips": 317,
-        "wins": 72,
-        "win_rate": 0.2271,
-        "ci_low": 0.1844,
-        "ci_high": 0.2764,
-        "expectancy_bp": -38.18,
+        "trips": 327,
+        "wins": 73,
+        "win_rate": 0.2232,
+        "ci_low": 0.1815,
+        "ci_high": 0.2714,
+        "expectancy_bp": -37.93,
         "verdict": "유의(음)",
         "sample_warning": false,
         "markets": [
@@ -2125,8 +2150,8 @@
           "US"
         ]
       },
-      "trades_per_day": 11.32,
-      "avg_hold_minutes": 22.3,
+      "trades_per_day": 11.28,
+      "avg_hold_minutes": 22.2,
       "enabled": true,
       "help": {
         "category": "intraday",
@@ -2159,12 +2184,12 @@
           "sample_warning": false
         },
         "us": {
-          "trips": 165,
-          "wins": 36,
-          "win_rate": 0.2182,
-          "ci_low": 0.162,
-          "ci_high": 0.2872,
-          "expectancy_bp": -27.45,
+          "trips": 175,
+          "wins": 37,
+          "win_rate": 0.2114,
+          "ci_low": 0.1575,
+          "ci_high": 0.2778,
+          "expectancy_bp": -27.59,
           "verdict": "유의(음)",
           "sample_warning": false
         }
@@ -2466,6 +2491,12 @@
             "day_net": 147.92,
             "cum_net": -1366.6,
             "cum_trips": 165
+          },
+          {
+            "date": "2026-09-25",
+            "day_net": -116.03,
+            "cum_net": -1482.62,
+            "cum_trips": 175
           }
         ]
       }
@@ -2475,12 +2506,12 @@
       "name_ko": "1분봉 스캘핑(촉매 갈래)",
       "name_en": "1-Minute Scalping (catalyst arm)",
       "total": {
-        "trips": 156,
-        "wins": 32,
-        "win_rate": 0.2051,
-        "ci_low": 0.1492,
-        "ci_high": 0.2752,
-        "expectancy_bp": -24.02,
+        "trips": 163,
+        "wins": 34,
+        "win_rate": 0.2086,
+        "ci_low": 0.1533,
+        "ci_high": 0.2773,
+        "expectancy_bp": -23.58,
         "verdict": "유의(음)",
         "sample_warning": false,
         "markets": [
@@ -2488,8 +2519,8 @@
           "US"
         ]
       },
-      "trades_per_day": 9.75,
-      "avg_hold_minutes": 22.0,
+      "trades_per_day": 9.59,
+      "avg_hold_minutes": 21.5,
       "enabled": true,
       "help": {
         "category": "intraday",
@@ -2522,12 +2553,12 @@
           "sample_warning": false
         },
         "us": {
-          "trips": 92,
-          "wins": 18,
-          "win_rate": 0.1957,
-          "ci_low": 0.1275,
-          "ci_high": 0.2882,
-          "expectancy_bp": -23.12,
+          "trips": 99,
+          "wins": 20,
+          "win_rate": 0.202,
+          "ci_low": 0.1348,
+          "ci_high": 0.2915,
+          "expectancy_bp": -22.46,
           "verdict": "유의(음)",
           "sample_warning": false
         }
@@ -2709,6 +2740,12 @@
             "day_net": -192.96,
             "cum_net": -877.65,
             "cum_trips": 92
+          },
+          {
+            "date": "2026-09-25",
+            "day_net": 16.51,
+            "cum_net": -861.15,
+            "cum_trips": 99
           }
         ]
       }
@@ -2902,12 +2939,12 @@
       "name_ko": "변동성 돌파(촉매 갈래)",
       "name_en": "Volatility Breakout (catalyst arm)",
       "total": {
-        "trips": 93,
+        "trips": 95,
         "wins": 27,
-        "win_rate": 0.2903,
-        "ci_low": 0.2079,
-        "ci_high": 0.3894,
-        "expectancy_bp": -3.68,
+        "win_rate": 0.2842,
+        "ci_low": 0.2033,
+        "ci_high": 0.3819,
+        "expectancy_bp": -4.81,
         "verdict": "유의(음)",
         "sample_warning": false,
         "markets": [
@@ -2915,8 +2952,8 @@
           "US"
         ]
       },
-      "trades_per_day": 5.81,
-      "avg_hold_minutes": 153.9,
+      "trades_per_day": 5.59,
+      "avg_hold_minutes": 154.1,
       "enabled": true,
       "help": {
         "category": "intraday",
@@ -2944,12 +2981,12 @@
           "sample_warning": false
         },
         "us": {
-          "trips": 54,
+          "trips": 56,
           "wins": 18,
-          "win_rate": 0.3333,
-          "ci_low": 0.2224,
-          "ci_high": 0.4664,
-          "expectancy_bp": -2.25,
+          "win_rate": 0.3214,
+          "ci_low": 0.214,
+          "ci_high": 0.4518,
+          "expectancy_bp": -4.2,
           "verdict": "유의(음)",
           "sample_warning": false
         }
@@ -3131,6 +3168,12 @@
             "day_net": 146.92,
             "cum_net": 256.6,
             "cum_trips": 54
+          },
+          {
+            "date": "2026-09-25",
+            "day_net": -82.38,
+            "cum_net": 174.21,
+            "cum_trips": 56
           }
         ]
       }
@@ -3138,8 +3181,8 @@
   ],
   "strategies_scope": "lifetime",
   "enabled_count": 18,
-  "strategies_note": "전략 통계는 모의 시대 포함 누적 951왕복",
-  "strategies_note_en": "Strategy stats are lifetime incl. paper era, 951 round trips",
+  "strategies_note": "전략 통계는 모의 시대 포함 누적 981왕복",
+  "strategies_note_en": "Strategy stats are lifetime incl. paper era, 981 round trips",
   "strategy_curves_note": "전략별 곡선은 종결 왕복 기준 누적 순손익(수수료 차감), 통화별 · 평가손익 미포함",
   "strategy_curves_note_en": "Per-strategy curves are cumulative net P&L (after fees) from closed round trips, by currency — unrealized (mark-to-market) P&L is not included",
   "excluded": {
@@ -3155,7 +3198,7 @@
     "kr_stock_roundtrip_bp": 23.0,
     "kr_etf_roundtrip_bp": 3.0,
     "us_roundtrip_bp": 20.0,
-    "fee_drag_pct_of_gross": 1393.46,
+    "fee_drag_pct_of_gross": 1170.31,
     "kr_tax_bp": 20.0,
     "note": "KR 개별주 왕복 23bp 중 20bp가 증권거래세+농특세 (US SEC Fee/TAF 등 소액 항목은 미포함)",
     "note_en": "Of the 23bp KR individual-stock round-trip cost, 20bp is securities transaction tax + rural development surtax (small items like US SEC Fee/TAF not included)"
@@ -3257,6 +3300,12 @@
           "day_krw": 75613.84,
           "cum_krw": -7252570.08,
           "cum_pct": -2.7741
+        },
+        {
+          "date": "2026-09-25",
+          "day_krw": -495993.14,
+          "cum_krw": -7748563.22,
+          "cum_pct": -2.9638
         }
       ],
       "max_drawdown_pct": 3.0802,
@@ -3574,6 +3623,13 @@
               "cum_native": -98.1,
               "cum_pct": -0.981,
               "trips": 1
+            },
+            {
+              "date": "2026-09-25",
+              "day_native": -8.85,
+              "cum_native": -106.94,
+              "cum_pct": -1.0694,
+              "trips": 1
             }
           ]
         }
@@ -3809,6 +3865,13 @@
               "cum_native": -617.81,
               "cum_pct": -6.1781,
               "trips": 9
+            },
+            {
+              "date": "2026-09-25",
+              "day_native": -128.35,
+              "cum_native": -746.16,
+              "cum_pct": -7.4616,
+              "trips": 7
             }
           ]
         }
@@ -3897,6 +3960,13 @@
               "cum_native": -593.72,
               "cum_pct": -5.9372,
               "trips": 4
+            },
+            {
+              "date": "2026-09-25",
+              "day_native": -41.18,
+              "cum_native": -634.9,
+              "cum_pct": -6.349,
+              "trips": 3
             }
           ]
         }
@@ -4092,6 +4162,13 @@
               "cum_native": -1159.61,
               "cum_pct": -11.5961,
               "trips": 8
+            },
+            {
+              "date": "2026-09-25",
+              "day_native": -116.03,
+              "cum_native": -1275.63,
+              "cum_pct": -12.7563,
+              "trips": 10
             }
           ]
         }
@@ -4286,6 +4363,13 @@
               "day_native": -192.96,
               "cum_native": -868.73,
               "cum_pct": -8.6873,
+              "trips": 7
+            },
+            {
+              "date": "2026-09-25",
+              "day_native": 16.51,
+              "cum_native": -852.23,
+              "cum_pct": -8.5223,
               "trips": 7
             }
           ]
@@ -4614,6 +4698,13 @@
               "cum_native": 255.14,
               "cum_pct": 2.5514,
               "trips": 5
+            },
+            {
+              "date": "2026-09-25",
+              "day_native": -82.38,
+              "cum_native": 172.75,
+              "cum_pct": 1.7275,
+              "trips": 2
             }
           ]
         }
