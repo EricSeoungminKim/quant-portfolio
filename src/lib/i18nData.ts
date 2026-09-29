@@ -43,12 +43,13 @@ const STRATEGY_NAME_EN: Record<string, string> = {
 };
 
 const VERDICT_EN: Record<string, string> = {
-  "판단 불가": "Insufficient sample",
-  "유의(음)": "Significant (negative)",
-  "유의(양)": "Significant (positive)",
+  "판단 불가": "Win-rate CI includes 50%",
+  "표본 부족": "Insufficient sample",
+  "유의(음)": "Win-rate CI below 50%",
+  "유의(양)": "Win-rate CI above 50%",
   "기각": "Rejected",
   "채택": "Adopted",
-  "판단 보류": "Judgment withheld",
+  "판단 보류": "Win-rate CI includes 50%",
 };
 
 // Fallback-only (priority 2 above) — only reached when an older
@@ -103,7 +104,7 @@ export function translateStrategyName(
 }
 
 export function translateVerdict(verdict: string, locale: Locale): string {
-  if (locale === "ko") return verdict;
+  if (locale === "ko") return ({ "판단 불가": "승률 CI에 50% 포함", "유의(음)": "승률 CI < 50%", "유의(양)": "승률 CI > 50%", "판단 보류": "승률 CI에 50% 포함" } as Record<string, string>)[verdict] ?? verdict;
   return VERDICT_EN[verdict] ?? "";
 }
 

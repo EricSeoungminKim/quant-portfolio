@@ -259,14 +259,14 @@ function StatGrid({ stats, strategy }: { stats: Strategy["total"]; strategy: Str
     { label: t.strategies.statTrips, value: String(stats.trips) },
     {
       label: t.strategies.statWinRate,
-      value: `${(stats.win_rate * 100).toFixed(0)}% (${(stats.ci_low * 100).toFixed(0)}–${(
+      value: stats.win_rate == null || stats.ci_low == null || stats.ci_high == null ? "—" : `${(stats.win_rate * 100).toFixed(0)}% (${(stats.ci_low * 100).toFixed(0)}–${(
         stats.ci_high * 100
       ).toFixed(0)}%)`,
     },
     {
       label: t.strategies.statExpectancy,
-      value: formatBp(stats.expectancy_bp),
-      tone: stats.expectancy_bp >= 0 ? "up" : "down",
+      value: stats.expectancy_bp == null ? "—" : formatBp(stats.expectancy_bp),
+      tone: stats.expectancy_bp == null ? undefined : stats.expectancy_bp >= 0 ? "up" : "down",
     },
     { label: t.strategies.statVerdict, value: translateVerdict(stats.verdict, locale) || "—" },
     {
@@ -276,7 +276,7 @@ function StatGrid({ stats, strategy }: { stats: Strategy["total"]; strategy: Str
     {
       label: t.strategies.statAvgHold,
       value:
-        strategy.avg_hold_minutes != null ? formatHoldMinutes(strategy.avg_hold_minutes) : "—",
+        strategy.avg_hold_minutes != null && stats.trips > 0 ? formatHoldMinutes(strategy.avg_hold_minutes) : "—",
     },
   ];
   return (
@@ -310,8 +310,8 @@ function MarketCell({ label, stats }: { label: string; stats: MarketStats | null
       {stats ? (
         <p className="tnum mt-1 text-[12px]">
           {t.verdicts.tripsUnit(stats.trips)} ·{" "}
-          <span className={stats.expectancy_bp >= 0 ? "text-[var(--up)]" : "text-[var(--down)]"}>
-            {formatBp(stats.expectancy_bp)}
+          <span className={stats.expectancy_bp == null ? "text-[var(--muted)]" : stats.expectancy_bp >= 0 ? "text-[var(--up)]" : "text-[var(--down)]"}>
+            {stats.expectancy_bp == null ? "—" : formatBp(stats.expectancy_bp)}
           </span>{" "}
           · <span className="text-[var(--muted)]">{translateVerdict(stats.verdict, locale) || "—"}</span>
         </p>

@@ -65,8 +65,8 @@ export interface EquityBook {
   seed_basis_en?: string;
   rows: EquityPoint[];
   // Percent, in the same units as rows[].cum_pct (1.387 = 1.387%) — NOT a
-  // fraction. Null when the book has fewer than 2 points to compute a
-  // drawdown from. Optional — absent on older snapshots.
+  // fraction. The initial capital is included as the first high-water mark.
+  // Optional — absent on older snapshots.
   max_drawdown_pct?: number | null;
   chart: {
     y_axis: ChartYAxis;
@@ -77,10 +77,10 @@ export interface EquityBook {
 export interface MarketStats {
   trips: number;
   wins: number;
-  win_rate: number;
-  ci_low: number;
-  ci_high: number;
-  expectancy_bp: number;
+  win_rate: number | null;
+  ci_low: number | null;
+  ci_high: number | null;
+  expectancy_bp: number | null;
   verdict: string;
   sample_warning: boolean;
 }
@@ -170,6 +170,11 @@ export interface StrategyCurves {
   us?: StrategyCurvePoint[];
 }
 
+export interface StrategyActivity {
+  trades_per_day: number;
+  avg_hold_minutes: number;
+}
+
 export interface Strategy {
   id: string;
   name_ko: string;
@@ -188,6 +193,10 @@ export interface Strategy {
   };
   // Optional — absent on older snapshots.
   trades_per_day?: number;
+  activity?: {
+    total: StrategyActivity;
+    by_market: { asia: StrategyActivity | null; us: StrategyActivity | null };
+  };
   avg_hold_minutes?: number;
   enabled?: boolean;
   /**
@@ -271,6 +280,15 @@ export interface PaperEpochCurvePoint {
 
 export interface PaperEpochStrategy {
   id: string;
+  name_ko: string;
+  name_en?: string;
+  enabled?: boolean;
+  help?: StrategyHelp | null;
+  total: StrategyTotal;
+  by_market: Strategy["by_market"];
+  activity?: Strategy["activity"];
+  trades_per_day?: number;
+  avg_hold_minutes?: number;
   /** Whichever currencies this strategy has an account in — a KR-only
    *  strategy carries just `KRW`, a US-only one just `USD`. */
   start_capital: { KRW?: number; USD?: number };
@@ -290,6 +308,13 @@ export interface PaperEpoch {
   /** ISO timestamp of the epoch boundary (2026-09-07T00:00:00+09:00). */
   epoch: string;
   account_model: PaperEpochAccountModel;
+  measurement_note?: string;
+  measurement_note_en?: string;
+  excluded_unassigned?: { total_fills: number };
+  period: PerformanceData["period"];
+  equity_asia: EquityBook;
+  equity_us: EquityBook;
+  costs: Costs;
   overall: PaperEpochOverall;
   /** Only strategies with a non-empty `start_capital` appear here — a
    *  strategy with no assigned account (e.g. disabled) is left out entirely,

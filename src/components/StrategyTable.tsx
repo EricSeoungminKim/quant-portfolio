@@ -12,31 +12,23 @@ import type {
 import { formatBp, formatHoldMinutes, formatMoneySigned, formatPct } from "@/lib/format";
 import { useLocale, useT } from "@/lib/i18n";
 import { translateDataText, translateStrategyName, translateVerdict } from "@/lib/i18nData";
-import { findEpochStrategy } from "@/lib/paperEpoch";
+import { activityForMarket, findEpochStrategy, statsForMarket } from "@/lib/paperEpoch";
 import Abbr from "./Abbr";
 import SectionHeading from "./SectionHeading";
 import StrategyHelpDrawer from "./StrategyHelpDrawer";
 
 type SortKey = "expectancy_bp" | "win_rate" | "trips";
 
-// Which stats to read for a given market filter — ALL reads the
-// market-agnostic total, KR/US read that market's own numbers so a filtered
-// view never shows the mixed-market figures under a single-market label. A
-// strategy that doesn't trade the filtered market has no entry (null) and
-// must be guarded at the call site.
-function statsForMarket(s: Strategy, market: "ALL" | Market): MarketStats | null {
-  if (market === "ALL") return s.total;
-  return market === "KR" ? s.by_market.asia : s.by_market.us;
-}
-
 export default function StrategyTable({
-  strategies,
+  strategies: currentStrategies,
+  historicalStrategies,
   note,
   noteEn,
   index,
   paperEpoch,
 }: {
   strategies: Strategy[];
+  historicalStrategies?: Strategy[];
   note?: string;
   noteEn?: string;
   index: string;
@@ -46,6 +38,9 @@ export default function StrategyTable({
 }) {
   const t = useT();
   const { locale } = useLocale();
+  const [historical, setHistorical] = useState(false);
+  const strategies = historical ? historicalStrategies ?? currentStrategies : currentStrategies;
+  const visibleEpoch = historical ? null : paperEpoch;
   const [market, setMarket] = useState<"ALL" | Market>("ALL");
   const [sortKey, setSortKey] = useState<SortKey>("expectancy_bp");
   const [asc, setAsc] = useState(false);
@@ -97,13 +92,27 @@ export default function StrategyTable({
         description={t.strategies.description}
       />
 
-      {(note || noteEn) && (
+      {historicalStrategies && (
+        <div className="mt-6 flex flex-wrap gap-2" aria-label={locale === "ko" ? "측정 기간" : "Measurement scope"}>
+          {[false, true].map((value) => (
+            <button key={String(value)} type="button" aria-pressed={historical === value}
+              onClick={() => { setHistorical(value); setOpenId(null); }}
+              className={`cursor-pointer border px-3 py-2 text-xs ${historical === value ? "border-[var(--accent)] text-[var(--accent)]" : "border-[var(--control)] text-[var(--muted)]"}`}>
+              {value ? (locale === "ko" ? "전체 과거 원장 · 별도 기록" : "Full historical ledger · separate scope") : (locale === "ko" ? `현재 독립계좌 · ${paperEpoch?.period.start ?? ""} 이후` : `Current accounts · since ${paperEpoch?.period.start ?? ""}`)}
+            </button>
+          ))}
+        </div>
+      )}
+      {historical && <p className="mt-3 text-xs text-[var(--muted)]">{locale === "ko"
+        ? "원장에 기록된 모든 기간의 왕복 거래입니다. 계좌 초기화 이전 기록을 포함하므로 현재 계좌 곡선과 직접 비교할 수 없습니다."
+        : "Round trips across the full ledger, including earlier account regimes. These statistics cannot be compared directly with the current account curves."}</p>}
+      {!historical && (note || noteEn) && (
         <p className="tnum mt-3 text-xs text-[var(--muted-2)]">
           {translateDataText(note ?? "", noteEn, locale)}
         </p>
       )}
 
-      <VerdictPanel strategies={strategies} onOpen={setOpenId} />
+      <VerdictPanel strategies={rows} market={market} onOpen={setOpenId} />
 
       <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
         <div className="flex gap-1.5">
@@ -158,7 +167,7 @@ export default function StrategyTable({
               <Th>{t.strategies.headerVerdict}</Th>
               <Th hideSm>{t.strategies.headerTradesPerDay}</Th>
               <Th hideSm>{t.strategies.headerAvgHold}</Th>
-              {paperEpoch && <Th hideSm>{t.strategies.headerSinceEpoch}</Th>}
+              {visibleEpoch && <Th hideSm>{t.strategies.headerSinceEpoch}</Th>}
             </tr>
           </thead>
           <tbody>
@@ -169,7 +178,9 @@ export default function StrategyTable({
               const stats = statsForMarket(s, market);
               const sampleWarning = stats ? stats.sample_warning : true;
               const name = translateStrategyName(s.id, s.name_ko, s.name_en, locale);
-              const epochAccount = paperEpoch ? findEpochStrategy(paperEpoch, s.id) : null;
+              const epochAccount = visibleEpoch ? findEpochStrategy(visibleEpoch, s.id) : null;
+              const activity = activityForMarket(s, market);
+              const hasWinRate = stats?.win_rate != null && stats.ci_low != null && stats.ci_high != null;
               return (
                 <tr
                   key={s.id}
@@ -213,35 +224,35 @@ export default function StrategyTable({
                   </td>
                   <td className="tnum px-4 py-3.5">{stats ? stats.trips : "—"}</td>
                   <td className="px-4 py-3.5">
-                    {stats ? (
-                      <WinRateBar winRate={stats.win_rate} ciLow={stats.ci_low} ciHigh={stats.ci_high} />
+                    {hasWinRate ? (
+                      <WinRateBar winRate={stats!.win_rate!} ciLow={stats!.ci_low!} ciHigh={stats!.ci_high!} />
                     ) : (
                       <span className="tnum text-xs text-[var(--muted-2)]">—</span>
                     )}
                   </td>
                   <td
                     className={`tnum px-4 py-3.5 font-medium ${
-                      stats
+                      stats?.expectancy_bp != null
                         ? stats.expectancy_bp >= 0
                           ? "text-[var(--up)]"
                           : "text-[var(--down)]"
                         : "text-[var(--muted-2)]"
                     }`}
                   >
-                    {stats ? formatBp(stats.expectancy_bp) : "—"}
+                    {stats?.expectancy_bp != null ? formatBp(stats.expectancy_bp) : "—"}
                   </td>
                   <td className="px-4 py-3.5 text-xs text-[var(--muted)]">
                     {stats ? translateVerdict(stats.verdict, locale) : "—"}
                   </td>
                   <td className="tnum hidden px-4 py-3.5 text-xs text-[var(--muted)] sm:table-cell">
-                    {s.trades_per_day != null ? s.trades_per_day.toFixed(1) : "—"}
+                    {activity?.trades_per_day != null ? activity.trades_per_day.toFixed(1) : "—"}
                   </td>
                   <td className="tnum hidden px-4 py-3.5 text-xs text-[var(--muted)] sm:table-cell">
-                    {s.avg_hold_minutes != null ? formatHoldMinutes(s.avg_hold_minutes) : "—"}
+                    {activity?.avg_hold_minutes != null && (stats?.trips ?? 0) > 0 ? formatHoldMinutes(activity.avg_hold_minutes) : "—"}
                   </td>
-                  {paperEpoch && (
+                  {visibleEpoch && (
                     <td className="hidden px-4 py-3.5 sm:table-cell">
-                      <SinceEpochBadges account={epochAccount} />
+                      <SinceEpochBadges account={epochAccount} market={market} />
                     </td>
                   )}
                 </tr>
@@ -270,10 +281,12 @@ export default function StrategyTable({
  */
 function VerdictPanel({
   strategies,
+  market,
   onOpen,
 }: {
   strategies: Strategy[];
   onOpen: (id: string) => void;
+  market: "ALL" | Market;
 }) {
   const t = useT();
   const { locale } = useLocale();
@@ -281,7 +294,7 @@ function VerdictPanel({
   const groups = useMemo(() => {
     const map = new Map<string, Strategy[]>();
     for (const s of strategies) {
-      const key = s.total.verdict;
+      const key = statsForMarket(s, market)?.verdict ?? "표본 부족";
       const list = map.get(key);
       if (list) list.push(s);
       else map.set(key, [s]);
@@ -289,10 +302,10 @@ function VerdictPanel({
     return [...map.entries()]
       .map(([verdict, list]) => ({
         verdict,
-        list: [...list].sort((a, b) => b.total.trips - a.total.trips),
+        list: [...list].sort((a, b) => (statsForMarket(b, market)?.trips ?? 0) - (statsForMarket(a, market)?.trips ?? 0)),
       }))
       .sort((a, b) => b.list.length - a.list.length);
-  }, [strategies]);
+  }, [strategies, market]);
 
   if (groups.length === 0) return null;
 
@@ -331,7 +344,7 @@ function VerdictPanel({
                       className="cursor-pointer border border-[var(--control)] px-1.5 py-0.5 text-[10px] text-[var(--muted)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
                     >
                       {translateStrategyName(s.id, s.name_ko, s.name_en, locale)}{" "}
-                      <span className="tnum text-[var(--muted-2)]">{s.total.trips}</span>
+                      <span className="tnum text-[var(--muted-2)]">{statsForMarket(s, market)?.trips ?? 0}</span>
                     </button>
                   </li>
                 ))}
@@ -402,7 +415,7 @@ function MarketBadges({ asia, us }: { asia: MarketStats | null; us: MarketStats 
 // `curve` array is empty, not absent) — `null` only means the strategy has
 // no account for that currency at all, which is why the badge lookup keys
 // off `start_capital` rather than curve length.
-function SinceEpochBadges({ account }: { account: PaperEpochStrategy | null }) {
+function SinceEpochBadges({ account, market }: { account: PaperEpochStrategy | null; market: "ALL" | Market }) {
   const t = useT();
   const { locale } = useLocale();
 
@@ -428,8 +441,8 @@ function SinceEpochBadges({ account }: { account: PaperEpochStrategy | null }) {
   }
 
   const badges = [
-    account.start_capital.KRW !== undefined ? badge("KR", "KRW", account.curve.asia) : null,
-    account.start_capital.USD !== undefined ? badge("US", "USD", account.curve.us) : null,
+    market !== "US" && account.start_capital.KRW !== undefined ? badge("KR", "KRW", account.curve.asia) : null,
+    market !== "KR" && account.start_capital.USD !== undefined ? badge("US", "USD", account.curve.us) : null,
   ].filter((b): b is React.ReactElement => b !== null);
 
   if (badges.length === 0) return <span className="tnum text-xs text-[var(--muted-2)]">—</span>;

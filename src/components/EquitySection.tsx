@@ -11,6 +11,7 @@ import { formatDateOnly, formatMoney, formatPct } from "@/lib/format";
 export default function EquitySection({ data, index }: { data: PerformanceData; index: string }) {
   const t = useT();
   const { locale } = useLocale();
+  const epoch = hasPaperEpoch(data) ? data.paper_epoch : null;
 
   return (
     <section id="equity" className="mx-auto max-w-6xl px-5 py-16 md:py-24">
@@ -32,13 +33,24 @@ export default function EquitySection({ data, index }: { data: PerformanceData; 
         </p>
       )}
 
+      {epoch?.measurement_note && (
+        <p className="mt-3 max-w-3xl text-xs leading-relaxed text-[var(--muted)]">
+          {translateDataText(epoch.measurement_note, epoch.measurement_note_en, locale)}
+          {(epoch.excluded_unassigned?.total_fills ?? 0) > 0 && (locale === "ko"
+            ? ` 현재 배정이 없는 계좌의 ${epoch.excluded_unassigned!.total_fills}건 체결은 현재 통계에서 제외했습니다. 과거 왕복 거래 통계는 아래 별도 기록에 보존합니다.`
+            : ` ${epoch.excluded_unassigned!.total_fills} fills from currently unassigned accounts are excluded here; historical round-trip statistics are preserved separately below.`)}
+        </p>
+      )}
+
       <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-[var(--muted)]">
         <Legend swatch="var(--up)" label={t.equity.legendUp} />
         <Legend swatch="var(--down)" label={t.equity.legendDown} />
-        <span className="flex items-center gap-1.5">
-          <span className="inline-block h-2.5 w-0.5 bg-[var(--accent)]" aria-hidden />
-          {t.equity.legendPhaseBoundary}
-        </span>
+        {data.phases.length > 0 && (
+          <span className="flex items-center gap-1.5">
+            <span className="inline-block h-2.5 w-0.5 bg-[var(--accent)]" aria-hidden />
+            {t.equity.legendPhaseBoundary}
+          </span>
+        )}
       </div>
 
       {/* 2026-09-06 paper_epoch — every strategy's own account summed into
@@ -108,10 +120,8 @@ function BookPanel({ title, book }: { title: string; book: EquityBook }) {
   const { locale } = useLocale();
   const seedBasisText = translateSeedBasis(book.seed_basis, book.seed_basis_en, locale);
   const hasDrawdown = book.max_drawdown_pct !== undefined;
-  // max_drawdown_pct is emitted in the same units as rows[].cum_pct — percent,
-  // not a fraction. Verified against the data: the Asia book runs -0.3769% to
-  // -1.7587%, a 1.38pp fall, and the generator reports 1.387. Multiplying by
-  // 100 here (as this did until 2026-09-04) printed that as "-138.7%".
+  // The generator includes initial capital as the first high-water mark;
+  // max_drawdown_pct and cum_pct are both percentages, not fractions.
   const drawdownText =
     book.max_drawdown_pct != null
       ? formatPct(-Math.abs(book.max_drawdown_pct), 2)
@@ -171,6 +181,9 @@ function OverallPanel({ overall }: { overall: PaperEpochOverall }) {
         </div>
       </div>
       <EquityChart rows={rows} yAxis={overall.chart.y_axis} phaseBoundaries={[]} title={t.equity.overallBookTitle} />
+      <p className="mt-3 text-[11px] leading-relaxed text-[var(--muted)]">
+        {translateDataText(overall.fx_source_note, overall.fx_source_note_en, locale)}
+      </p>
       {overall.seed_krw != null && (
         <div className="mt-2 text-[10px] text-[var(--muted-2)]">
           {t.equity.seedLabel} {formatMoney(overall.seed_krw, overall.currency, locale)}

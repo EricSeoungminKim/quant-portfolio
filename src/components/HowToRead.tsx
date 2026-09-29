@@ -1,6 +1,6 @@
 "use client";
 
-import { useT } from "@/lib/i18n";
+import { useLocale, useT } from "@/lib/i18n";
 
 /**
  * Short "how to read this page" primer (2026-09-06 Phase 5 live-readiness) —
@@ -13,6 +13,7 @@ import { useT } from "@/lib/i18n";
  */
 export default function HowToRead() {
   const t = useT();
+  const { locale } = useLocale();
 
   return (
     <div className="mx-auto max-w-6xl px-5 pb-10 md:pb-12" data-reveal>
@@ -29,6 +30,14 @@ export default function HowToRead() {
           ))}
         </dl>
 
+        <div className="mt-5 flex flex-wrap gap-4 text-xs">
+          <a className="underline underline-offset-4" href="/data/performance.json" target="_blank" rel="noreferrer">
+            {locale === "ko" ? "원본 성과 JSON ↗" : "Source performance JSON ↗"}
+          </a>
+          <a className="underline underline-offset-4" href="/measurement-notes.md" target="_blank" rel="noreferrer">
+            {locale === "ko" ? "측정 기준 · 검산 방법 ↗" : "Measurement notes · reproduce totals ↗"}
+          </a>
+        </div>
         <div className="mt-5 grid gap-3 border-t border-[var(--border)] pt-4 sm:grid-cols-2">
           <div>
             <p className="mono-label text-[9px] text-[var(--muted-2)]">{t.howToRead.sourceLabel}</p>

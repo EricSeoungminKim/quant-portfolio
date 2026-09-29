@@ -52,7 +52,7 @@ export interface CurveSeries {
   color: string;
   /** `false` when the strategy is switched off in settings.yaml. */
   enabled: boolean;
-  /** Lifetime verdict from `total.verdict`, already localized. */
+  /** Scope- and market-specific win-rate evidence, already localized. */
   verdict: string;
   points: StrategyCurvePoint[];
 }

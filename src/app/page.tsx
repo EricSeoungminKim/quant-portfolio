@@ -22,7 +22,7 @@ import {
   EPOCH_CURVES_NOTE_EN,
   EPOCH_CURVES_NOTE_KO,
   hasPaperEpoch,
-  withEpochCurves,
+  currentPerformance,
 } from "@/lib/paperEpoch";
 
 // Reading order is the argument: the record first, then the per-strategy
@@ -31,13 +31,9 @@ import {
 // safeguards. "Why publish this" comes last, once a reader has seen what is
 // being published.
 export default function Home() {
-  // 2026-09-06 paper_epoch: swap in each strategy's since-epoch curve where
-  // one exists (`withEpochCurves` falls back to the existing lifetime curve
-  // per strategy, not all-or-nothing) — everything downstream (the "has any
-  // curves at all" check, the chart itself) reads this instead of the raw
-  // `performance.strategies` curves.
-  const curveStrategies = withEpochCurves(performance.strategies, performance);
-  const paperEpochActive = hasPaperEpoch(performance) && performance.paper_epoch.strategies.length > 0;
+  const current = currentPerformance(performance);
+  const curveStrategies = current.strategies;
+  const paperEpochActive = hasPaperEpoch(current);
 
   // The per-strategy curves section only exists when the snapshot carries
   // curves; the rail numbering closes up behind it when it does not, which is
@@ -55,12 +51,12 @@ export default function Home() {
       <SkipLink />
       <Nav sections={sections} />
       <main id="main-content" className="flex-1 focus:outline-none" tabIndex={-1}>
-        <Hero data={performance} />
+        <Hero data={current} />
         <AboutProject />
-        <EpochNote data={performance} />
+        <EpochNote data={current} />
         <HowToRead />
-        <ResearchLog data={performance} />
-        <EquitySection data={performance} index={idx.equity} />
+        <ResearchLog data={current} />
+        <EquitySection data={current} index={idx.equity} />
         {hasCurves && (
           <StrategyCurves
             strategies={curveStrategies}
@@ -70,15 +66,16 @@ export default function Home() {
           />
         )}
         <StrategyTable
-          strategies={performance.strategies}
-          note={performance.strategies_note}
-          noteEn={performance.strategies_note_en}
+          strategies={current.strategies}
+          historicalStrategies={paperEpochActive ? performance.strategies : undefined}
+          note={current.strategies_note}
+          noteEn={current.strategies_note_en}
           index={idx.strategies}
           paperEpoch={hasPaperEpoch(performance) ? performance.paper_epoch : null}
         />
-        <CostTruth costs={performance.costs} index={idx.cost} />
+        <CostTruth costs={current.costs} index={idx.cost} />
         <HowItWorks index={idx.how} />
-        <Methodology index={idx.methodology} data={performance} />
+        <Methodology index={idx.methodology} data={current} />
         <ResearchVerdicts index={idx["research-verdicts"]} />
         <Safety index={idx.safety} />
         <EditorsNote />

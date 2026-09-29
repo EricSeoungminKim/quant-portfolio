@@ -1,16 +1,8 @@
-// Adapters for the 2026-09-06 paper_epoch account model — every strategy's
-// own independent paper account (10,000,000 KRW / $10,000, epoch 2026-09-07
-// 00:00 KST). This layer exists so the page's existing chart components
-// (EquityChart, StrategyCurveChart/StrategyCurves) never need to know two
-// slightly different row shapes exist — they only ever see their own native
-// point types (EquityCurvePoint / StrategyCurvePoint).
-//
-// `paper_epoch` can be `{}` (older snapshot, or the generator's ledger-side
-// dependency not yet landed) — every function here treats that the same as
-// "absent" and callers fall back to the pre-epoch fields.
-
 import type {
   EquityCurvePoint,
+  Market,
+  MarketStats,
+  StrategyActivity,
   PaperEpoch,
   PaperEpochCurvePoint,
   PaperEpochOverallRow,
@@ -27,9 +19,9 @@ import type {
 // it flows through the same `translateDataText` call StrategyCurves already
 // makes rather than needing a second code path.
 export const EPOCH_CURVES_NOTE_KO =
-  "2026-09-07 paper_epoch 재시작 이후 — 전략마다 독립된 자기 계좌 기준이며, 위의 누적 기록과는 다르다.";
+  "2026-09-07 이후 독립 모의계좌 기준. 첫 화면·계좌 합계·전략 통계와 같은 기간의 비용 후 실현손익이며, 미청산 평가손익은 제외합니다.";
 export const EPOCH_CURVES_NOTE_EN =
-  "Since the 2026-09-07 paper_epoch restart: each strategy's own independent account, not the lifetime record above.";
+  "Independent paper accounts since 2026-09-07. Headline, account and strategy statistics share this period and measure realized P&L after costs; open-position P&L is excluded.";
 
 /** True once `paper_epoch` is a real (non-empty) subtree. */
 export function hasPaperEpoch(
@@ -91,36 +83,77 @@ export function toEquityCurvePoints(
   }));
 }
 
-/**
- * Swaps in each strategy's paper_epoch curve (since-epoch, % + native P&L)
- * wherever one exists, leaving the lifetime curve untouched otherwise — the
- * "use paper_epoch when present, fall back to the existing fields when
- * absent" rule, applied per strategy rather than as an all-or-nothing switch
- * for the whole section.
- *
- * A strategy that has a paper_epoch account but literally zero round trips
- * in its entire history (so `strategies[]` — which only lists strategies
- * with at least one closed trip — has no entry for it at all) is left out
- * here too: there's no verdict, display name, or enabled flag to show
- * alongside a curve for it, and inventing one would violate the page's
- * measured-not-selected rule. This only affects a brand-new strategy on its
- * first day with zero fills ever, which is rare enough to accept.
- */
+/** Build the current scope from epoch accounts only. No lifetime fallbacks. */
 export function withEpochCurves(
   strategies: Strategy[],
   data: Pick<PerformanceData, "paper_epoch">
 ): Strategy[] {
   if (!hasPaperEpoch(data)) return strategies;
-  const { paper_epoch } = data;
-  return strategies.map((s) => {
-    const account = findEpochStrategy(paper_epoch, s.id);
-    if (!account) return s;
+  const epoch = data.paper_epoch;
+  return epoch.strategies.map((account) => {
+    const metadata = strategies.find((s) => s.id === account.id);
+    if (!account.total || !account.by_market) {
+      throw new Error(`Missing epoch statistics for ${account.id}; refusing lifetime fallback`);
+    }
+    const curve = (book: "asia" | "us", currency: "KRW" | "USD") => {
+      if (account.start_capital[currency] === undefined) return [];
+      const points = toStrategyCurvePoints(account.curve[book]);
+      // A funded account with no closes still belongs in the comparison.
+      if (!points.length) {
+        const dates = [...new Set([epoch.epoch.slice(0, 10), epoch.period.end ?? epoch.epoch.slice(0, 10)])];
+        return dates.map((date) => ({ date, day_net: 0, cum_net: 0, cum_trips: 0, cum_pct: 0 }));
+      }
+      return points;
+    };
     return {
-      ...s,
-      curve: {
-        asia: toStrategyCurvePoints(account.curve.asia),
-        us: toStrategyCurvePoints(account.curve.us),
-      },
+      id: account.id,
+      name_ko: account.name_ko ?? metadata?.name_ko ?? account.id,
+      name_en: account.name_en ?? metadata?.name_en,
+      help: account.help ?? metadata?.help,
+      enabled: account.enabled ?? metadata?.enabled,
+      total: account.total,
+      by_market: account.by_market,
+      activity: account.activity,
+      trades_per_day: account.trades_per_day,
+      avg_hold_minutes: account.avg_hold_minutes,
+      curve: { asia: curve("asia", "KRW"), us: curve("us", "USD") },
     };
   });
+}
+
+/** One source of scope for every current numerical readout. */
+export function currentPerformance(data: PerformanceData): PerformanceData {
+  if (!hasPaperEpoch(data)) return data;
+  const epoch = data.paper_epoch;
+  if (!epoch.period || !epoch.equity_asia || !epoch.equity_us || !epoch.costs) {
+    throw new Error("Incomplete paper_epoch snapshot; refusing mixed-period publication");
+  }
+  const strategies = withEpochCurves(data.strategies, data);
+  const trips = strategies.reduce((sum, strategy) => sum + strategy.total.trips, 0);
+  return {
+    ...data,
+    period: epoch.period,
+    equity_asia: epoch.equity_asia,
+    equity_us: epoch.equity_us,
+    strategies,
+    enabled_count: strategies.filter((s) => s.enabled).length,
+    strategies_note: `${epoch.period.start ?? epoch.epoch.slice(0, 10)} 이후 · ${trips}왕복 거래 · 배정된 ${strategies.length}개 전략 계좌 (미거래 포함)`,
+    strategies_note_en: `Since ${epoch.period.start ?? epoch.epoch.slice(0, 10)} · ${trips} round trips · ${strategies.length} assigned strategies (including accounts with no trades)`,
+    strategy_curves_note: EPOCH_CURVES_NOTE_KO,
+    strategy_curves_note_en: EPOCH_CURVES_NOTE_EN,
+    costs: epoch.costs,
+    phases: [],
+    excluded: {},
+    prior_paper: {},
+  };
+}
+
+/** A market filter applies to evidence and activity as well as P&L. */
+export function statsForMarket(strategy: Strategy, market: "ALL" | Market): MarketStats | null {
+  return market === "ALL" ? strategy.total : strategy.by_market[market === "KR" ? "asia" : "us"];
+}
+
+export function activityForMarket(strategy: Strategy, market: "ALL" | Market): Partial<StrategyActivity> | null {
+  if (market === "ALL") return strategy.activity?.total ?? strategy;
+  return strategy.activity?.by_market[market === "KR" ? "asia" : "us"] ?? null;
 }

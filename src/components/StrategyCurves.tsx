@@ -69,7 +69,7 @@ export default function StrategyCurves({
             name: translateStrategyName(s.id, s.name_ko, s.name_en, locale),
             color: style.color,
             enabled: s.enabled !== false,
-            verdict: translateVerdict(s.total.verdict, locale) || s.total.verdict,
+            verdict: translateVerdict(s.by_market[book]?.verdict ?? "표본 부족", locale),
             points: [...points].sort((a, b) => a.date.localeCompare(b.date)),
           } satisfies CurveSeries;
         })
