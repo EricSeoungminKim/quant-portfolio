@@ -1,10 +1,11 @@
 import Nav from "@/components/Nav";
 import SkipLink from "@/components/SkipLink";
-import Hero from "@/components/Hero";
+import ResearchFocus from "@/components/ResearchFocus";
+import ResearchHistory from "@/components/ResearchHistory";
 import AboutProject from "@/components/AboutProject";
 import EpochNote from "@/components/EpochNote";
 import HowToRead from "@/components/HowToRead";
-import ResearchLog from "@/components/ResearchLog";
+import ResearchLog, { ResearchJourney } from "@/components/ResearchLog";
 import EquitySection from "@/components/EquitySection";
 import StrategyCurves from "@/components/StrategyCurves";
 import StrategyTable from "@/components/StrategyTable";
@@ -42,8 +43,12 @@ export default function Home() {
   const hasCurves = curveStrategies.some(
     (s) => (s.curve?.asia?.length ?? 0) + (s.curve?.us?.length ?? 0) > 0
   );
-  const sections = buildSections(hasCurves);
-  const idx = Object.fromEntries(sections.map((s) => [s.id, s.index])) as Record<string, string>;
+  const sections = [
+    { id: "research-focus", key: "focus", index: "01" },
+    { id: "research-history", key: "history", index: "02" },
+    ...buildSections(hasCurves).filter((s) => !["equity", "strategy-curves", "strategies", "cost"].includes(s.id)).map((s, i) => ({ ...s, index: String(i + 3).padStart(2, "0") })),
+  ];
+  const idx = { equity: "02.A", "strategy-curves": "02.B", strategies: "02.C", cost: "02.D", ...Object.fromEntries(sections.map((s) => [s.id, s.index])) } as Record<string, string>;
 
   return (
     <>
@@ -51,10 +56,12 @@ export default function Home() {
       <SkipLink />
       <Nav sections={sections} />
       <main id="main-content" className="flex-1 focus:outline-none" tabIndex={-1}>
-        <Hero data={current} />
+        <ResearchFocus data={performance} />
+        <ResearchJourney data={performance} />
         <AboutProject />
-        <EpochNote data={current} />
         <HowToRead />
+        <ResearchHistory>
+        <EpochNote data={current} />
         <ResearchLog data={current} />
         <EquitySection data={current} index={idx.equity} />
         {hasCurves && (
@@ -74,6 +81,7 @@ export default function Home() {
           paperEpoch={hasPaperEpoch(performance) ? performance.paper_epoch : null}
         />
         <CostTruth costs={current.costs} index={idx.cost} />
+        </ResearchHistory>
         <HowItWorks index={idx.how} />
         <Methodology index={idx.methodology} data={current} />
         <ResearchVerdicts index={idx["research-verdicts"]} />

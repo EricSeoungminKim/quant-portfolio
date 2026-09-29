@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import LocaleToggle from "./LocaleToggle";
-import { useT } from "@/lib/i18n";
+import { useLocale, useT } from "@/lib/i18n";
 import type { SectionEntry } from "@/lib/sections";
 
 export default function Nav({ sections }: { sections: SectionEntry[] }) {
   const t = useT();
+  const { locale } = useLocale();
   const [progress, setProgress] = useState(0);
-  const [active, setActive] = useState<string>("equity");
+  const [active, setActive] = useState<string>(sections[0]?.id ?? "equity");
 
   // Read progress: scroll position over scrollable height. Written straight
   // to a transform (scaleX) rather than a width, so it never triggers layout.
@@ -55,6 +56,8 @@ export default function Nav({ sections }: { sections: SectionEntry[] }) {
   }, [sections]);
 
   const labels: Record<string, string> = {
+    focus: locale === "ko" ? "주력 연구" : "Research focus",
+    history: locale === "ko" ? "전체 기록" : "Full record",
     equity: t.nav.equity,
     curves: t.nav.curves,
     strategies: t.nav.strategies,

@@ -579,31 +579,31 @@ const en: Messages = {
     whenWrong: "If wrong →",
     diagramTitle: "Allowed dependency direction",
     diagramCaption:
-      "Import tests separate analysis from the trade plane. Watchlists and validated inbox files carry inputs; control writes settings for the next reload. External AI proposals in the experimental lane still pass deterministic risk checks.",
+      "Import tests separate analysis from the trade plane. Watchlists and validated inbox files carry inputs; control writes settings for the next reload. The external-AI inbox remains an implementation capability; its trading lane is currently disabled.",
     diagramNewsEdge: "universe only",
     diagramSettingsEdge: "settings file",
     diagramNoImport: "import forbidden",
     timelineTitle: "A day, as it actually runs",
     timelineNote:
-      "Illustrative operating schedule in KST, checked against the September runbook. Actual completion depends on data availability; US session times shift with daylight saving.",
+      "KST schedule reflecting the September 30 focus change: KR catalyst breakout is the sole paper trading lane. US reporting and collection continue with automated trading disabled. Completion depends on data availability; US times follow daylight saving.",
     timeline: [
       { time: "07:30", market: "KR", label: "Report build", detail: "The daily market report is assembled from overnight data." },
       { time: "08:00", market: "KR", label: "Report publish", detail: "The report goes out, carrying a machine-readable engine JSON alongside the prose." },
       { time: "08:05", market: "KR", label: "Watchlist reset", detail: "Yesterday's auto-added names are cleared so a stale candidate cannot survive into a new session." },
       { time: "08:12", market: "KR", label: "Confidence-scored inclusion", detail: "The report's engine JSON is scored; only names above threshold are auto-registered. A market-cap floor of ₩300B and a block on names that hit the previous day's limit-up both apply here. No language model sits on this path." },
       { time: "08:27", market: "KR", label: "Universe roll", detail: "The tradable universe reloads ahead of the pre-open auction." },
-      { time: "09:00", market: "KR", label: "KR open", detail: "Korean paper strategies run with configured stop, sizing and account limits plus Telegram controls." },
+      { time: "09:00", market: "KR", label: "KR open", detail: "Only KR vol_breakout_cat runs in paper mode, with configured stop, sizing and account limits plus Telegram controls." },
       { time: "14:10", market: "KR", label: "Close-report roll", detail: "The closing report's inputs refresh before the session ends." },
-      { time: "15:20", market: "KR", label: "Flatten window", detail: "Session-end flatten rules apply to intraday positions; designated overnight observation lanes are exempt." },
+      { time: "15:20", market: "KR", label: "Flatten window", detail: "The KR catalyst strategy follows its session-end flatten rule. Previous overnight observation lanes are disabled." },
       { time: "15:35", market: "KR", label: "Session P&L", detail: "Korean fills are reconciled and written to the ledger." },
       { time: "15:50", market: "KR", label: "Swing recommendations", detail: "Overnight and swing ideas for the manual account are sent to Telegram as recommendations. The engine does not act on them." },
       { time: "16:25", market: "KR", label: "Performance publish", detail: "The JSON behind this page is regenerated and pushed." },
       { time: "21:40", market: "US", label: "US watchlist reset", detail: "The US side of the universe is cleared for the coming session." },
       { time: "21:50", market: "US", label: "US inclusion", detail: "The same confidence scoring runs against US candidates." },
-      { time: "22:10", market: "US", label: "US universe roll", detail: "The tradable universe reloads ahead of the US open." },
-      { time: "22:30", market: "US", label: "US open", detail: "The same strategy set runs against the US universe, under the same rails." },
+      { time: "22:10", market: "US", label: "US universe roll", detail: "US candidate data refreshes before the open; automated US trading is disabled." },
+      { time: "22:30", market: "US", label: "US open", detail: "US market collection and reports continue. No automated US strategy is enabled." },
       { time: "23:00", market: "ALL", label: "Market pulse", detail: "Digests at 23:00, 01:00, 03:00 and 05:00 summarize what moved overnight." },
-      { time: "06:10", market: "US", label: "US P&L", detail: "US fills are reconciled; the round-trip ledger that feeds this page is closed for the day." },
+      { time: "06:10", market: "US", label: "US P&L", detail: "The reporting and ledger checks continue; historical US fills remain available for comparison." },
     ],
     legendKr: "Korean session",
     legendUs: "US session",
@@ -616,7 +616,7 @@ const en: Messages = {
   },
   {
     "label": "Independent books",
-    "detail": "Each strategy has its own allocated paper capital"
+    "detail": "The current KR lane has its own paper account; previous strategy books remain in history"
   },
   {
     "label": "Kill switch",
@@ -635,12 +635,12 @@ const en: Messages = {
     ],
     pipelineTitle: "How a strategy earns its way in",
     pipelineNote:
-      "Research uses out-of-sample tests, cost stress and explicit acceptance criteria. Some NO_GO or unvalidated ideas also run as labeled paper observation lanes; being enabled is not evidence of a passed research gate.",
+      "Research uses out-of-sample tests, cost stress and explicit acceptance criteria. Earlier parallel paper experiments included NO_GO and unvalidated ideas. The current KR candidate remains in burn-in; its selection does not establish a passed research gate.",
     pipeline: [
       { step: "01", label: "Data lake", detail: "Bars and fundamentals land locally, versioned, so a result can be re-run against the same inputs." },
       { step: "02", label: "Stage-1 screening", detail: "A cheap sweep kills obviously dead ideas before anyone spends compute on them." },
       { step: "03", label: "Walk-forward", detail: "Out-of-sample windows only, scored with a deflated Sharpe ratio so the number of trials the idea survived is priced in." },
-      { step: "04", label: "Go / no-go gate", detail: "Research acceptance criteria are defined before evaluation. Failed ideas remain NO_GO even if assigned a paper observation lane." },
+      { step: "04", label: "Go / no-go gate", detail: "Research acceptance criteria are defined before evaluation. Earlier paper observation did not overturn failed ideas’ NO_GO verdicts." },
       { step: "05", label: "Promote to paper", detail: "Configured strategies run with market quotes and modeled paper fills and costs. Observation is distinct from research acceptance." },
       { step: "06", label: "≥ 30 round trips", detail: "Under thirty trips is flagged. Larger samples still require dependence, cost and multiple-testing checks." },
       { step: "07", label: "Owner decides", detail: "Real capital is never switched on automatically. A person reads the record and makes the call." },
@@ -648,14 +648,14 @@ const en: Messages = {
     pipelineCaption: "Ideas enter at the top; almost none reach the bottom.",
     abTitle: "The catalyst A/B split",
     abBody:
-      "Base and catalyst arms share strategy logic. The _cat universe is restricted by news or flow tags, allowing the effect of that filter to be measured. Compare matching dates and settings before drawing an A/B conclusion.",
-    notAutomatedTitle: "Overnight exceptions",
+      "Base and catalyst arms share strategy logic; _cat restricts the universe by news or flow tags. Earlier parallel records are preserved. The base arm is currently disabled, so a new matched baseline is required before claiming an A/B improvement.",
+    notAutomatedTitle: "Previous experiments · now disabled",
     notAutomatedBody:
-      "Intraday strategies have a session-end flatten rule. close_bet, frgn_accumulate and news_accumulate are designated observation lanes that may hold overnight. Separate manual recommendations are also sent through Telegram.",
+      "The current KR catalyst strategy is intraday. close_bet, frgn_accumulate and news_accumulate were overnight observation experiments and are now disabled. Their code and historical records are retained.",
     aiTitle: "Where AI is — and isn't",
     aiPresent: "AI used",
     aiPresentDesc:
-      "Models assist reports and analysis outside the execution loop. The experimental llm_trader lane also consumes external AI buy/sell and weight proposals through a validated inbox.",
+      "Models assist reports and analysis outside the execution loop. The previous llm_trader experiment accepted external AI proposals through a validated inbox; that trading lane is now disabled.",
     aiAbsent: "Deterministic execution",
     aiAbsentDesc:
       "The trade plane makes no model or network calls directly. It validates incoming signals and applies position, sizing and risk limits before adapters execute orders. This boundary does not mean that every input is free of AI influence.",
@@ -718,7 +718,7 @@ const en: Messages = {
     items: [
   {
     "title": "Population and period",
-    "detail": "Current panels use the paper-epoch reset and assigned strategy accounts. Historical trade statistics are available separately and never substituted into a current curve."
+    "detail": "The headline uses only the KR catalyst account since the paper-epoch reset, including records before its September 30 selection. The collapsed comparison retains all strategy accounts. New observations after selection must be tracked separately."
   },
   {
     "title": "Realized net P&L",
@@ -775,7 +775,7 @@ const en: Messages = {
       {
         term: "EoD flatten",
         definition:
-          "Closing intraday positions near session end; designated overnight lanes are exempt.",
+          "Closing intraday positions near session end. Previous overnight exceptions are currently disabled.",
       },
       {
         term: "Catalyst arm",
@@ -796,11 +796,11 @@ const en: Messages = {
     items: [
   {
     "term": "Current period",
-    "detail": "The paper-account reset defines the start. Current headline, charts, costs and statistics use that same scope."
+    "detail": "The headline tracks the KR catalyst account from the September 7 paper reset, including records before its September 30 selection. The collapsed history keeps the wider strategy comparison."
   },
   {
     "term": "Allocated capital",
-    "detail": "Separate strategy accounts include unused cash. This is not return on only the money actively invested."
+    "detail": "The headline return uses one KR account’s allocated starting capital, including unused cash. Aggregate strategy-account returns appear only in the historical comparison."
   },
   {
     "term": "Realized only",
@@ -1086,31 +1086,31 @@ const ko: Messages = {
     whenWrong: "틀리면 →",
     diagramTitle: "허용된 의존 방향",
     diagramCaption:
-      "임포트 테스트로 분석과 거래 평면을 분리합니다. 관심종목·검증된 인박스 파일로 입력을 전달하고, 제어는 다음 리로드용 설정을 씁니다. 실험 레인의 외부 AI 제안도 결정론적 위험 검사를 통과해야 합니다.",
+      "임포트 테스트로 분석과 거래 평면을 분리합니다. 관심종목·검증된 인박스 파일로 입력을 전달하고, 제어는 다음 리로드용 설정을 씁니다. 외부 AI 인박스 구현은 남아 있지만 해당 매매 레인은 현재 비활성입니다.",
     diagramNewsEdge: "유니버스만",
     diagramSettingsEdge: "설정 파일",
     diagramNoImport: "임포트 금지",
     timelineTitle: "하루가 실제로 도는 순서",
     timelineNote:
-      "9월 운영 문서를 기준으로 정리한 KST 일정입니다. 실제 완료 시각은 데이터 가용성에 따라 달라지며 미국장 시각은 서머타임을 따릅니다.",
+      "9월 30일 전환을 반영한 KST 일정입니다. KR 촉매형만 모의 매매하며 US는 자동매매를 중단하고 리포트·수집을 유지합니다. 완료 시각은 데이터 가용성에 따라 달라지며 미국장 시각은 서머타임을 따릅니다.",
     timeline: [
       { time: "07:30", market: "KR", label: "리포트 빌드", detail: "야간 데이터로 데일리 마켓 리포트를 조립합니다." },
       { time: "08:00", market: "KR", label: "리포트 발행", detail: "산문과 함께 기계가 읽을 수 있는 엔진 JSON이 같이 나갑니다." },
       { time: "08:05", market: "KR", label: "관심종목 리셋", detail: "어제 자동 등록된 종목을 비웁니다. 낡은 후보가 새 세션까지 살아남지 못하게." },
       { time: "08:12", market: "KR", label: "확신도 채점 자동 등록", detail: "리포트의 엔진 JSON을 채점해 임계 통과분만 자동 등록합니다. 시가총액 3,000억원 하한과 전일 상한가 종목 차단이 여기서 걸립니다. 이 경로에 언어모델은 없습니다." },
       { time: "08:27", market: "KR", label: "유니버스 롤", detail: "동시호가 전에 매매 가능 유니버스를 리로드합니다." },
-      { time: "09:00", market: "KR", label: "한국장 개장", detail: "설정된 손절·사이징·계좌 한도와 텔레그램 제어 아래 KR 모의 전략을 운용합니다." },
+      { time: "09:00", market: "KR", label: "한국장 개장", detail: "KR vol_breakout_cat 하나만 모의 운용합니다. 설정된 손절·사이징·계좌 한도와 텔레그램 제어를 적용합니다." },
       { time: "14:10", market: "KR", label: "마감 리포트 롤", detail: "장 마감 전에 마감 리포트의 입력을 갱신합니다." },
-      { time: "15:20", market: "KR", label: "청산 구간", detail: "일중 포지션에 장 마감 청산 규칙을 적용합니다. 지정된 오버나이트 관찰 레인은 예외입니다." },
+      { time: "15:20", market: "KR", label: "청산 구간", detail: "KR 촉매형에 장 마감 청산 규칙을 적용합니다. 이전 오버나이트 관찰 레인은 현재 비활성입니다." },
       { time: "15:35", market: "KR", label: "세션 손익", detail: "한국장 체결을 정산해 원장에 적습니다." },
       { time: "15:50", market: "KR", label: "스윙 추천", detail: "오버나이트·스윙 아이디어를 수동 계좌용 추천으로 텔레그램에 보냅니다. 엔진은 이것으로 매매하지 않습니다." },
       { time: "16:25", market: "KR", label: "성과 발행", detail: "이 페이지가 읽는 JSON을 다시 만들어 배포합니다." },
       { time: "21:40", market: "US", label: "미국 관심종목 리셋", detail: "다가올 세션을 위해 유니버스의 미국 쪽을 비웁니다." },
       { time: "21:50", market: "US", label: "미국 자동 등록", detail: "같은 확신도 채점을 미국 후보에 돌립니다." },
-      { time: "22:10", market: "US", label: "미국 유니버스 롤", detail: "미국장 개장 전에 유니버스를 리로드합니다." },
-      { time: "22:30", market: "US", label: "미국장 개장", detail: "같은 전략군이 같은 레일 아래에서 미국 유니버스로 돕니다." },
+      { time: "22:10", market: "US", label: "미국 유니버스 롤", detail: "미국장 개장 전에 후보 데이터를 갱신합니다. US 자동매매는 중단된 상태입니다." },
+      { time: "22:30", market: "US", label: "미국장 개장", detail: "미국 시장 수집·리포트를 계속합니다. 활성화된 US 자동매매 전략은 없습니다." },
       { time: "23:00", market: "ALL", label: "마켓 펄스", detail: "23:00·01:00·03:00·05:00에 밤사이 움직임을 요약해 보냅니다." },
-      { time: "06:10", market: "US", label: "미국 손익", detail: "미국장 체결을 정산하고, 이 페이지가 읽는 왕복 원장을 그날치로 마감합니다." },
+      { time: "06:10", market: "US", label: "미국 손익", detail: "리포트·원장 점검을 유지합니다. 과거 US 체결 기록은 비교 자료로 남깁니다." },
     ],
     legendKr: "한국장",
     legendUs: "미국장",
@@ -1123,7 +1123,7 @@ const ko: Messages = {
   },
   {
     "label": "독립 장부",
-    "detail": "전략별로 배정된 모의 자본을 별도 관리"
+    "detail": "현재 KR 레인의 독립 모의계좌를 관리하고 이전 전략 장부는 이력으로 보존"
   },
   {
     "label": "킬 스위치",
@@ -1142,12 +1142,12 @@ const ko: Messages = {
     ],
     pipelineTitle: "전략이 들어오는 관문",
     pipelineNote:
-      "연구에서는 표본 외 검증·비용 스트레스·채택 기준을 적용합니다. NO_GO 또는 미검증 아이디어 일부도 별도의 페이퍼 관찰 레인으로 운용합니다. 활성화 여부가 연구 검증 통과를 뜻하지는 않습니다.",
+      "연구에서는 표본 외 검증·비용 스트레스·채택 기준을 적용합니다. 이전 병렬 모의 실험에는 NO_GO·미검증 아이디어도 포함됐습니다. 현재 KR 후보도 burn-in 단계이며 주력 선정이 연구 검증 통과를 뜻하지 않습니다.",
     pipeline: [
       { step: "01", label: "데이터 레이크", detail: "봉·재무 데이터를 버전을 붙여 로컬에 쌓습니다. 같은 입력으로 결과를 다시 돌릴 수 있도록." },
       { step: "02", label: "1차 스크리닝", detail: "값싼 스윕으로 명백히 죽은 아이디어를 먼저 걸러냅니다." },
       { step: "03", label: "워크포워드", detail: "표본 외 구간만 사용하고, deflated Sharpe로 채점해 그 아이디어가 통과한 시도 횟수를 값에 반영합니다." },
-      { step: "04", label: "Go / No-go 게이트", detail: "연구 전에 정한 채택 기준입니다. 모의 관찰을 계속해도 기각된 아이디어의 NO_GO 판정은 유지됩니다." },
+      { step: "04", label: "Go / No-go 게이트", detail: "연구 전에 정한 채택 기준입니다. 이전에 모의 관찰을 진행한 기각 아이디어도 NO_GO 판정은 유지됩니다." },
       { step: "05", label: "모의로 승격", detail: "설정된 전략이 시장 시세와 모의 체결·비용 가정으로 운용됩니다. 관찰은 연구 채택과 구분됩니다." },
       { step: "06", label: "30왕복 이상", detail: "30회 미만에 경고를 붙입니다. 표본이 늘어도 거래 간 상관·비용·반복 검정을 확인해야 합니다." },
       { step: "07", label: "사람이 결정", detail: "실자금은 자동으로 켜지지 않습니다. 사람이 기록을 읽고 판단합니다." },
@@ -1155,14 +1155,14 @@ const ko: Messages = {
     pipelineCaption: "아이디어는 위로 들어오고, 아래까지 내려오는 것은 거의 없습니다.",
     abTitle: "촉매 A/B 분할",
     abBody:
-      "기본·촉매 갈래는 전략 로직을 공유합니다. _cat은 뉴스·수급 태그가 있는 유니버스로 제한해 필터의 효과를 측정합니다. A/B 결론을 내리기 전에는 같은 기간과 설정인지 대조해야 합니다.",
-    notAutomatedTitle: "오버나이트 예외",
+      "기본·촉매 갈래는 전략 로직을 공유하며 _cat은 뉴스·수급 태그가 있는 유니버스로 제한합니다. 이전 병렬 기록은 보존합니다. 현재 기본 갈래는 비활성이므로 A/B 개선을 주장하려면 같은 기간·설정의 새 기준선이 필요합니다.",
+    notAutomatedTitle: "이전 실험 · 현재 비활성",
     notAutomatedBody:
-      "일중 전략에는 장 마감 청산 규칙이 있습니다. close_bet·frgn_accumulate·news_accumulate는 오버나이트를 허용하는 관찰 레인입니다. 별도의 수동 매매 추천도 텔레그램으로 제공합니다.",
+      "현재 KR 촉매형은 일중 전략입니다. close_bet·frgn_accumulate·news_accumulate는 이전 오버나이트 관찰 실험이며 현재 비활성입니다. 코드와 과거 기록은 보존합니다.",
     aiTitle: "AI가 있는 자리 / 없는 자리",
     aiPresent: "AI 있음",
     aiPresentDesc:
-      "모델은 실행 루프 밖에서 보고서·분석을 돕습니다. 실험용 llm_trader는 외부 AI의 매수·매도·비중 제안을 검증된 인박스로 받습니다.",
+      "모델은 실행 루프 밖에서 보고서·분석을 돕습니다. 이전 llm_trader 실험은 검증된 인박스로 외부 AI 제안을 받았으며 해당 매매 레인은 현재 비활성입니다.",
     aiAbsent: "결정론적 집행",
     aiAbsentDesc:
       "거래 평면은 모델이나 네트워크를 직접 호출하지 않습니다. 신호를 검증하고 포지션·사이징·위험 한도를 적용한 뒤 어댑터가 주문을 집행합니다. 모든 입력에서 AI 영향을 배제한다는 뜻은 아닙니다.",
@@ -1225,7 +1225,7 @@ const ko: Messages = {
     items: [
   {
     "title": "대상과 기간",
-    "detail": "현재 패널은 모의계좌 재시작 이후 배정된 전략 계좌를 사용합니다. 과거 거래 통계는 별도로 제공하며 현재 곡선에 대신 끼워 넣지 않습니다."
+    "detail": "상단은 모의계좌 재시작 이후 KR 촉매형 한 계좌이며 9월 30일 선정 전 기록도 포함합니다. 접힌 과거 비교는 전체 전략 계좌를 보존합니다. 선정 이후 새 표본은 별도로 추적해야 합니다."
   },
   {
     "title": "실현 순손익",
@@ -1278,7 +1278,7 @@ const ko: Messages = {
       },
       {
         term: "EoD 청산(Flatten)",
-        definition: "일중 전략의 장 마감 청산 규칙입니다. 지정된 오버나이트 관찰 레인은 예외입니다.",
+        definition: "일중 전략의 장 마감 청산 규칙입니다. 이전 오버나이트 예외 레인은 현재 비활성입니다.",
       },
       {
         term: "촉매 갈래(Catalyst arm)",
@@ -1299,11 +1299,11 @@ const ko: Messages = {
     items: [
   {
     "term": "현재 기간",
-    "detail": "모의계좌 재시작이 시작점입니다. 대표 지표·곡선·비용·통계에 같은 범위를 적용합니다."
+    "detail": "상단은 9월 7일 모의계좌 재시작 이후 KR 촉매형 한 계좌이며 9월 30일 선정 전 기록도 포함합니다. 전체 전략 비교는 접힌 과거 기록에 남깁니다."
   },
   {
     "term": "배정 자본",
-    "detail": "전략별 독립 계좌의 유휴 자금도 포함합니다. 실제로 투자된 금액만의 수익률과 다릅니다."
+    "detail": "상단 수익률의 분모는 유휴 자금을 포함한 KR 한 계좌의 초기 배정 자본입니다. 전체 전략 계좌 합산 수익률은 과거 비교에서만 표시합니다."
   },
   {
     "term": "실현손익만",
