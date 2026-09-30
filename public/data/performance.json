@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-30T16:15:02+09:00",
+  "generated_at": "2026-09-30T18:28:40+09:00",
   "disclaimer": "모의투자(paper) 기록입니다. 실제 자금이 투입되지 않았습니다.",
   "disclaimer_en": "Paper trading record. No real capital was deployed.",
   "period": {
@@ -402,8 +402,8 @@
         "evidence_ko": "burn_in — 웹 리서치 근거, 원장 표본은 experiments 루프가 판정. 배분 부족(예산 95,888원으로 대형주 1주도 못 삼)으로 8/25 이후 체결 0건이던 결함을 target_weight 0.1→0.5로 수리(2026-09-03). 오버나이트 보유가 전략 정의라 같은 날 정책으로 비활성.",
         "evidence_en": "burn_in — web-research-based; sample judgment is left to the experiments loop. A budget bug (95,888 KRW couldn't buy even 1 large-cap share) causing zero fills since 8/25 was fixed by raising target_weight 0.1→0.5 (2026-09-03). Disabled the same day since overnight holding is core to its definition.",
         "refs": [],
-        "sizing_ko": "KR 자본배분 20% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 오버나이트 보유형 — 장중 손절 −5%/목표 +10% 하드레일 적용 제외 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-        "sizing_en": "KR capital allocation 20%; per-entry size = strategy capital x 50% (target_weight); overnight-carry design — exempt from the intraday -5%/+10% hard stop/target rail; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 20% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 오버나이트 보유형 — 장중 손절 −5%/목표 +10% 하드레일 적용 제외 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "currently disabled; historical books retained; KR capital_fraction 20%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); overnight-carry design — exempt from the intraday -5%/+10% hard stop/target rail; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
       },
       "by_market": {
         "asia": {
@@ -468,8 +468,8 @@
         "evidence_ko": "burn_in — 파라미터 전부 문헌 표준값(튜닝 없음), 백테스트 미검증. 2026-08-25 한국장 4종 체제 재편으로 비활성.",
         "evidence_en": "burn_in — all parameters use textbook default values (no tuning), unvalidated by backtest. Disabled since 2026-08-25's KR-focused realignment.",
         "refs": [],
-        "sizing_ko": "KR 자본배분 7.5% · US 자본배분 20% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-        "sizing_en": "KR capital allocation 7.5%; US capital allocation 20%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 7.5% · US 설정 계수(capital_fraction) 20% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "currently disabled; historical books retained; KR capital_fraction 7.5%; US capital_fraction 20%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
       },
       "by_market": {
         "asia": {
@@ -603,8 +603,8 @@
         "evidence_ko": "verified — 전작 stock-algo-trade에서 라이브 검증된 파라미터를 계승하고 본 저장소 백테스트/회계 사다리를 통과했다(ADR-0007). 2026-08-25 한국장 4종 체제 재편으로 현재 비활성(성과 저하가 아니라 재배분).",
         "evidence_en": "verified — inherits parameters live-validated in the predecessor repo stock-algo-trade and passed this repo's backtest/accounting ladder (ADR-0007). Disabled since 2026-08-25's KR-focused 4-strategy realignment (a reallocation, not a performance failure).",
         "refs": [],
-        "sizing_ko": "US 자본배분 30% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-        "sizing_en": "US capital allocation 30%; intraday hard rail: stop capped at -5%, target capped at +10%"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 30% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정",
+        "sizing_en": "currently disabled; historical books retained; US capital_fraction 30%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured"
       },
       "by_market": {
         "asia": null,
@@ -668,8 +668,8 @@
         "evidence_ko": "burn_in — 백테스트 미검증(원장 20거래일 승격 기준 도달 전). 오버나이트 보유가 전략 정의라 2026-09-03 정책으로 비활성. 과거 일별 재평가가 그날 리포트 랭킹 안 종목만 대상이라 랭킹 밖 보유 종목이 영영 재평가 안 되던 결함(매수 34/매도 1 불균형)을 2026-09-03 수리했다.",
         "evidence_en": "burn_in — unvalidated by backtest (had not yet reached the 20-trading-day promotion threshold). Disabled since the 2026-09-03 policy because overnight holding is core to its definition. A bug where daily re-evaluation only covered symbols still in that day's report ranking (causing a 34-buy/1-sell imbalance) was fixed 2026-09-03.",
         "refs": [],
-        "sizing_ko": "KR 자본배분 14% · 오버나이트 보유형 — 장중 손절 −5%/목표 +10% 하드레일 적용 제외 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-        "sizing_en": "KR capital allocation 14%; overnight-carry design — exempt from the intraday -5%/+10% hard stop/target rail; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 14% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 오버나이트 보유형 — 장중 손절 −5%/목표 +10% 하드레일 적용 제외 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "currently disabled; historical books retained; KR capital_fraction 14%; fixed books: participation flags, not order weights; overnight-carry design — exempt from the intraday -5%/+10% hard stop/target rail; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
       },
       "by_market": {
         "asia": {
@@ -738,8 +738,8 @@
             "url": "https://arxiv.org/abs/2605.04004"
           }
         ],
-        "sizing_ko": "US 자본배분 3% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-        "sizing_en": "US capital allocation 3%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 3% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정",
+        "sizing_en": "currently disabled; historical books retained; US capital_fraction 3%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured"
       },
       "by_market": {
         "asia": null,
@@ -808,8 +808,8 @@
             "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4824172"
           }
         ],
-        "sizing_ko": "US 자본배분 9% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-        "sizing_en": "US capital allocation 9%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 9% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정",
+        "sizing_en": "currently disabled; historical books retained; US capital_fraction 9%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured"
       },
       "by_market": {
         "asia": null,
@@ -982,8 +982,8 @@
         "evidence_ko": "burn_in — 원장 재생 27건(전체 종결 63건 중 1분봉 보유분)에서 현행 청산 규칙 중앙 −85.4bp를 익절+100bp/손절−100bp 규칙이 중앙 −7.6bp로 개선했지만 표본이 작아 판단 불가에 가깝다. 2026-08-25 한국장 4종 체제 재편으로 비활성.",
         "evidence_en": "burn_in — replaying 27 ledger exits (of 63 total, minute-bar-holdable subset) showed the current exit rule's median -85.4bp improving to -7.6bp under a fixed +100bp/-100bp rule, but the sample is small enough to be near-inconclusive. Disabled since 2026-08-25's KR-focused realignment.",
         "refs": [],
-        "sizing_ko": "KR 자본배분 10% · US 자본배분 10% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-        "sizing_en": "KR capital allocation 10%; US capital allocation 10%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 10% · US 설정 계수(capital_fraction) 10% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "currently disabled; historical books retained; KR capital_fraction 10%; US capital_fraction 10%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
       },
       "by_market": {
         "asia": {
@@ -1171,8 +1171,8 @@
         "evidence_ko": "walk-forward 결과 대기, 미검증 — 원장 표본 0, enabled: false, capital_fraction KR/US 모두 0. 독립 백테스터의 walk-forward(24개월 훈련/6개월 테스트)·deflated Sharpe·비용 2배 생존 검증을 통과해야 번인 후보가 된다.",
         "evidence_en": "walk-forward results pending, unvalidated — zero ledger samples, enabled: false, capital_fraction is 0 in both KR and US. Requires the independent backtester's walk-forward (24-month train / 6-month test), deflated-Sharpe, and 2x-cost survival checks before becoming a burn-in candidate.",
         "refs": [],
-        "sizing_ko": "US 자본배분 5% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-        "sizing_en": "US capital allocation 5%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 5% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정",
+        "sizing_en": "currently disabled; historical books retained; US capital_fraction 5%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured"
       },
       "by_market": {
         "asia": null,
@@ -1266,8 +1266,8 @@
         "evidence_ko": "walk-forward 결과 대기, 미검증 — 원장 표본 0, enabled: false, capital_fraction KR/US 모두 0. 독립 백테스터의 walk-forward(24개월 훈련/6개월 테스트)·deflated Sharpe·비용 2배 생존 검증을 통과해야 번인 후보가 된다.",
         "evidence_en": "walk-forward results pending, unvalidated — zero ledger samples, enabled: false, capital_fraction is 0 in both KR and US. Requires the independent backtester's walk-forward (24-month train / 6-month test), deflated-Sharpe, and 2x-cost survival checks before becoming a burn-in candidate.",
         "refs": [],
-        "sizing_ko": "US 자본배분 5% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-        "sizing_en": "US capital allocation 5%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 5% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정",
+        "sizing_en": "currently disabled; historical books retained; US capital_fraction 5%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured"
       },
       "by_market": {
         "asia": null,
@@ -1415,8 +1415,8 @@
         "evidence_ko": "burn_in — 백테스트 표본 0(LLM 판단은 리플레이 불가). paper 번인(한 달 테스트)이 유일한 검증 경로. LLM 호출은 거래 핫패스 밖 별도 프로세스에서만 이뤄진다(엔진은 인박스 파일을 읽기만 함).",
         "evidence_en": "burn_in — zero backtest samples (an LLM's judgment cannot be replayed). Paper burn-in (a one-month trial) is the only validation path. The LLM call happens only in a separate process outside the trading hot path — the engine only reads an inbox file.",
         "refs": [],
-        "sizing_ko": "KR 자본배분 8% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-        "sizing_en": "KR capital allocation 8%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 8% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "currently disabled; historical books retained; KR capital_fraction 8%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
       },
       "by_market": {
         "asia": {
@@ -1522,8 +1522,8 @@
         "evidence_ko": "burn_in — 백테스트 표본 0. 문헌이 '스프레드 조정 시 단기 반전의 유의성 급감'을 반복 경고 — KR 개별주에서 먼저 죽고 US·KR ETF에서만 살아남을 수 있다는 것을 알고 가동한다.",
         "evidence_en": "burn_in — zero backtest samples. The literature repeatedly warns that short-term reversal significance collapses after spread adjustment; this is run knowing it may fail first on KR individual stocks and survive only on US/KR ETFs, if at all.",
         "refs": [],
-        "sizing_ko": "US 자본배분 6% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-        "sizing_en": "US capital allocation 6%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 6% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정",
+        "sizing_en": "currently disabled; historical books retained; US capital_fraction 6%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured"
       },
       "by_market": {
         "asia": null,
@@ -1593,8 +1593,8 @@
         "evidence_ko": "문서 없음.",
         "evidence_en": "No documentation.",
         "refs": [],
-        "sizing_ko": "KR 자본배분 10% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-        "sizing_en": "KR capital allocation 10%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 10% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "currently disabled; historical books retained; KR capital_fraction 10%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
       },
       "by_market": {
         "asia": {
@@ -1688,8 +1688,8 @@
         "evidence_ko": "burn_in — 초기 표본에서 전 전략 중 최악(6청산 1승, 순 −27,018원)이었으나 원인(정보 없이 시가를 사던 결함)을 찾아 '첫봉 양봉 확인' 규칙을 추가했다. 2026-09-03부터 news_scalp를 '같은 유니버스·다른 진입시점' 대조군으로 삼은 A/B로 재검증 중(`run scoreboard --ab`).",
         "evidence_en": "burn_in — an early sample was the worst of all strategies (6 exits, 1 win, net -27,018 KRW); the root cause (buying at the open with zero price information) was found and a 'first bar must close bullish' rule was added. Since 2026-09-03 it is being re-evaluated in an A/B pairing against news_scalp ('same universe, different entry timing'; see `run scoreboard --ab`).",
         "refs": [],
-        "sizing_ko": "KR 자본배분 10% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-        "sizing_en": "KR capital allocation 10%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 10% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "currently disabled; historical books retained; KR capital_fraction 10%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
       },
       "by_market": {
         "asia": {
@@ -1753,8 +1753,8 @@
         "evidence_ko": "burn_in — 2026-08-25 비활성 이전 표본 n=6, −174.5bp(표본 밖이라 판단 불가). 2026-09-03 A/B 목적으로 재활성했고, 배분을 프로토콜 하한 바로 위(KR 4%)로 최소화해 표본을 쌓는 중이다.",
         "evidence_en": "burn_in — before its 2026-08-25 deactivation, a sample of n=6 showed -174.5bp (too small to be conclusive). Reactivated 2026-09-03 for A/B purposes at a minimal allocation (KR 4%, just above the protocol floor) while it accumulates a sample.",
         "refs": [],
-        "sizing_ko": "KR 자본배분 4% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-        "sizing_en": "KR capital allocation 4%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 4% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "currently disabled; historical books retained; KR capital_fraction 4%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
       },
       "by_market": {
         "asia": {
@@ -1818,8 +1818,8 @@
         "evidence_ko": "burn_in — TQQQ 전용으로 최적화된 파라미터를 임의 종목에 그대로 이식한 것이라 KR 재측정 전까지 근거가 없다. 종결 표본 0건. 2026-08-25 한국장 4종 체제 재편으로 비활성.",
         "evidence_en": "burn_in — reuses parameters optimized for TQQQ on arbitrary symbols without re-validation. Zero closed trades so far. Disabled since 2026-08-25's KR-focused realignment.",
         "refs": [],
-        "sizing_ko": "KR 자본배분 10% · US 자본배분 20% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-        "sizing_en": "KR capital allocation 10%; US capital allocation 20%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 10% · US 설정 계수(capital_fraction) 20% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "currently disabled; historical books retained; KR capital_fraction 10%; US capital_fraction 20%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
       },
       "by_market": {
         "asia": {
@@ -1889,8 +1889,8 @@
         "evidence_ko": "burn_in — 표본 0(문헌 인용이지 우리 실측이 아니다). 오버나이트 보유가 전략 정의라 2026-09-03 정책으로 비활성.",
         "evidence_en": "burn_in — zero samples so far (a literature citation, not our own measurement). Disabled since the 2026-09-03 policy because overnight holding is core to its definition.",
         "refs": [],
-        "sizing_ko": "US 자본배분 15% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 오버나이트 보유형 — 장중 손절 −5%/목표 +10% 하드레일 적용 제외",
-        "sizing_en": "US capital allocation 15%; per-entry size = strategy capital x 50% (target_weight); overnight-carry design — exempt from the intraday -5%/+10% hard stop/target rail"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 15% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 오버나이트 보유형 — 장중 손절 −5%/목표 +10% 하드레일 적용 제외",
+        "sizing_en": "currently disabled; historical books retained; US capital_fraction 15%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); overnight-carry design — exempt from the intraday -5%/+10% hard stop/target rail"
       },
       "by_market": {
         "asia": null,
@@ -1954,8 +1954,8 @@
         "evidence_ko": "burn_in — 백테스트 표본 0(Toss 5분봉 롤링 히스토리 한계). 리서치 스크리닝(US 1분봉 10.7년 OOS)에서 gross +0.9bp로 유일하게 양수였지만 실측 왕복비용 10.5bp를 못 이겨 순손실 — 게이트 통과 0건. paper 번인이 유일한 검증 경로.",
         "evidence_en": "burn_in — zero backtest samples (limited by Toss's rolling 5-min history). A 10.7-year US OOS screen found the only positive gross edge among the three tested (+0.9bp), but it still lost net after the measured 10.5bp round-trip cost — zero strategies passed the gate.",
         "refs": [],
-        "sizing_ko": "US 자본배분 3% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-        "sizing_en": "US capital allocation 3%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 3% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정",
+        "sizing_en": "currently disabled; historical books retained; US capital_fraction 3%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured"
       },
       "by_market": {
         "asia": null,
@@ -2132,15 +2132,15 @@
         "category": "intraday",
         "theory_ko": "원장 실측 — scalp_1m 손절 건의 76%(35/46)가 당일 진입가 위로 회복(중앙 +105bp): 방향은 맞았지만 파동 고점에서 샀다는 뜻이라, 같은 임펄스 신호를 눌림목까지 기다렸다 사는 가설.",
         "theory_en": "Ledger-derived hypothesis: 76% (35/46) of scalp_1m stop-outs recovered above the entry price same-day (median +105bp) — the direction was right but entries were made at the impulse peak, so this strategy buys the same impulse signal on its pullback instead.",
-        "entry_ko": "5분봉에서 80bp 이상 임펄스 발생 후 그 되돌림이 0.38~0.62% 구간(EMA9 부근)일 때 매수 — 파동 고점이 아니라 눌림목에서 진입 (A/B 촉매 갈래 — EVENT/FRGN/TREND 태그가 붙은 종목만 대상)",
-        "entry_en": "On 5-min bars, after a 80bp+ impulse move, buys the pullback once retracement reaches 0.38-0.62% (near EMA9) — enters on the dip, not the impulse peak (A/B catalyst arm — only trades symbols tagged EVENT/FRGN/TREND)",
+        "entry_ko": "5분봉에서 80bp 이상 임펄스 발생 후 그 되돌림이 0.38~0.62% 구간(EMA9 부근)일 때 매수 — 파동 고점이 아니라 눌림목에서 진입 (촉매 갈래·A/B 비교용 — KR: FRGN 하나 이상 필요; US: EVENT/TREND 모두 필요)",
+        "entry_en": "On 5-min bars, after a 80bp+ impulse move, buys the pullback once retracement reaches 0.38-0.62% (near EMA9) — enters on the dip, not the impulse peak (catalyst arm for A/B comparison — KR: any FRGN; US: all EVENT/TREND)",
         "exit_ko": "손절 = ATR 버퍼 x 0.3, 목표 = 임펄스 x 1.2, 60분 타임아웃 청산",
         "exit_en": "Stop = ATR buffer x 0.3; target = impulse size x 1.2; times out after 60 minutes",
-        "evidence_ko": "burn_in — 백테스트 표본 0(Toss 5분봉 롤링 히스토리 한계). 리서치 스크리닝(US 1분봉 10.7년 OOS)에서 gross +0.9bp로 유일하게 양수였지만 실측 왕복비용 10.5bp를 못 이겨 순손실 — 게이트 통과 0건. paper 번인이 유일한 검증 경로. pullback_impulse와 파라미터는 동일, 유니버스만 다른 A/B 짝 — `run scoreboard --ab`(양쪽 n≥30 전엔 판단 불가)로 판정.",
-        "evidence_en": "burn_in — zero backtest samples (limited by Toss's rolling 5-min history). A 10.7-year US OOS screen found the only positive gross edge among the three tested (+0.9bp), but it still lost net after the measured 10.5bp round-trip cost — zero strategies passed the gate. An A/B pair with pullback_impulse: identical parameters, different universe — judged via `run scoreboard --ab` (n>=30 both arms).",
+        "evidence_ko": "burn_in — 백테스트 표본 0(Toss 5분봉 롤링 히스토리 한계). 리서치 스크리닝(US 1분봉 10.7년 OOS)에서 gross +0.9bp로 유일하게 양수였지만 실측 왕복비용 10.5bp를 못 이겨 순손실 — 게이트 통과 0건. paper 번인이 유일한 검증 경로. pullback_impulse와 가격 규칙을 공유한다. 유니버스·기간·파라미터를 맞춘 비교가 필요하며 표본 수만으로 검증을 통과하지 않는다. 기본 갈래는 현재 비활성이다.",
+        "evidence_en": "burn_in — zero backtest samples (limited by Toss's rolling 5-min history). A 10.7-year US OOS screen found the only positive gross edge among the three tested (+0.9bp), but it still lost net after the measured 10.5bp round-trip cost — zero strategies passed the gate. Shares price rules with pullback_impulse; comparisons need matched universes, periods and parameters, not just a minimum trade",
         "refs": [],
-        "sizing_ko": "US 자본배분 7.5% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-        "sizing_en": "US capital allocation 7.5%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 7.5% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정",
+        "sizing_en": "currently disabled; historical books retained; US capital_fraction 7.5%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured"
       },
       "by_market": {
         "asia": null,
@@ -2288,8 +2288,8 @@
             "url": "https://arxiv.org/abs/1005.3535"
           }
         ],
-        "sizing_ko": "KR 자본배분 3% · US 자본배분 3% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-        "sizing_en": "KR capital allocation 3%; US capital allocation 3%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 3% · US 설정 계수(capital_fraction) 3% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "currently disabled; historical books retained; KR capital_fraction 3%; US capital_fraction 3%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
       },
       "by_market": {
         "asia": {
@@ -2669,20 +2669,20 @@
         "category": "intraday",
         "theory_ko": "1분봉 거래량 서지 또는 이동평균 지지를 짧게 잡아 스캘핑하되, 손절은 구조(스윙 저점) 기반으로 두고 익절은 본전 이동+트레일링으로 상방을 열어 둔다는 가설 — 원장 실측 반사실 분석으로 규칙을 여러 차례 다듬었다.",
         "theory_en": "Scalps short 1-min volume-surge or moving-average-support setups, using a structure-based (swing-low) stop and a breakeven-plus-trailing exit to leave upside open — rules have been iteratively refined via counterfactual replay of ledger data.",
-        "entry_ko": "1분봉에서 직전 20봉 평균 대비 3.0배 이상인 상승봉(거래량 서지) 또는 60선(1분) 지지(허용오차 0.2%)를 확인해 진입 · KR은 개장 30분간 진입 지연(원장 실측: 08시대 승률 15%·09시대 30%) (A/B 촉매 갈래 — EVENT/FRGN/TREND 태그가 붙은 종목만 대상)",
-        "entry_en": "Enters on a 1-min volume-surge bar (3.0x the trailing 20-bar average) or a bounce off the 60-period 1-min moving average (tolerance 0.2%); In KR, entries are delayed 30 minutes after open (ledger data: 15% win rate in the 8am hour vs 30% in the 9am hour) (A/B catalyst arm — only trades symbols tagged EVENT/FRGN/TREND)",
+        "entry_ko": "1분봉에서 직전 20봉 평균 대비 3.0배 이상인 상승봉(거래량 서지) 또는 60선(1분) 지지(허용오차 0.2%)를 확인해 진입 · KR은 개장 30분간 진입 지연(원장 실측: 08시대 승률 15%·09시대 30%) (촉매 갈래·A/B 비교용 — KR: FRGN 하나 이상 필요; US: EVENT/TREND 모두 필요)",
+        "entry_en": "Enters on a 1-min volume-surge bar (3.0x the trailing 20-bar average) or a bounce off the 60-period 1-min moving average (tolerance 0.2%); In KR, entries are delayed 30 minutes after open (ledger data: 15% win rate in the 8am hour vs 30% in the 9am hour) (catalyst arm for A/B comparison — KR: any FRGN; US: all EVENT/TREND)",
         "exit_ko": "손절 = 최근 스윙 저점(구조) 아래, 하드캡 −2.0%, +1.5R 도달 시 50.0% 부분익절 · +100bp 도달 시 본전 이동 + 70bp 트레일링 스톱, 마감 1분 전 강제청산",
         "exit_en": "Stop is placed below the recent swing low (structure-based), hard-capped at -2.0%; takes partial profit (50.0%) at +1.5R; at +100bp moves the stop to breakeven and trails by 70bp; force-flattens 1 minutes before close",
-        "evidence_ko": "burn_in — KR 1년 분봉 게이트 NO_GO(6폴드 전부 비양수, 2026-09-04). US 10.7년 OOS(12폴드)에서도 gross −2.2bp로 실측 왕복비용 10.5bp를 못 이겨 순손실, DSR≈0, 게이트 통과 0건. '수수료가 엣지보다 크다'는 원장의 결론을 10년 데이터로 재현한 사례. scalp_1m와 파라미터는 동일, 유니버스만 다른 A/B 짝 — `run scoreboard --ab`(양쪽 n≥30 전엔 판단 불가)로 판정.",
-        "evidence_en": "burn_in — the 1-year KR minute-bar gate returned NO_GO (all 6 folds non-positive, 2026-09-04). A 10.7-year US OOS screen (12 folds) also showed a -2.2bp gross edge, losing net against the measured 10.5bp round-trip cost, DSR≈0, zero gates passed. An A/B pair with scalp_1m: identical parameters, different universe — judged via `run scoreboard --ab` (n>=30 both arms).",
+        "evidence_ko": "burn_in — KR 1년 분봉 게이트 NO_GO(6폴드 전부 비양수, 2026-09-04). US 10.7년 OOS(12폴드)에서도 gross −2.2bp로 실측 왕복비용 10.5bp를 못 이겨 순손실, DSR≈0, 게이트 통과 0건. '수수료가 엣지보다 크다'는 원장의 결론을 10년 데이터로 재현한 사례. scalp_1m와 가격 규칙을 공유한다. 유니버스·기간·파라미터를 맞춘 비교가 필요하며 표본 수만으로 검증을 통과하지 않는다. 기본 갈래는 현재 비활성이다.",
+        "evidence_en": "burn_in — the 1-year KR minute-bar gate returned NO_GO (all 6 folds non-positive, 2026-09-04). A 10.7-year US OOS screen (12 folds) also showed a -2.2bp gross edge, losing net against the measured 10.5bp round-trip cost, DSR≈0, zero gates passed. Shares price rules with scalp_1m; comparisons need matched universes, periods and parameters, not just a minimum trade count. The base arm is currently",
         "refs": [
           {
             "label": "arXiv:1005.3535 (opening-volatility research cited for KR entry delay)",
             "url": "https://arxiv.org/abs/1005.3535"
           }
         ],
-        "sizing_ko": "KR 자본배분 3% · US 자본배분 3% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-        "sizing_en": "KR capital allocation 3%; US capital allocation 3%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 3% · US 설정 계수(capital_fraction) 3% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "currently disabled; historical books retained; KR capital_fraction 3%; US capital_fraction 3%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
       },
       "by_market": {
         "asia": {
@@ -2946,11 +2946,11 @@
         "entry_en": "Buys on a breakout above open + prior-day range x 0.5 (Larry Williams' original formula); no fixed target, follows the trend",
         "exit_ko": "손절폭 하한 40bp, 마감 5분 전 청산",
         "exit_en": "Stop distance floored at 40bp; flattens 5 minutes before close",
-        "evidence_ko": "burn_in — Larry Williams 원 공식 인용, 우리 원장 실측 0. KR은 ETF 전용(왕복 ~4bp 실측 — 비용을 이기는 유일한 KR venue), US는 TQQQ.",
-        "evidence_en": "burn_in — a citation of Larry Williams' original formula, zero measurements from our own ledger. KR trades ETFs only (measured ~4bp round-trip cost, the only KR venue that beats cost); US trades TQQQ.",
+        "evidence_ko": "burn_in — 변동성 돌파 가설을 관찰 중. 표본·비용 후 손익은 해당 기간의 원장 집계를 참조한다. 문헌 인용이나 주력 선정은 표본 외 검증·실거래 수익성 입증이 아니다.",
+        "evidence_en": "burn_in — observing the volatility-breakout hypothesis. See period-specific ledger statistics for samples and net results. Selection does not establish OOS or live profitability.",
         "refs": [],
-        "sizing_ko": "KR 자본배분 7% · US 자본배분 5% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-        "sizing_en": "KR capital allocation 7%; US capital allocation 5%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+        "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 7% · US 설정 계수(capital_fraction) 5% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "currently disabled; historical books retained; KR capital_fraction 7%; US capital_fraction 5%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
       },
       "by_market": {
         "asia": {
@@ -3126,15 +3126,15 @@
         "category": "intraday",
         "theory_ko": "시가에 전일 레인지의 일정 비율을 더한 값을 상향 돌파하면 그날 상승이 확장된다는 변동성 돌파 가설(Larry Williams 원 공식).",
         "theory_en": "Volatility-breakout hypothesis that a break above open + a fraction of the prior day's range signals expanding upside for the day (Larry Williams' original formula).",
-        "entry_ko": "시가 + 전일 레인지 x 0.5(Larry Williams 원 공식) 상향 돌파 시 매수, 목표 없이 추종 (A/B 촉매 갈래 — EVENT/FRGN/TREND 태그가 붙은 종목만 대상)",
-        "entry_en": "Buys on a breakout above open + prior-day range x 0.5 (Larry Williams' original formula); no fixed target, follows the trend (A/B catalyst arm — only trades symbols tagged EVENT/FRGN/TREND)",
+        "entry_ko": "시가 + 전일 레인지 x 0.5(Larry Williams 원 공식) 상향 돌파 시 매수, 목표 없이 추종 (촉매 갈래·A/B 비교용 — KR: FRGN 하나 이상 필요)",
+        "entry_en": "Buys on a breakout above open + prior-day range x 0.5 (Larry Williams' original formula); no fixed target, follows the trend (catalyst arm for A/B comparison — KR: any FRGN)",
         "exit_ko": "손절폭 하한 40bp, 마감 5분 전 청산",
         "exit_en": "Stop distance floored at 40bp; flattens 5 minutes before close",
-        "evidence_ko": "burn_in — Larry Williams 원 공식 인용, 우리 원장 실측 0. KR은 ETF 전용(왕복 ~4bp 실측 — 비용을 이기는 유일한 KR venue), US는 TQQQ. vol_breakout와 파라미터는 동일, 유니버스만 다른 A/B 짝 — `run scoreboard --ab`(양쪽 n≥30 전엔 판단 불가)로 판정.",
-        "evidence_en": "burn_in — a citation of Larry Williams' original formula, zero measurements from our own ledger. KR trades ETFs only (measured ~4bp round-trip cost, the only KR venue that beats cost); US trades TQQQ. An A/B pair with vol_breakout: identical parameters, different universe — judged via `run scoreboard --ab` (n>=30 both arms).",
+        "evidence_ko": "burn_in — 변동성 돌파 가설을 관찰 중. 표본·비용 후 손익은 해당 기간의 원장 집계를 참조한다. 문헌 인용이나 주력 선정은 표본 외 검증·실거래 수익성 입증이 아니다. vol_breakout와 가격 규칙을 공유한다. 유니버스·기간·파라미터를 맞춘 비교가 필요하며 표본 수만으로 검증을 통과하지 않는다. 기본 갈래는 현재 비활성이다.",
+        "evidence_en": "burn_in — observing the volatility-breakout hypothesis. See period-specific ledger statistics for samples and net results. Selection does not establish OOS or live profitability. Shares price rules with vol_breakout; comparisons need matched universes, periods and parameters, not just a minimum trade count. The base arm is currently disabled.",
         "refs": [],
-        "sizing_ko": "KR 자본배분 7% · US 자본배분 5% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-        "sizing_en": "KR capital allocation 7%; US capital allocation 5%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+        "sizing_ko": "현재 거래 허용 시장: KR · KR 설정 계수(capital_fraction) 7% · US 설정 계수(capital_fraction) 5% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+        "sizing_en": "current permitted markets: KR; KR capital_fraction 7%; US capital_fraction 5%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
       },
       "by_market": {
         "asia": {
@@ -3846,8 +3846,8 @@
           "evidence_ko": "burn_in — 웹 리서치 근거, 원장 표본은 experiments 루프가 판정. 배분 부족(예산 95,888원으로 대형주 1주도 못 삼)으로 8/25 이후 체결 0건이던 결함을 target_weight 0.1→0.5로 수리(2026-09-03). 오버나이트 보유가 전략 정의라 같은 날 정책으로 비활성.",
           "evidence_en": "burn_in — web-research-based; sample judgment is left to the experiments loop. A budget bug (95,888 KRW couldn't buy even 1 large-cap share) causing zero fills since 8/25 was fixed by raising target_weight 0.1→0.5 (2026-09-03). Disabled the same day since overnight holding is core to its definition.",
           "refs": [],
-          "sizing_ko": "KR 자본배분 20% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 오버나이트 보유형 — 장중 손절 −5%/목표 +10% 하드레일 적용 제외 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-          "sizing_en": "KR capital allocation 20%; per-entry size = strategy capital x 50% (target_weight); overnight-carry design — exempt from the intraday -5%/+10% hard stop/target rail; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 20% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 오버나이트 보유형 — 장중 손절 −5%/목표 +10% 하드레일 적용 제외 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+          "sizing_en": "currently disabled; historical books retained; KR capital_fraction 20%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); overnight-carry design — exempt from the intraday -5%/+10% hard stop/target rail; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
         },
         "total": {
           "trips": 2,
@@ -3932,8 +3932,8 @@
           "evidence_ko": "burn_in — 백테스트 미검증(원장 20거래일 승격 기준 도달 전). 오버나이트 보유가 전략 정의라 2026-09-03 정책으로 비활성. 과거 일별 재평가가 그날 리포트 랭킹 안 종목만 대상이라 랭킹 밖 보유 종목이 영영 재평가 안 되던 결함(매수 34/매도 1 불균형)을 2026-09-03 수리했다.",
           "evidence_en": "burn_in — unvalidated by backtest (had not yet reached the 20-trading-day promotion threshold). Disabled since the 2026-09-03 policy because overnight holding is core to its definition. A bug where daily re-evaluation only covered symbols still in that day's report ranking (causing a 34-buy/1-sell imbalance) was fixed 2026-09-03.",
           "refs": [],
-          "sizing_ko": "KR 자본배분 14% · 오버나이트 보유형 — 장중 손절 −5%/목표 +10% 하드레일 적용 제외 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-          "sizing_en": "KR capital allocation 14%; overnight-carry design — exempt from the intraday -5%/+10% hard stop/target rail; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 14% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 오버나이트 보유형 — 장중 손절 −5%/목표 +10% 하드레일 적용 제외 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+          "sizing_en": "currently disabled; historical books retained; KR capital_fraction 14%; fixed books: participation flags, not order weights; overnight-carry design — exempt from the intraday -5%/+10% hard stop/target rail; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
         },
         "total": {
           "trips": 8,
@@ -4016,8 +4016,8 @@
               "url": "https://arxiv.org/abs/2605.04004"
             }
           ],
-          "sizing_ko": "US 자본배분 3% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-          "sizing_en": "US capital allocation 3%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 3% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정",
+          "sizing_en": "currently disabled; historical books retained; US capital_fraction 3%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured"
         },
         "total": {
           "trips": 0,
@@ -4092,8 +4092,8 @@
               "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4824172"
             }
           ],
-          "sizing_ko": "US 자본배분 9% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-          "sizing_en": "US capital allocation 9%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 9% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정",
+          "sizing_en": "currently disabled; historical books retained; US capital_fraction 9%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured"
         },
         "total": {
           "trips": 31,
@@ -4269,8 +4269,8 @@
           "evidence_ko": "walk-forward 결과 대기, 미검증 — 원장 표본 0, enabled: false, capital_fraction KR/US 모두 0. 독립 백테스터의 walk-forward(24개월 훈련/6개월 테스트)·deflated Sharpe·비용 2배 생존 검증을 통과해야 번인 후보가 된다.",
           "evidence_en": "walk-forward results pending, unvalidated — zero ledger samples, enabled: false, capital_fraction is 0 in both KR and US. Requires the independent backtester's walk-forward (24-month train / 6-month test), deflated-Sharpe, and 2x-cost survival checks before becoming a burn-in candidate.",
           "refs": [],
-          "sizing_ko": "US 자본배분 5% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-          "sizing_en": "US capital allocation 5%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 5% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정",
+          "sizing_en": "currently disabled; historical books retained; US capital_fraction 5%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured"
         },
         "total": {
           "trips": 8,
@@ -4390,8 +4390,8 @@
           "evidence_ko": "walk-forward 결과 대기, 미검증 — 원장 표본 0, enabled: false, capital_fraction KR/US 모두 0. 독립 백테스터의 walk-forward(24개월 훈련/6개월 테스트)·deflated Sharpe·비용 2배 생존 검증을 통과해야 번인 후보가 된다.",
           "evidence_en": "walk-forward results pending, unvalidated — zero ledger samples, enabled: false, capital_fraction is 0 in both KR and US. Requires the independent backtester's walk-forward (24-month train / 6-month test), deflated-Sharpe, and 2x-cost survival checks before becoming a burn-in candidate.",
           "refs": [],
-          "sizing_ko": "US 자본배분 5% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-          "sizing_en": "US capital allocation 5%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 5% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정",
+          "sizing_en": "currently disabled; historical books retained; US capital_fraction 5%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured"
         },
         "total": {
           "trips": 19,
@@ -4574,8 +4574,8 @@
           "evidence_ko": "burn_in — 백테스트 표본 0(LLM 판단은 리플레이 불가). paper 번인(한 달 테스트)이 유일한 검증 경로. LLM 호출은 거래 핫패스 밖 별도 프로세스에서만 이뤄진다(엔진은 인박스 파일을 읽기만 함).",
           "evidence_en": "burn_in — zero backtest samples (an LLM's judgment cannot be replayed). Paper burn-in (a one-month trial) is the only validation path. The LLM call happens only in a separate process outside the trading hot path — the engine only reads an inbox file.",
           "refs": [],
-          "sizing_ko": "KR 자본배분 8% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-          "sizing_en": "KR capital allocation 8%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 8% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+          "sizing_en": "currently disabled; historical books retained; KR capital_fraction 8%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
         },
         "total": {
           "trips": 8,
@@ -4681,8 +4681,8 @@
           "evidence_ko": "burn_in — 백테스트 표본 0. 문헌이 '스프레드 조정 시 단기 반전의 유의성 급감'을 반복 경고 — KR 개별주에서 먼저 죽고 US·KR ETF에서만 살아남을 수 있다는 것을 알고 가동한다.",
           "evidence_en": "burn_in — zero backtest samples. The literature repeatedly warns that short-term reversal significance collapses after spread adjustment; this is run knowing it may fail first on KR individual stocks and survive only on US/KR ETFs, if at all.",
           "refs": [],
-          "sizing_ko": "US 자본배분 6% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-          "sizing_en": "US capital allocation 6%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 6% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정",
+          "sizing_en": "currently disabled; historical books retained; US capital_fraction 6%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured"
         },
         "total": {
           "trips": 3,
@@ -4767,8 +4767,8 @@
           "evidence_ko": "문서 없음.",
           "evidence_en": "No documentation.",
           "refs": [],
-          "sizing_ko": "KR 자본배분 10% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-          "sizing_en": "KR capital allocation 10%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 10% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+          "sizing_en": "currently disabled; historical books retained; KR capital_fraction 10%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
         },
         "total": {
           "trips": 20,
@@ -4888,8 +4888,8 @@
           "evidence_ko": "burn_in — 초기 표본에서 전 전략 중 최악(6청산 1승, 순 −27,018원)이었으나 원인(정보 없이 시가를 사던 결함)을 찾아 '첫봉 양봉 확인' 규칙을 추가했다. 2026-09-03부터 news_scalp를 '같은 유니버스·다른 진입시점' 대조군으로 삼은 A/B로 재검증 중(`run scoreboard --ab`).",
           "evidence_en": "burn_in — an early sample was the worst of all strategies (6 exits, 1 win, net -27,018 KRW); the root cause (buying at the open with zero price information) was found and a 'first bar must close bullish' rule was added. Since 2026-09-03 it is being re-evaluated in an A/B pairing against news_scalp ('same universe, different entry timing'; see `run scoreboard --ab`).",
           "refs": [],
-          "sizing_ko": "KR 자본배분 10% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-          "sizing_en": "KR capital allocation 10%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 10% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+          "sizing_en": "currently disabled; historical books retained; KR capital_fraction 10%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
         },
         "total": {
           "trips": 0,
@@ -4952,15 +4952,15 @@
           "category": "intraday",
           "theory_ko": "당일 뉴스 호재(EVENT 태그)가 붙은 종목은 개장 직후 매수해도 그 상승세가 장중 이어진다는 뉴스 모멘텀 가설.",
           "theory_en": "News-momentum hypothesis that symbols tagged with same-day positive news (EVENT) keep rising through the session even if bought right at the open.",
-          "entry_ko": "당일 뉴스 EVENT 태그 종목만, 개장 첫 1분봉이 양봉으로 마감해야 진입(개장 후 120초 이내), 세션당 최대 5종목 (A/B 촉매 갈래 — EVENT/TREND 태그가 붙은 종목만 대상)",
-          "entry_en": "Only symbols tagged EVENT (news) that day; enters only if the first 1-min bar closes bullish (within 120 seconds of open), up to 5 symbols per session (A/B catalyst arm — only trades symbols tagged EVENT/TREND)",
+          "entry_ko": "당일 뉴스 EVENT 태그 종목만, 개장 첫 1분봉이 양봉으로 마감해야 진입(개장 후 120초 이내), 세션당 최대 5종목 (촉매 갈래·A/B 비교용 — KR: EVENT/TREND 모두 필요)",
+          "entry_en": "Only symbols tagged EVENT (news) that day; enters only if the first 1-min bar closes bullish (within 120 seconds of open), up to 5 symbols per session (catalyst arm for A/B comparison — KR: all EVENT/TREND)",
           "exit_ko": "손절 −2.0%, +5.0%에서 50.0% 부분익절, +10.0% 전량 익절 · 시간청산 없음, 마감 1분 전 강제청산",
           "exit_en": "Stop at -2.0%, partial take-profit (50.0%) at +5.0%, full exit at +10.0%; no time-based exit; force-flatten 1 minutes before close",
-          "evidence_ko": "burn_in — 초기 표본에서 전 전략 중 최악(6청산 1승, 순 −27,018원)이었으나 원인(정보 없이 시가를 사던 결함)을 찾아 '첫봉 양봉 확인' 규칙을 추가했다. 2026-09-03부터 news_scalp를 '같은 유니버스·다른 진입시점' 대조군으로 삼은 A/B로 재검증 중(`run scoreboard --ab`). news_momentum와 파라미터는 동일, 유니버스만 다른 A/B 짝 — `run scoreboard --ab`(양쪽 n≥30 전엔 판단 불가)로 판정.",
-          "evidence_en": "burn_in — an early sample was the worst of all strategies (6 exits, 1 win, net -27,018 KRW); the root cause (buying at the open with zero price information) was found and a 'first bar must close bullish' rule was added. Since 2026-09-03 it is being re-evaluated in an A/B pairing against news_scalp ('same universe, different entry timing'; see `run scoreboard --ab`). An A/B pair with",
+          "evidence_ko": "burn_in — 초기 표본에서 전 전략 중 최악(6청산 1승, 순 −27,018원)이었으나 원인(정보 없이 시가를 사던 결함)을 찾아 '첫봉 양봉 확인' 규칙을 추가했다. 2026-09-03부터 news_scalp를 '같은 유니버스·다른 진입시점' 대조군으로 삼은 A/B로 재검증 중(`run scoreboard --ab`). news_momentum와 가격 규칙을 공유한다. 유니버스·기간·파라미터를 맞춘 비교가 필요하며 표본 수만으로 검증을 통과하지 않는다. 기본 갈래는 현재 비활성이다.",
+          "evidence_en": "burn_in — an early sample was the worst of all strategies (6 exits, 1 win, net -27,018 KRW); the root cause (buying at the open with zero price information) was found and a 'first bar must close bullish' rule was added. Since 2026-09-03 it is being re-evaluated in an A/B pairing against news_scalp ('same universe, different entry timing'; see `run scoreboard --ab`). Shares price rules with",
           "refs": [],
-          "sizing_ko": "KR 자본배분 10% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-          "sizing_en": "KR capital allocation 10%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 10% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+          "sizing_en": "currently disabled; historical books retained; KR capital_fraction 10%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
         },
         "total": {
           "trips": 0,
@@ -5030,8 +5030,8 @@
           "evidence_ko": "burn_in — 2026-08-25 비활성 이전 표본 n=6, −174.5bp(표본 밖이라 판단 불가). 2026-09-03 A/B 목적으로 재활성했고, 배분을 프로토콜 하한 바로 위(KR 4%)로 최소화해 표본을 쌓는 중이다.",
           "evidence_en": "burn_in — before its 2026-08-25 deactivation, a sample of n=6 showed -174.5bp (too small to be conclusive). Reactivated 2026-09-03 for A/B purposes at a minimal allocation (KR 4%, just above the protocol floor) while it accumulates a sample.",
           "refs": [],
-          "sizing_ko": "KR 자본배분 4% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-          "sizing_en": "KR capital allocation 4%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 4% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+          "sizing_en": "currently disabled; historical books retained; KR capital_fraction 4%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
         },
         "total": {
           "trips": 0,
@@ -5101,8 +5101,8 @@
           "evidence_ko": "burn_in — 백테스트 표본 0(Toss 5분봉 롤링 히스토리 한계). 리서치 스크리닝(US 1분봉 10.7년 OOS)에서 gross +0.9bp로 유일하게 양수였지만 실측 왕복비용 10.5bp를 못 이겨 순손실 — 게이트 통과 0건. paper 번인이 유일한 검증 경로.",
           "evidence_en": "burn_in — zero backtest samples (limited by Toss's rolling 5-min history). A 10.7-year US OOS screen found the only positive gross edge among the three tested (+0.9bp), but it still lost net after the measured 10.5bp round-trip cost — zero strategies passed the gate.",
           "refs": [],
-          "sizing_ko": "US 자본배분 3% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-          "sizing_en": "US capital allocation 3%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 3% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정",
+          "sizing_en": "currently disabled; historical books retained; US capital_fraction 3%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured"
         },
         "total": {
           "trips": 103,
@@ -5278,15 +5278,15 @@
           "category": "intraday",
           "theory_ko": "원장 실측 — scalp_1m 손절 건의 76%(35/46)가 당일 진입가 위로 회복(중앙 +105bp): 방향은 맞았지만 파동 고점에서 샀다는 뜻이라, 같은 임펄스 신호를 눌림목까지 기다렸다 사는 가설.",
           "theory_en": "Ledger-derived hypothesis: 76% (35/46) of scalp_1m stop-outs recovered above the entry price same-day (median +105bp) — the direction was right but entries were made at the impulse peak, so this strategy buys the same impulse signal on its pullback instead.",
-          "entry_ko": "5분봉에서 80bp 이상 임펄스 발생 후 그 되돌림이 0.38~0.62% 구간(EMA9 부근)일 때 매수 — 파동 고점이 아니라 눌림목에서 진입 (A/B 촉매 갈래 — EVENT/FRGN/TREND 태그가 붙은 종목만 대상)",
-          "entry_en": "On 5-min bars, after a 80bp+ impulse move, buys the pullback once retracement reaches 0.38-0.62% (near EMA9) — enters on the dip, not the impulse peak (A/B catalyst arm — only trades symbols tagged EVENT/FRGN/TREND)",
+          "entry_ko": "5분봉에서 80bp 이상 임펄스 발생 후 그 되돌림이 0.38~0.62% 구간(EMA9 부근)일 때 매수 — 파동 고점이 아니라 눌림목에서 진입 (촉매 갈래·A/B 비교용 — KR: FRGN 하나 이상 필요; US: EVENT/TREND 모두 필요)",
+          "entry_en": "On 5-min bars, after a 80bp+ impulse move, buys the pullback once retracement reaches 0.38-0.62% (near EMA9) — enters on the dip, not the impulse peak (catalyst arm for A/B comparison — KR: any FRGN; US: all EVENT/TREND)",
           "exit_ko": "손절 = ATR 버퍼 x 0.3, 목표 = 임펄스 x 1.2, 60분 타임아웃 청산",
           "exit_en": "Stop = ATR buffer x 0.3; target = impulse size x 1.2; times out after 60 minutes",
-          "evidence_ko": "burn_in — 백테스트 표본 0(Toss 5분봉 롤링 히스토리 한계). 리서치 스크리닝(US 1분봉 10.7년 OOS)에서 gross +0.9bp로 유일하게 양수였지만 실측 왕복비용 10.5bp를 못 이겨 순손실 — 게이트 통과 0건. paper 번인이 유일한 검증 경로. pullback_impulse와 파라미터는 동일, 유니버스만 다른 A/B 짝 — `run scoreboard --ab`(양쪽 n≥30 전엔 판단 불가)로 판정.",
-          "evidence_en": "burn_in — zero backtest samples (limited by Toss's rolling 5-min history). A 10.7-year US OOS screen found the only positive gross edge among the three tested (+0.9bp), but it still lost net after the measured 10.5bp round-trip cost — zero strategies passed the gate. An A/B pair with pullback_impulse: identical parameters, different universe — judged via `run scoreboard --ab` (n>=30 both arms).",
+          "evidence_ko": "burn_in — 백테스트 표본 0(Toss 5분봉 롤링 히스토리 한계). 리서치 스크리닝(US 1분봉 10.7년 OOS)에서 gross +0.9bp로 유일하게 양수였지만 실측 왕복비용 10.5bp를 못 이겨 순손실 — 게이트 통과 0건. paper 번인이 유일한 검증 경로. pullback_impulse와 가격 규칙을 공유한다. 유니버스·기간·파라미터를 맞춘 비교가 필요하며 표본 수만으로 검증을 통과하지 않는다. 기본 갈래는 현재 비활성이다.",
+          "evidence_en": "burn_in — zero backtest samples (limited by Toss's rolling 5-min history). A 10.7-year US OOS screen found the only positive gross edge among the three tested (+0.9bp), but it still lost net after the measured 10.5bp round-trip cost — zero strategies passed the gate. Shares price rules with pullback_impulse; comparisons need matched universes, periods and parameters, not just a minimum trade",
           "refs": [],
-          "sizing_ko": "US 자본배분 7.5% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10%",
-          "sizing_en": "US capital allocation 7.5%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · US 설정 계수(capital_fraction) 7.5% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정",
+          "sizing_en": "currently disabled; historical books retained; US capital_fraction 7.5%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured"
         },
         "total": {
           "trips": 50,
@@ -5460,8 +5460,8 @@
               "url": "https://arxiv.org/abs/1005.3535"
             }
           ],
-          "sizing_ko": "KR 자본배분 3% · US 자본배분 3% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-          "sizing_en": "KR capital allocation 3%; US capital allocation 3%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 3% · US 설정 계수(capital_fraction) 3% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+          "sizing_en": "currently disabled; historical books retained; KR capital_fraction 3%; US capital_fraction 3%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
         },
         "total": {
           "trips": 201,
@@ -5754,20 +5754,20 @@
           "category": "intraday",
           "theory_ko": "1분봉 거래량 서지 또는 이동평균 지지를 짧게 잡아 스캘핑하되, 손절은 구조(스윙 저점) 기반으로 두고 익절은 본전 이동+트레일링으로 상방을 열어 둔다는 가설 — 원장 실측 반사실 분석으로 규칙을 여러 차례 다듬었다.",
           "theory_en": "Scalps short 1-min volume-surge or moving-average-support setups, using a structure-based (swing-low) stop and a breakeven-plus-trailing exit to leave upside open — rules have been iteratively refined via counterfactual replay of ledger data.",
-          "entry_ko": "1분봉에서 직전 20봉 평균 대비 3.0배 이상인 상승봉(거래량 서지) 또는 60선(1분) 지지(허용오차 0.2%)를 확인해 진입 · KR은 개장 30분간 진입 지연(원장 실측: 08시대 승률 15%·09시대 30%) (A/B 촉매 갈래 — EVENT/FRGN/TREND 태그가 붙은 종목만 대상)",
-          "entry_en": "Enters on a 1-min volume-surge bar (3.0x the trailing 20-bar average) or a bounce off the 60-period 1-min moving average (tolerance 0.2%); In KR, entries are delayed 30 minutes after open (ledger data: 15% win rate in the 8am hour vs 30% in the 9am hour) (A/B catalyst arm — only trades symbols tagged EVENT/FRGN/TREND)",
+          "entry_ko": "1분봉에서 직전 20봉 평균 대비 3.0배 이상인 상승봉(거래량 서지) 또는 60선(1분) 지지(허용오차 0.2%)를 확인해 진입 · KR은 개장 30분간 진입 지연(원장 실측: 08시대 승률 15%·09시대 30%) (촉매 갈래·A/B 비교용 — KR: FRGN 하나 이상 필요; US: EVENT/TREND 모두 필요)",
+          "entry_en": "Enters on a 1-min volume-surge bar (3.0x the trailing 20-bar average) or a bounce off the 60-period 1-min moving average (tolerance 0.2%); In KR, entries are delayed 30 minutes after open (ledger data: 15% win rate in the 8am hour vs 30% in the 9am hour) (catalyst arm for A/B comparison — KR: any FRGN; US: all EVENT/TREND)",
           "exit_ko": "손절 = 최근 스윙 저점(구조) 아래, 하드캡 −2.0%, +1.5R 도달 시 50.0% 부분익절 · +100bp 도달 시 본전 이동 + 70bp 트레일링 스톱, 마감 1분 전 강제청산",
           "exit_en": "Stop is placed below the recent swing low (structure-based), hard-capped at -2.0%; takes partial profit (50.0%) at +1.5R; at +100bp moves the stop to breakeven and trails by 70bp; force-flattens 1 minutes before close",
-          "evidence_ko": "burn_in — KR 1년 분봉 게이트 NO_GO(6폴드 전부 비양수, 2026-09-04). US 10.7년 OOS(12폴드)에서도 gross −2.2bp로 실측 왕복비용 10.5bp를 못 이겨 순손실, DSR≈0, 게이트 통과 0건. '수수료가 엣지보다 크다'는 원장의 결론을 10년 데이터로 재현한 사례. scalp_1m와 파라미터는 동일, 유니버스만 다른 A/B 짝 — `run scoreboard --ab`(양쪽 n≥30 전엔 판단 불가)로 판정.",
-          "evidence_en": "burn_in — the 1-year KR minute-bar gate returned NO_GO (all 6 folds non-positive, 2026-09-04). A 10.7-year US OOS screen (12 folds) also showed a -2.2bp gross edge, losing net against the measured 10.5bp round-trip cost, DSR≈0, zero gates passed. An A/B pair with scalp_1m: identical parameters, different universe — judged via `run scoreboard --ab` (n>=30 both arms).",
+          "evidence_ko": "burn_in — KR 1년 분봉 게이트 NO_GO(6폴드 전부 비양수, 2026-09-04). US 10.7년 OOS(12폴드)에서도 gross −2.2bp로 실측 왕복비용 10.5bp를 못 이겨 순손실, DSR≈0, 게이트 통과 0건. '수수료가 엣지보다 크다'는 원장의 결론을 10년 데이터로 재현한 사례. scalp_1m와 가격 규칙을 공유한다. 유니버스·기간·파라미터를 맞춘 비교가 필요하며 표본 수만으로 검증을 통과하지 않는다. 기본 갈래는 현재 비활성이다.",
+          "evidence_en": "burn_in — the 1-year KR minute-bar gate returned NO_GO (all 6 folds non-positive, 2026-09-04). A 10.7-year US OOS screen (12 folds) also showed a -2.2bp gross edge, losing net against the measured 10.5bp round-trip cost, DSR≈0, zero gates passed. Shares price rules with scalp_1m; comparisons need matched universes, periods and parameters, not just a minimum trade count. The base arm is currently",
           "refs": [
             {
               "label": "arXiv:1005.3535 (opening-volatility research cited for KR entry delay)",
               "url": "https://arxiv.org/abs/1005.3535"
             }
           ],
-          "sizing_ko": "KR 자본배분 3% · US 자본배분 3% · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-          "sizing_en": "KR capital allocation 3%; US capital allocation 3%; intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 3% · US 설정 계수(capital_fraction) 3% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+          "sizing_en": "currently disabled; historical books retained; KR capital_fraction 3%; US capital_fraction 3%; fixed books: participation flags, not order weights; stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
         },
         "total": {
           "trips": 164,
@@ -6064,11 +6064,11 @@
           "entry_en": "Buys on a breakout above open + prior-day range x 0.5 (Larry Williams' original formula); no fixed target, follows the trend",
           "exit_ko": "손절폭 하한 40bp, 마감 5분 전 청산",
           "exit_en": "Stop distance floored at 40bp; flattens 5 minutes before close",
-          "evidence_ko": "burn_in — Larry Williams 원 공식 인용, 우리 원장 실측 0. KR은 ETF 전용(왕복 ~4bp 실측 — 비용을 이기는 유일한 KR venue), US는 TQQQ.",
-          "evidence_en": "burn_in — a citation of Larry Williams' original formula, zero measurements from our own ledger. KR trades ETFs only (measured ~4bp round-trip cost, the only KR venue that beats cost); US trades TQQQ.",
+          "evidence_ko": "burn_in — 변동성 돌파 가설을 관찰 중. 표본·비용 후 손익은 해당 기간의 원장 집계를 참조한다. 문헌 인용이나 주력 선정은 표본 외 검증·실거래 수익성 입증이 아니다.",
+          "evidence_en": "burn_in — observing the volatility-breakout hypothesis. See period-specific ledger statistics for samples and net results. Selection does not establish OOS or live profitability.",
           "refs": [],
-          "sizing_ko": "KR 자본배분 7% · US 자본배분 5% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-          "sizing_en": "KR capital allocation 7%; US capital allocation 5%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+          "sizing_ko": "현재 비활성 — 과거 계좌 기록 보존 · KR 설정 계수(capital_fraction) 7% · US 설정 계수(capital_fraction) 5% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+          "sizing_en": "currently disabled; historical books retained; KR capital_fraction 7%; US capital_fraction 5%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
         },
         "total": {
           "trips": 20,
@@ -6263,15 +6263,15 @@
           "category": "intraday",
           "theory_ko": "시가에 전일 레인지의 일정 비율을 더한 값을 상향 돌파하면 그날 상승이 확장된다는 변동성 돌파 가설(Larry Williams 원 공식).",
           "theory_en": "Volatility-breakout hypothesis that a break above open + a fraction of the prior day's range signals expanding upside for the day (Larry Williams' original formula).",
-          "entry_ko": "시가 + 전일 레인지 x 0.5(Larry Williams 원 공식) 상향 돌파 시 매수, 목표 없이 추종 (A/B 촉매 갈래 — EVENT/FRGN/TREND 태그가 붙은 종목만 대상)",
-          "entry_en": "Buys on a breakout above open + prior-day range x 0.5 (Larry Williams' original formula); no fixed target, follows the trend (A/B catalyst arm — only trades symbols tagged EVENT/FRGN/TREND)",
+          "entry_ko": "시가 + 전일 레인지 x 0.5(Larry Williams 원 공식) 상향 돌파 시 매수, 목표 없이 추종 (촉매 갈래·A/B 비교용 — KR: FRGN 하나 이상 필요)",
+          "entry_en": "Buys on a breakout above open + prior-day range x 0.5 (Larry Williams' original formula); no fixed target, follows the trend (catalyst arm for A/B comparison — KR: any FRGN)",
           "exit_ko": "손절폭 하한 40bp, 마감 5분 전 청산",
           "exit_en": "Stop distance floored at 40bp; flattens 5 minutes before close",
-          "evidence_ko": "burn_in — Larry Williams 원 공식 인용, 우리 원장 실측 0. KR은 ETF 전용(왕복 ~4bp 실측 — 비용을 이기는 유일한 KR venue), US는 TQQQ. vol_breakout와 파라미터는 동일, 유니버스만 다른 A/B 짝 — `run scoreboard --ab`(양쪽 n≥30 전엔 판단 불가)로 판정.",
-          "evidence_en": "burn_in — a citation of Larry Williams' original formula, zero measurements from our own ledger. KR trades ETFs only (measured ~4bp round-trip cost, the only KR venue that beats cost); US trades TQQQ. An A/B pair with vol_breakout: identical parameters, different universe — judged via `run scoreboard --ab` (n>=30 both arms).",
+          "evidence_ko": "burn_in — 변동성 돌파 가설을 관찰 중. 표본·비용 후 손익은 해당 기간의 원장 집계를 참조한다. 문헌 인용이나 주력 선정은 표본 외 검증·실거래 수익성 입증이 아니다. vol_breakout와 가격 규칙을 공유한다. 유니버스·기간·파라미터를 맞춘 비교가 필요하며 표본 수만으로 검증을 통과하지 않는다. 기본 갈래는 현재 비활성이다.",
+          "evidence_en": "burn_in — observing the volatility-breakout hypothesis. See period-specific ledger statistics for samples and net results. Selection does not establish OOS or live profitability. Shares price rules with vol_breakout; comparisons need matched universes, periods and parameters, not just a minimum trade count. The base arm is currently disabled.",
           "refs": [],
-          "sizing_ko": "KR 자본배분 7% · US 자본배분 5% · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 하드레일: 손절 상한 −5%/목표 상한 +10% · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
-          "sizing_en": "KR capital allocation 7%; US capital allocation 5%; per-entry size = strategy capital x 50% (target_weight); intraday hard rail: stop capped at -5%, target capped at +10%; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
+          "sizing_ko": "현재 거래 허용 시장: KR · KR 설정 계수(capital_fraction) 7% · US 설정 계수(capital_fraction) 5% · 고정 독립 계좌에서 이 계수는 참여 선언이며 주문 비중이 아님 · 1회 진입 규모 = 전략자본 x 50%(target_weight) · 장중 손절 상한 −5%; 목표가가 있을 때 +10% 상한, 강제 익절은 별도 설정 · KR: 전일·당일 상한가(+29.5%) 종목 진입 금지 레일 적용",
+          "sizing_en": "current permitted markets: KR; KR capital_fraction 7%; US capital_fraction 5%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
         },
         "total": {
           "trips": 93,
