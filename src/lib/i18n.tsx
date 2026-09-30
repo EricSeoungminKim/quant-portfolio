@@ -780,7 +780,7 @@ const en: Messages = {
       {
         term: "Catalyst arm",
         definition:
-          "The “_cat” variant of a strategy, restricted to symbols carrying a news or flow catalyst tag — run as an A/B test against the unrestricted base arm.",
+          "The “_cat” variant restricts symbols by news or flow catalyst tags. It was introduced for base/catalyst comparisons; currently only the KR catalyst breakout is active.",
       },
     ],
     epochItemTitle: "Paper-epoch account model",
@@ -1283,7 +1283,7 @@ const ko: Messages = {
       {
         term: "촉매 갈래(Catalyst arm)",
         definition:
-          "id가 “_cat”으로 끝나는 전략 갈래 — 뉴스·수급 촉매 태그가 붙은 종목만 보도록 제한해, 제한 없는 기본 갈래와 A/B로 비교합니다.",
+          "id가 “_cat”으로 끝나는 전략 갈래는 뉴스·수급 촉매 태그로 종목을 제한합니다. 기본·촉매 비교를 위해 도입했으며 현재는 KR 촉매형 돌파만 활성화돼 있습니다.",
       },
     ],
     epochItemTitle: "모의계좌 에폭 계좌 모델",
