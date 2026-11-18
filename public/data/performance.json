@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-11-18T06:20:02+09:00",
+  "generated_at": "2026-11-18T16:15:02+09:00",
   "disclaimer": "모의투자(paper) 기록입니다. 실제 자금이 투입되지 않았습니다.",
   "disclaimer_en": "Paper trading record. No real capital was deployed.",
   "period": {
     "start": "2026-09-01",
-    "end": "2026-11-17",
-    "sessions": 36,
-    "total_fills": 1811,
+    "end": "2026-11-18",
+    "sessions": 37,
+    "total_fills": 1813,
     "scope": "real_seeded",
     "note": "실계좌 이식 이후",
     "note_en": "Since real-account transplant"
@@ -264,19 +264,26 @@
         "day_pct": 0.1392,
         "fills": 2,
         "phase": "real_seeded"
+      },
+      {
+        "date": "2026-11-18",
+        "cum_pct": -110.382,
+        "day_pct": -3.9309,
+        "fills": 2,
+        "phase": "real_seeded"
       }
     ],
-    "max_drawdown_pct": 106.5903,
+    "max_drawdown_pct": 110.382,
     "chart": {
       "y_axis": {
-        "min": -125.7766,
-        "max": 19.1863,
+        "min": -130.2508,
+        "max": 19.8688,
         "ticks": [
-          19.1863,
-          9.5931,
+          19.8688,
+          9.9344,
           0.0,
-          -62.8883,
-          -125.7766
+          -65.1254,
+          -130.2508
         ],
         "zero": 0.0
       },
@@ -3197,12 +3204,12 @@
       "name_ko": "변동성 돌파(촉매 갈래)",
       "name_en": "Volatility Breakout (catalyst arm)",
       "total": {
-        "trips": 119,
+        "trips": 120,
         "wins": 34,
-        "win_rate": 0.2857,
-        "ci_low": 0.2122,
-        "ci_high": 0.3726,
-        "expectancy_bp": -15.95,
+        "win_rate": 0.2833,
+        "ci_low": 0.2104,
+        "ci_high": 0.3697,
+        "expectancy_bp": -18.41,
         "verdict": "유의(음)",
         "sample_warning": false,
         "markets": [
@@ -3210,8 +3217,8 @@
           "US"
         ]
       },
-      "trades_per_day": 3.72,
-      "avg_hold_minutes": 152.1,
+      "trades_per_day": 3.64,
+      "avg_hold_minutes": 151.4,
       "enabled": true,
       "help": {
         "category": "intraday",
@@ -3229,12 +3236,12 @@
       },
       "by_market": {
         "asia": {
-          "trips": 57,
+          "trips": 58,
           "wins": 15,
-          "win_rate": 0.2632,
-          "ci_low": 0.1665,
-          "ci_high": 0.3898,
-          "expectancy_bp": -23.78,
+          "win_rate": 0.2586,
+          "ci_low": 0.1635,
+          "ci_high": 0.3838,
+          "expectancy_bp": -28.72,
           "verdict": "유의(음)",
           "sample_warning": false
         },
@@ -3424,6 +3431,12 @@
             "day_net": 6346.55,
             "cum_net": -84906.78,
             "cum_trips": 57
+          },
+          {
+            "date": "2026-11-18",
+            "day_net": -179249.88,
+            "cum_net": -264156.67,
+            "cum_trips": 58
           }
         ],
         "us": [
@@ -3541,8 +3554,8 @@
   ],
   "strategies_scope": "lifetime",
   "enabled_count": 1,
-  "strategies_note": "전략 통계는 모의 시대 포함 누적 1090왕복",
-  "strategies_note_en": "Strategy stats are lifetime incl. paper era, 1090 round trips",
+  "strategies_note": "전략 통계는 모의 시대 포함 누적 1091왕복",
+  "strategies_note_en": "Strategy stats are lifetime incl. paper era, 1091 round trips",
   "strategy_curves_note": "전략별 곡선은 종결 왕복 기준 누적 순손익(수수료 차감), 통화별 · 평가손익 미포함",
   "strategy_curves_note_en": "Per-strategy curves are cumulative net P&L (after fees) from closed round trips, by currency — unrealized (mark-to-market) P&L is not included",
   "excluded": {
@@ -3558,7 +3571,7 @@
     "kr_stock_roundtrip_bp": 23.0,
     "kr_etf_roundtrip_bp": 3.0,
     "us_roundtrip_bp": 20.0,
-    "fee_drag_pct_of_gross": 362.59,
+    "fee_drag_pct_of_gross": 339.22,
     "kr_tax_bp": 20.0,
     "note": "KR 개별주 왕복 23bp 중 20bp가 증권거래세+농특세 (US SEC Fee/TAF 등 소액 항목은 미포함)",
     "note_en": "Of the 23bp KR individual-stock round-trip cost, 20bp is securities transaction tax + rural development surtax (small items like US SEC Fee/TAF not included)"
@@ -3567,9 +3580,9 @@
     "epoch": "2026-09-07T00:00:00+09:00",
     "period": {
       "start": "2026-09-07",
-      "end": "2026-11-17",
-      "sessions": 31,
-      "total_fills": 1572,
+      "end": "2026-11-18",
+      "sessions": 32,
+      "total_fills": 1574,
       "scope": "paper_epoch",
       "note": "독립 모의계좌 재시작 이후",
       "note_en": "Since independent paper-account restart"
@@ -3583,7 +3596,7 @@
       "kr_stock_roundtrip_bp": 23.0,
       "kr_etf_roundtrip_bp": 3.0,
       "us_roundtrip_bp": 20.0,
-      "fee_drag_pct_of_gross": 376.63,
+      "fee_drag_pct_of_gross": 351.26,
       "kr_tax_bp": 20.0,
       "note": "KR 개별주 왕복 23bp 중 20bp가 증권거래세+농특세 (US SEC Fee/TAF 등 소액 항목은 미포함)",
       "note_en": "Of the 23bp KR individual-stock round-trip cost, 20bp is securities transaction tax + rural development surtax (small items like US SEC Fee/TAF not included)",
@@ -3797,19 +3810,26 @@
           "day_pct": 0.0058,
           "fills": 2,
           "phase": "paper_epoch"
+        },
+        {
+          "date": "2026-11-18",
+          "cum_pct": -4.4844,
+          "day_pct": -0.163,
+          "fills": 2,
+          "phase": "paper_epoch"
         }
       ],
-      "max_drawdown_pct": 4.3272,
+      "max_drawdown_pct": 4.4844,
       "chart": {
         "y_axis": {
-          "min": -5.1061,
-          "max": 0.7789,
+          "min": -5.2916,
+          "max": 0.8072,
           "ticks": [
-            0.7789,
-            0.3894,
+            0.8072,
+            0.4036,
             0.0,
-            -2.553,
-            -5.1061
+            -2.6458,
+            -5.2916
           ],
           "zero": 0.0
         },
@@ -4149,19 +4169,25 @@
           "day_krw": 6346.55,
           "cum_krw": -10731145.6,
           "cum_pct": -4.1047
+        },
+        {
+          "date": "2026-11-18",
+          "day_krw": -179249.88,
+          "cum_krw": -10910395.49,
+          "cum_pct": -4.1732
         }
       ],
-      "max_drawdown_pct": 4.1071,
+      "max_drawdown_pct": 4.1732,
       "chart": {
         "y_axis": {
-          "min": -4.8464,
-          "max": 0.7393,
+          "min": -4.9244,
+          "max": 0.7512,
           "ticks": [
-            0.7393,
-            0.3696,
+            0.7512,
+            0.3756,
             0.0,
-            -2.4232,
-            -4.8464
+            -2.4622,
+            -4.9244
           ],
           "zero": 0.0
         }
@@ -6612,12 +6638,12 @@
           "sizing_en": "current permitted markets: KR; KR capital_fraction 7%; US capital_fraction 5%; fixed books: participation flags, not order weights; per-entry size = strategy capital x 50% (target_weight); stop cap -5%; +10% ceiling if a target exists; forced take-profit is separately configured; KR: blocked from entering prior-day/same-day limit-up (+29.5%) stocks"
         },
         "total": {
-          "trips": 108,
+          "trips": 109,
           "wins": 30,
-          "win_rate": 0.2778,
-          "ci_low": 0.2021,
-          "ci_high": 0.3688,
-          "expectancy_bp": -11.45,
+          "win_rate": 0.2752,
+          "ci_low": 0.2001,
+          "ci_high": 0.3656,
+          "expectancy_bp": -14.2,
           "verdict": "유의(음)",
           "sample_warning": false,
           "markets": [
@@ -6627,12 +6653,12 @@
         },
         "by_market": {
           "asia": {
-            "trips": 51,
+            "trips": 52,
             "wins": 15,
-            "win_rate": 0.2941,
-            "ci_low": 0.1871,
-            "ci_high": 0.43,
-            "expectancy_bp": -14.82,
+            "win_rate": 0.2885,
+            "ci_low": 0.1833,
+            "ci_high": 0.4227,
+            "expectancy_bp": -20.51,
             "verdict": "유의(음)",
             "sample_warning": false
           },
@@ -6647,17 +6673,17 @@
             "sample_warning": false
           }
         },
-        "trades_per_day": 3.6,
-        "avg_hold_minutes": 156.1,
+        "trades_per_day": 3.52,
+        "avg_hold_minutes": 155.3,
         "activity": {
           "total": {
-            "trades_per_day": 3.6,
-            "avg_hold_minutes": 156.1
+            "trades_per_day": 3.52,
+            "avg_hold_minutes": 155.3
           },
           "by_market": {
             "asia": {
-              "trades_per_day": 1.82,
-              "avg_hold_minutes": 151.6
+              "trades_per_day": 1.79,
+              "avg_hold_minutes": 149.9
             },
             "us": {
               "trades_per_day": 3.56,
@@ -6865,6 +6891,13 @@
               "day_native": 6346.55,
               "cum_native": -70508.26,
               "cum_pct": -0.7051,
+              "trips": 1
+            },
+            {
+              "date": "2026-11-18",
+              "day_native": -179249.88,
+              "cum_native": -249758.15,
+              "cum_pct": -2.4976,
               "trips": 1
             }
           ],
